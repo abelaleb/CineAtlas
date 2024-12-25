@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaBeer, FaUser } from 'react-icons/fa';
 import { Input } from './ui/input';
 const Navbar = () => {

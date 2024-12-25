@@ -1,4 +1,3 @@
-import React from 'react';
 import highestImg from '../assets/images/Highest in the room.jpg';
 import { Input } from './ui/input';
 const MainContent = () => {
