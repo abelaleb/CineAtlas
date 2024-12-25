@@ -1,10 +1,24 @@
-import React from "react";
-import Navbar from "./components/Navbar";
+import React from 'react';
+import Mainbar from './components/Mainbar';
+import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
 function App() {
   return (
-    <div className="app">
-     <Navbar/>
-    </div>
+    <>
+      <div className="flex flex-col">
+        <div >
+          <Navbar />
+        </div>
+        <div className="grid grid-cols-4">
+          <div className="col-span-1">
+            <Sidebar />
+          </div>
+          <div className="col-span-3 bg-red-200">
+            <Mainbar />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
