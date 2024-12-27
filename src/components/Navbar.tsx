@@ -7,7 +7,7 @@ const Navbar = () => {
         <div className="flex justify-center items-center">
           <FaBeer />
         </div>
-        <h1 className="bg-red text-2xl font-bold text-primary">CineAtlas</h1>
+        <div className="bg-red text-2xl font-bold text-primary">CineAtlas</div>
       </div>
       <div className="flex items-center justify-between col-span-3 px-4">
         <div className="w-3/4">

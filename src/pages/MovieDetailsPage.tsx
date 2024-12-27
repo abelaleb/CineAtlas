@@ -13,10 +13,10 @@ const MovieDetailsPage = () => {
           className="h-[80vh] w-[70vw] flex flex-col justify-center items-center m-4"
         ></div>
         <div className="flex flex-col justify-start items-center p-4">
-          <h1 className="font-black flex justify-start">Gladiator II</h1>
-          <h2 className="font-semibold flex justify-start">
+          <div className="font-black flex justify-start">Gladiator II</div>
+          <div className="font-semibold flex justify-start">
             2024-11-05 . Action, Adventure, Drama .148 minutes .
-          </h2>
+          </div>
           <div className="flex justify-start items-center font-bold">
             <div className="relative w-10 h-10">
               <FaStar className="absolute w-full h-full text-yellow-400 opacity-30" />
