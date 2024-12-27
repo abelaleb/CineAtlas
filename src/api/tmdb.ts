@@ -38,12 +38,12 @@ export interface PersonChange {
   original_title: string;
 }
 
-export interface PaginatedResponse<T> {
-  page: number;
-  results: T[];
-  total_pages: number;
-  total_results: number;
-}
+  export interface PaginatedResponse<T> {
+    page: number;
+    results: T[];
+    total_pages: number;
+    total_results: number;
+  }
 
 //Fetch data for Movies
 export const getMovieChanges = async (

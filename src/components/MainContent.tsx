@@ -10,11 +10,30 @@ import {
 import highestImg from '../assets/images/Highest in the room.jpg';
 import { Input } from './ui/input';
 import { MovieCards, TVShowCards, PeopleCards } from './Cards';
+import Pagination from './Pagination';
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
   const [people, setPeople] = useState<PersonChange[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postPerPage, setPostPerPage] = useState<number>(5);
+  const [currentTvPage, setCurrentTvPage] = useState<number>(1);
+  const [currentPeoplePage, setCurrentPeoplePage] = useState<number>(1);
+  const [tvPostPerPage, setTvPostPerPage] = useState<number>(5);
+  const [peoplePostPerPage, setPeoplePostPerPage] = useState<number>(5);
+
+  const lastPostIndex = currentPage * postPerPage;
+  const firstPostIndex = lastPostIndex - postPerPage; 
+  const currentMovies = movies.slice(firstPostIndex, lastPostIndex);
+
+  const lastTvPostIndex = currentTvPage * tvPostPerPage;
+  const firstTvPostIndex = lastTvPostIndex - tvPostPerPage;
+  const currentTvShows = tvShows.slice(firstTvPostIndex, lastTvPostIndex);
+
+  const lastPeoplePostIndex = currentPeoplePage * peoplePostPerPage;
+  const firstPeoplePostIndex = lastPeoplePostIndex - peoplePostPerPage;
+  const currentPeople = people.slice(firstPeoplePostIndex, lastPeoplePostIndex);
 
   useEffect(() => {
     const fetchChanges = async () => {
@@ -25,7 +44,7 @@ const MainContent = () => {
           getTVChanges(),
           getPersonChanges(),
         ]);
-        console.log('Movies: ', movies);
+        console.log('Movies: ', currentMovies);
         // console.log('tvchanges: ', tvChanges);
         // console.log('People: ', people);
 
@@ -72,23 +91,26 @@ const MainContent = () => {
         <div className="px-4">
           <h1 className="text-2xl font-bold">Trending Movies</h1>
         </div>
-        <MovieCards movies={movies} />
+        <MovieCards movies={currentMovies} />
+        <Pagination totalPosts={movies.length} postsPerPage={postPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
       </div>
       <div className="flex flex-col">
         <div className="px-4">
           <h1 className="text-2xl font-bold">Trending TV Shows</h1>
         </div>
         <div className="flex gap-4 p-4">
-          <TVShowCards tvShows={tvShows} />
+          <TVShowCards tvShows={currentTvShows} />
         </div>
+        <Pagination totalPosts={tvShows.length} postsPerPage={tvPostPerPage} currentPage={currentTvPage} setCurrentPage={setCurrentTvPage}/>
       </div>
       <div className="flex flex-col">
         <div className="px-4">
           <h1 className="text-2xl font-bold">Trending People</h1>
         </div>
         <div className="flex gap-4 p-4">
-          <PeopleCards people={people} />
+          <PeopleCards people={currentPeople} />
         </div>
+        <Pagination totalPosts={people.length} postsPerPage={peoplePostPerPage} currentPage={currentPeoplePage} setCurrentPage={setCurrentPeoplePage}/>
       </div>
     </div>
   );
