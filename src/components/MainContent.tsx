@@ -7,10 +7,11 @@ import {
   TVShowChange,
   PersonChange,
 } from '../api/tmdb';
-import highestImg from '../assets/images/Highest in the room.jpg';
-import { Input } from './ui/input';
-import { MovieCards, TVShowCards, PeopleCards } from './Cards';
-import Pagination from './Pagination';
+import Header from './Header';
+import MoviesSection from './MoviesSection';
+import TVShowsSection from './TVShowsSection';
+import PeopleSection from './PeopleSection';
+
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
@@ -65,68 +66,31 @@ const MainContent = () => {
   return (
     <div>
       <div className="flex  w-full">
-        <div
-          style={{
-            backgroundImage: `url(${highestImg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-          className="h-[300px] w-full flex flex-col justify-center items-center "
-        >
-          <div className="">
-            <p className="text-white text-3xl font-extrabold text-start">
-              Welcome.{' '}
-            </p>
-            <p className="text-white text-xl font-semibold text-start">
-              Millions of Movies, TV shows and people to discover.
-            </p>
-            <p className="text-white text-xl font-semibold text-start">
-              Explore now.
-            </p>
-            <Input type="text" placeholder="Search" color="white" />
-          </div>
-        </div>
+        <Header />
       </div>
-      <div className="flex flex-col">
-        <div className="px-4">
-          <h1 className="text-2xl font-bold">Trending Movies</h1>
-        </div>
-        <MovieCards movies={currentMovies} />
-        <Pagination
-          totalPosts={movies.length}
-          postsPerPage={postPerPage}
+      <div>
+        <MoviesSection
+          movies={movies}
+          currentMovies={currentMovies}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
+          postPerPage={postPerPage}
         />
       </div>
-      <div className="flex flex-col">
-        <div className="px-4">
-          <h1 className="text-2xl font-bold">Trending TV Shows</h1>
-        </div>
-        <div className="flex gap-4 p-4">
-          <TVShowCards tvShows={currentTvShows} />
-        </div>
-        <Pagination
-          totalPosts={tvShows.length}
-          postsPerPage={tvPostPerPage}
-          currentPage={currentTvPage}
-          setCurrentPage={setCurrentTvPage}
-        />
-      </div>
-      <div className="flex flex-col">
-        <div className="px-4">
-          <h1 className="text-2xl font-bold">Trending People</h1>
-        </div>
-        <div className="flex gap-4 p-4">
-          <PeopleCards people={currentPeople} />
-        </div>
-        <Pagination
-          totalPosts={people.length}
-          postsPerPage={peoplePostPerPage}
-          currentPage={currentPeoplePage}
-          setCurrentPage={setCurrentPeoplePage}
-        />
-      </div>
+      <TVShowsSection
+        tvShows={tvShows}
+        currentTvShows={currentTvShows}
+        currentPage={currentTvPage}
+        setCurrentPage={setCurrentTvPage}
+        tvPostPerPage={tvPostPerPage}
+      />
+      <PeopleSection
+        people={people}
+        currentPeople={currentPeople}
+        currentPage={currentPeoplePage}
+        setCurrentPage={setCurrentPeoplePage}
+        peoplePostPerPage={peoplePostPerPage}
+      />
     </div>
   );
 };
