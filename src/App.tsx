@@ -1,6 +1,8 @@
 import MainContent from './components/MainContent';
-import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
+import { AppSidebar } from './components/Sidebar';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+
 function App() {
   return (
     <>
@@ -8,13 +10,15 @@ function App() {
         <div>
           <Navbar />
         </div>
-        <div className="grid grid-cols-4">
-          <div className="col-span-1">
-            <Sidebar />
-          </div>
-          <div className="col-span-3 bg-red-200">
-            <MainContent />
-          </div>
+        <div className="flex">
+          <SidebarProvider>
+            <div>
+              <AppSidebar />
+            </div>
+            <div className="col-span-3 bg-red-200">
+              <SidebarTrigger /> <MainContent />
+            </div>
+          </SidebarProvider>
         </div>
       </div>
     </>

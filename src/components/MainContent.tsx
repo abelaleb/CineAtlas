@@ -24,7 +24,7 @@ const MainContent = () => {
   const [peoplePostPerPage, setPeoplePostPerPage] = useState<number>(5);
 
   const lastPostIndex = currentPage * postPerPage;
-  const firstPostIndex = lastPostIndex - postPerPage; 
+  const firstPostIndex = lastPostIndex - postPerPage;
   const currentMovies = movies.slice(firstPostIndex, lastPostIndex);
 
   const lastTvPostIndex = currentTvPage * tvPostPerPage;
@@ -92,7 +92,12 @@ const MainContent = () => {
           <h1 className="text-2xl font-bold">Trending Movies</h1>
         </div>
         <MovieCards movies={currentMovies} />
-        <Pagination totalPosts={movies.length} postsPerPage={postPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+        <Pagination
+          totalPosts={movies.length}
+          postsPerPage={postPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
       <div className="flex flex-col">
         <div className="px-4">
@@ -101,7 +106,12 @@ const MainContent = () => {
         <div className="flex gap-4 p-4">
           <TVShowCards tvShows={currentTvShows} />
         </div>
-        <Pagination totalPosts={tvShows.length} postsPerPage={tvPostPerPage} currentPage={currentTvPage} setCurrentPage={setCurrentTvPage}/>
+        <Pagination
+          totalPosts={tvShows.length}
+          postsPerPage={tvPostPerPage}
+          currentPage={currentTvPage}
+          setCurrentPage={setCurrentTvPage}
+        />
       </div>
       <div className="flex flex-col">
         <div className="px-4">
@@ -110,7 +120,12 @@ const MainContent = () => {
         <div className="flex gap-4 p-4">
           <PeopleCards people={currentPeople} />
         </div>
-        <Pagination totalPosts={people.length} postsPerPage={peoplePostPerPage} currentPage={currentPeoplePage} setCurrentPage={setCurrentPeoplePage}/>
+        <Pagination
+          totalPosts={people.length}
+          postsPerPage={peoplePostPerPage}
+          currentPage={currentPeoplePage}
+          setCurrentPage={setCurrentPeoplePage}
+        />
       </div>
     </div>
   );
