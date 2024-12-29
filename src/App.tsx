@@ -1,8 +1,8 @@
 // App.tsx
-import SidebarLayout from './components/SidebarLayout';
 import Navbar from './components/Navbar';
-import MainContent from './components/MainContent';
+import SidebarLayout from './components/SidebarLayout';
 import { SidebarProvider } from './components/ui/sidebar';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <div className="flex w-full h-screen ">
         <SidebarLayout />
         <div className="flex flex-col w-full h-full">
-          <Navbar />
-          <MainContent />
+        <Navbar />
+        <Outlet />
         </div>
       </div>
     </SidebarProvider>

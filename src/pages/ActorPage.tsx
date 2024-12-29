@@ -1,9 +1,7 @@
 import highestImg from '@/assets/images/Highest in the room.jpg';
-import Navbar from '@/components/Navbar';
 const ActorPage = () => {
   return (
-    <div className="flex flex-col w-full h-full">
-      <Navbar/>
+    <div className="w-full h-full">
       <div className="flex  justify-center items-start ">
         <div
           style={{
@@ -38,19 +36,16 @@ const ActorPage = () => {
 
       <div className="flex flex-col justify-start items-start p-4">
         <div className="font-bold text-2xl">Personal Info</div>
-        <div className='font-bold text-lg'>
-           Known for
-        </div>
-         <div>Directing</div>
-        
-        <div className='font-bold text-lg'> Place of Birth</div>
-        
+        <div className="font-bold text-lg">Known for</div>
+        <div>Directing</div>
+
+        <div className="font-bold text-lg"> Place of Birth</div>
+
         <div>Westminster, London, England, UK </div>
-        <div className='font-bold text-lg'>Presence</div>
+        <div className="font-bold text-lg">Presence</div>
         <div>1970-07-30</div>
         <div> - Present Gender Male</div>
       </div>
-      <div></div>
     </div>
   );
 };

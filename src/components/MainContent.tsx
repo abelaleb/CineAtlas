@@ -12,8 +12,6 @@ import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';
 import PeopleSection from './PeopleSection';
 
-/*eslint-disable*/
-
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
