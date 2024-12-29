@@ -1,7 +1,9 @@
 import highestImg from '@/assets/images/Highest in the room.jpg';
+import Navbar from '@/components/Navbar';
 const ActorPage = () => {
   return (
-    <>
+    <div className="flex flex-col w-full h-full">
+      <Navbar/>
       <div className="flex  justify-center items-start ">
         <div
           style={{
@@ -49,7 +51,7 @@ const ActorPage = () => {
         <div> - Present Gender Male</div>
       </div>
       <div></div>
-    </>
+    </div>
   );
 };
 

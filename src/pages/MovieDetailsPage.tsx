@@ -1,8 +1,10 @@
 import highestImg from '@/assets/images/Highest in the room.jpg';
+import Navbar from '@/components/Navbar';
 import { FaStar, FaUser } from 'react-icons/fa';
 const MovieDetailsPage = () => {
   return (
-    <>
+    <div className="flex flex-col w-full h-full">
+      <Navbar />
       <div className="flex  justify-center items-center ">
         <div
           style={{
@@ -85,8 +87,8 @@ const MovieDetailsPage = () => {
         </div>
         <div>
           <div className="font-bold text-xl">You may also like</div>
-          <div className='flex justify-between items-center gap-4'>
-            <div >
+          <div className="flex justify-between items-center gap-4">
+            <div>
               <img src={highestImg} alt="img" />
               John Doe
             </div>
@@ -105,7 +107,7 @@ const MovieDetailsPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

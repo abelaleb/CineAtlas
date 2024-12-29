@@ -10,15 +10,16 @@ import {
   useSidebar,
 } from './ui/sidebar';
 import CollapsibleTrigger from './CollapsibleTrigger';
+import { Link } from 'react-router-dom';
 
 export default function SidebarLayout() {
   const { state, toggleSidebar } = useSidebar();
   const sidebarItems = [
-    { title: 'Browse', url: '#', icon: Compass },
-    { title: 'Trending', url: '#', icon: TrendingUp },
-    { title: 'Movies', url: '#', icon: Popcorn },
-    { title: 'TV Shows', url: '#', icon: Tv },
-    { title: 'People', url: '#', icon: Star },
+    { title: 'Browse', url: '/browser', icon: Compass },
+    { title: 'Trending', url: '/trending', icon: TrendingUp },
+    { title: 'Movies', url: '/movies', icon: Popcorn },
+    { title: 'TV Shows', url: '/tvshows', icon: Tv },
+    { title: 'People', url: '/actor', icon: Star },
   ];
 
   return (
@@ -44,12 +45,16 @@ export default function SidebarLayout() {
             >
               {state === 'expanded' ? (
                 <div className="pl-4 flex gap-4 justify-start items-center">
-                  <item.icon className="mr-2 h-5 w-5" />
-                  {item.title}
+                  <Link to={item.url} className="flex items-center ">
+                    <item.icon className="mr-2 h-5 w-5" />
+                    {item.title}{' '}
+                  </Link>
                 </div>
               ) : (
                 <div className="flex justify-center items-center">
-                  <item.icon className="h-5 w-5" />
+                  <Link to={item.url}>
+                    <item.icon className="h-5 w-5" />
+                  </Link>
                 </div>
               )}
             </SidebarMenuItem>
@@ -57,10 +62,11 @@ export default function SidebarLayout() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter className="p-4">
-        {state === 'expanded' ? (<p className="text-sm text-gray-500">© 2024 CineAtlas</p>):(
+        {state === 'expanded' ? (
+          <p className="text-sm text-gray-500">© 2024 CineAtlas</p>
+        ) : (
           <TrendingUp className="h-5 w-5" />
         )}
-        
       </SidebarFooter>
     </Sidebar>
   );
