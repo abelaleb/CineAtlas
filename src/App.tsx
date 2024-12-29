@@ -7,9 +7,9 @@ import { SidebarProvider } from './components/ui/sidebar';
 function App() {
   return (
     <SidebarProvider>
-      <div className="flex w-full h-screen overflow-hidden">
+      <div className="flex w-full h-screen ">
         <SidebarLayout />
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full h-full">
           <Navbar />
           <MainContent />
         </div>
