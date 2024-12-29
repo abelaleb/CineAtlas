@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 export default function SidebarLayout() {
   const { state, toggleSidebar } = useSidebar();
   const sidebarItems = [
-    { title: 'Browse', url: '/browser', icon: Compass },
+    { title: 'Browse', url: '/browse', icon: Compass },
     { title: 'Trending', url: '/trending', icon: TrendingUp },
     { title: 'Movies', url: '/movies', icon: Popcorn },
     { title: 'TV Shows', url: '/tvshows', icon: Tv },
@@ -25,9 +25,11 @@ export default function SidebarLayout() {
   return (
     <Sidebar
       collapsible="icon"
-      className={` fixed left-0 top-0 z-20 h-full border-r border-gray-800 bg-white ${
-        state === 'collapsed' ? 'w-20' : 'w-64'
-      }`}
+      className={` fixed left-0 top-0 z-20 h-full border-r border-gray-800 bg-white  `}
+      style={{
+        transition: 'width 0.2s',
+        width: state === 'collapsed' ? '3rem' : '16rem',
+      }}
     >
       <SidebarHeader
         className=" hover:bg-gray-300 flex justify-center items-center p-4"
@@ -40,14 +42,17 @@ export default function SidebarLayout() {
           {sidebarItems.map((item) => (
             <SidebarMenuItem
               key={item.title}
-              style={{ padding: '1rem' }}
-              className="hover:bg-gray-200 flex justify-start"
+              style={{ 
+                display:'flex',
+                justifyContent: 'center',
+                padding: '1rem' }}
+              className="hover:bg-gray-200 "
             >
               {state === 'expanded' ? (
-                <div className="pl-4 flex gap-4 justify-start items-center">
-                  <Link to={item.url} className="flex items-center ">
-                    <item.icon className="mr-2 h-5 w-5" />
-                    {item.title}{' '}
+                <div className="p-4 flex gap-4 justify-start items-center">
+                  <Link to={item.url} className="flex justify-start items-center gap-2">
+                    <item.icon className=" h-5 w-5" />
+                    {item.title}
                   </Link>
                 </div>
               ) : (
