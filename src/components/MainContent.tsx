@@ -12,7 +12,7 @@ import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';
 import PeopleSection from './PeopleSection';
 
-const MainContent = () => {
+const MainContent = (className:string) => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
   const [people, setPeople] = useState<PersonChange[]>([]);
@@ -64,7 +64,7 @@ const MainContent = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className={className}>
       <div className="flex  w-full">
         <Header />
       </div>

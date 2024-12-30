@@ -13,7 +13,7 @@ const routes: RouteObject[] = [
     element: <App />,
     children:[
       { path: '', element: <HomePage /> }, 
-      { path: 'browse', element: <BrowseSearchPage /> },
+      { path: 'search', element: <BrowseSearchPage /> },
       { path: 'actor', element: <ActorPage /> },
       { path: 'movies', element: <MovieDetailsPage /> },
       { path: 'favorites', element: <FavoritesPage /> },

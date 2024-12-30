@@ -6,12 +6,14 @@ import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <div className="flex w-full h-screen ">
         <SidebarLayout />
         <div className="flex flex-col w-full h-full">
-        <Navbar />
-        <Outlet />
+          <div className="fixed top-0 right-0 left-0 z-50">
+            <Navbar />
+          </div>
+          <Outlet />
         </div>
       </div>
     </SidebarProvider>
