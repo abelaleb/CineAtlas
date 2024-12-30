@@ -3,7 +3,7 @@ import React from 'react';
 
 const FavoritesPage: React.FC = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col  pt-[68px]">
       <Navbar />
       <div>
         myfavorite things

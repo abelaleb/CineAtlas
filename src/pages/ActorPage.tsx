@@ -1,7 +1,7 @@
 import highestImg from '@/assets/images/Highest in the room.jpg';
 const ActorPage = () => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full  pt-[68px]">
       <div className="flex  justify-center items-start ">
         <div
           style={{

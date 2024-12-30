@@ -2,7 +2,7 @@ import highestImg from '@/assets/images/Highest in the room.jpg';
 import { FaStar, FaUser } from 'react-icons/fa';
 const MovieDetailsPage = () => {
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full  pt-[68px]">
       <div className="flex  justify-center items-center ">
         <div
           style={{

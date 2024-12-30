@@ -9,11 +9,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from './ui/sidebar';
-import CollapsibleTrigger from './CollapsibleTrigger';
 import { Link } from 'react-router-dom';
 
 export default function SidebarLayout() {
-  const { state, toggleSidebar } = useSidebar();
+  const { state } = useSidebar();
   const sidebarItems = [
     { title: 'Browse', url: '/search', icon: Compass },
     { title: 'Trending', url: '/trending', icon: TrendingUp },

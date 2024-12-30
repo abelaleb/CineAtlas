@@ -24,8 +24,8 @@ const BrowseSearchPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full gap-4 p-4 justify-top items-center">
-      <div className=" w-3/4">
+    <div className="flex flex-col w-full h-full gap-4 p-4 justify-top items-center  pt-[68px]">
+      <div className=" w-3/4 pt-10">
         <div>Search Items :</div>
         <div className="flex gap-4">
           <Input

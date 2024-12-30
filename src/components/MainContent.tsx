@@ -65,7 +65,7 @@ const MainContent = (className:string) => {
 
   return (
     <div className={className}>
-      <div className="flex  w-full">
+      <div className="flex  w-full ">
         <Header />
       </div>
       <div>
