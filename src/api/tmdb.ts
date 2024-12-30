@@ -37,13 +37,21 @@ export interface PersonChange {
   original_name: string;
   original_title: string;
 }
+export interface searchChange {
+  id: number;
+  adult: boolean;
+  original_title: string;
+  original_name: string;
+  poster_path: string;
+  release_date: number;
+}
 
-  export interface PaginatedResponse<T> {
-    page: number;
-    results: T[];
-    total_pages: number;
-    total_results: number;
-  }
+export interface PaginatedResponse<T> {
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
+}
 
 //Fetch data for Movies
 export const getMovieChanges = async (
@@ -75,6 +83,22 @@ export const getPersonChanges = async (
     `https://api.themoviedb.org/3/trending/person/day?language=en-US`,
     { params: { page } }
   );
+  return response.data;
+};
+
+//Fetch data for Search
+export const search = async (
+  query: string,
+  page = 1
+): Promise<PaginatedResponse<searchChange>> => {
+  const response = await tmdb.get(
+    `https://api.themoviedb.org/3/search/multi?include_adult=false&language=en-US&page=1`,
+    {
+      params: { query, page },
+    }
+  );
+  console.log(response.data.results);
+  
   return response.data;
 };
 
