@@ -1,6 +1,4 @@
 import highestImg from '@/assets/images/Highest in the room.jpg';
-import { Input } from './ui/input';
-
 const Header = () => {
   return (
     <div
@@ -21,7 +19,6 @@ const Header = () => {
         <p className="text-white text-xl font-semibold text-start">
           Explore now.
         </p>
-        <Input type="text" placeholder="Search" color="white" />
       </div>
     </div>
   );

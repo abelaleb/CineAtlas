@@ -2,7 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { search, searchChange } from '@/api/tmdb';
 import { useState } from 'react';
-import { image200 } from '@/Constants';
+import { image200 } from '@/Constants/Constants';
+import SelectScrollable from '@/components/SelectScrollable';
+import {
+  orderOptions,
+  genreOptions,
+  ratingOptions,
+  yearOptions,
+  languageOptions,
+} from '@/Constants/dropdownOptions';
 const BrowseSearchPage = () => {
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<searchChange[]>([]);
@@ -40,24 +48,32 @@ const BrowseSearchPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-row gap-2 justify-center w-1/2">
-        <div className="bg-red-300 p-4 hover:bg-red-950 hover:text-white rounded-md ">
-          Quality:
+      <div className="flex w-full gap-4 p-4 justify-center items-center ">
+        <div className=" p-4 rounded-md">
+          <h2 className="font-semibold mb-2">Genre:</h2>
+          <SelectScrollable placeholder="Select genre" options={genreOptions} />
         </div>
-        <div className="bg-red-300 p-4 hover:bg-red-950 hover:text-white rounded-md">
-          Genre:
+        <div className=" p-4 rounded-md">
+          <h2 className="font-semibold mb-2">Ratings:</h2>
+          <SelectScrollable
+            placeholder="Select rating"
+            options={ratingOptions}
+          />
         </div>
-        <div className="bg-red-300 p-4 hover:bg-red-950 hover:text-white rounded-md">
-          Ratings:
+        <div className=" p-4 rounded-md">
+          <h2 className="font-semibold mb-2">Year:</h2>
+          <SelectScrollable placeholder="Select year" options={yearOptions} />
         </div>
-        <div className="bg-red-300 p-4 hover:bg-red-950 hover:text-white rounded-md">
-          Year:
+        <div className=" p-4 rounded-md">
+          <h2 className="font-semibold mb-2">Language:</h2>
+          <SelectScrollable
+            placeholder="Select language"
+            options={languageOptions}
+          />
         </div>
-        <div className="bg-red-300 p-4 hover:bg-red-950 hover:text-white rounded-md">
-          Language:
-        </div>
-        <div className="bg-red-300 p-4 hover:bg-red-950 hover:text-white rounded-md">
-          Orderd by:
+        <div className=" p-4 rounded-md">
+          <h2 className="font-semibold mb-2">Ordered by:</h2>
+          <SelectScrollable placeholder="Select order" options={orderOptions} />
         </div>
       </div>
 

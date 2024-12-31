@@ -1,4 +1,4 @@
-import { image200 } from '@/Constants';
+import { image200 } from '@/Constants/Constants';
 import { MovieChange, TVShowChange, PersonChange } from '@/api/tmdb';
 
 interface MovieCardProps {
