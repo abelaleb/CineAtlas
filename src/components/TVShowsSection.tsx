@@ -16,7 +16,7 @@ const TVShowsSection: React.FC<TVShowsSectionProps> = ({
   currentPage,
   setCurrentPage,
   tvPostPerPage,
-}) => {
+}:TVShowsSectionProps) => {
   return (
     <div className="flex flex-col">
       <div className="px-4">

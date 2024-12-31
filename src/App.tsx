@@ -3,7 +3,6 @@ import Navbar from './components/Navbar';
 import SidebarLayout from './components/SidebarLayout';
 import { SidebarProvider } from './components/ui/sidebar';
 import { Outlet } from 'react-router-dom';
-import BrowseSearchPage from './pages/BrowseSearchPage';
 
 function App() {
   return (
@@ -14,9 +13,8 @@ function App() {
           <div className="fixed top-0 right-0 left-0 z-50">
             <Navbar />
           </div>
-          {/* <Outlet />
-           */}
-           <BrowseSearchPage />
+          <Outlet />
+          
         </div>
       </div>
     </SidebarProvider>

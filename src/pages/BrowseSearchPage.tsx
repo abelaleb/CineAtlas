@@ -11,9 +11,29 @@ import {
   yearOptions,
   languageOptions,
 } from '@/Constants/dropdownOptions';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+
 const BrowseSearchPage = () => {
   const [query, setQuery] = useState<string>('');
+  const [searchCategory, setSearchCategory] = useState<string>('movies');
   const [searchResults, setSearchResults] = useState<searchChange[]>([]);
+
   // const [page, setPage] = useState<number>(1);
   // const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -21,8 +41,24 @@ const BrowseSearchPage = () => {
   const handleSearch = async () => {
     if (!query.trim()) return; //prevent empty search
     setLoading(true);
+
     try {
-      const response = await search(query);
+      let response;
+      switch (searchCategory) {
+        case 'movies':
+          response = await search(query, 1, 'movie');
+          break;
+        case 'tvShows':
+          response = await search(query, 1, 'tv');
+          break;
+        case 'people':
+          response = await search(query, 1, 'person');
+          break;
+        default:
+          response = await search(query, 1);
+          break;
+      }
+
       setSearchResults(response.results);
     } catch (err) {
       console.error('Error during search:', err);
@@ -33,14 +69,31 @@ const BrowseSearchPage = () => {
 
   return (
     <div className="flex flex-col w-full h-full gap-4 p-4 justify-top items-center  pt-[68px]">
-      <div className=" w-3/4 pt-10">
+      <div className="flex justify-center items-center w-3/4 pt-10 gap-4">
         <div>Search Items :</div>
-        <div className="flex gap-4">
+        <div className="flex h-[32px] justify-center items-center">
+          <Select onValueChange={(value) => setSearchCategory(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="All" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Search</SelectLabel>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="movies">Movies</SelectItem>
+                <SelectItem value="tvShows">Tv Shows</SelectItem>
+                <SelectItem value="people">People</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex gap-4 justify-center items-center  ">
           <Input
             type="text"
-            placeholder="Search for Movies,Tv Shows, People"
+            placeholder={`Search ${searchCategory}...`}
             onChange={(e) => setQuery(e.target.value)}
-            style={{ width: '100%' }}
+            style={{ width: '300px', height: '32px' }}
           />
           <Button onClick={handleSearch} disabled={loading}>
             {loading ? 'Searching...' : 'Search'}
@@ -86,26 +139,43 @@ const BrowseSearchPage = () => {
         "
           >
             {searchResults.map((item) => (
-              <div key={item.id} className="bg-red-300 p-4 rounded shadow-md">
-                <p className="font-bold">
-                  {item.original_title || item.original_name}
-                </p>
-                {item.adult && <span className="text-red-500">18+</span>}
-                {item.poster_path && (
-                  <img
-                    src={image200 + item.poster_path}
-                    alt={item.original_title || item.original_name}
-                    className="w-full h-48 object-cover rounded hover:shadow-lg"
-                  />
-                )}
-                {item.release_date && <div>{item.release_date}</div>}
-              </div>
+              // <div
+              //   key={item.id}
+              //   className="border-r border-t p-4 rounded shadow-md"
+              // >
+              //   <p className="font-bold">
+              //     {item.original_title || item.original_name}
+              //   </p>
+              //   {item.adult && <span className="text-red-500">18+</span>}
+              //   {item.poster_path && (
+              //     <img
+              //       src={image200 + item.poster_path}
+              //       alt={item.original_title || item.original_name}
+              //       className="w-full h-48 object-cover rounded hover:shadow-lg"
+              //     />
+              //   )}
+                
+              //   {item.release_date && <div>{item.release_date}</div>}
+              // </div>
+              
             ))}
           </div>
         )}
 
         {!loading && searchResults.length === 0 && <p>No results found.</p>}
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

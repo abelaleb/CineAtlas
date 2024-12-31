@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_KEY, BASE_URL } from '@/Constants/Constants';
+
 if (!API_KEY) {
   throw new Error('Missing TMDB API Key. Please set it in the .env file');
 }
@@ -38,6 +39,7 @@ export interface PersonChange {
   original_title: string;
 }
 export interface searchChange {
+  backdrop_path: any;
   id: number;
   adult: boolean;
   original_title: string;
@@ -87,18 +89,31 @@ export const getPersonChanges = async (
 };
 
 //Fetch data for Search
+// const all = `https://api.themoviedb.org/3/search/multi?include_adult=false&language=en-US&page=1`;
+// const movie = `https://api.themoviedb.org/3/search/movie?include_adult=true&language=en-US&page=1`;
+// const tv = `https://api.themoviedb.org/3/search/tv?include_adult=true&language=en-US&page=1`;
+// const person = `https://api.themoviedb.org/3/search/person?include_adult=true&language=en-US&page=1`;
 export const search = async (
   query: string,
-  page = 1
+  page = 1,
+  type?: 'movie' | 'tv' | 'person'
 ): Promise<PaginatedResponse<searchChange>> => {
-  const response = await tmdb.get(
-    `https://api.themoviedb.org/3/search/multi?include_adult=false&language=en-US&page=1`,
-    {
-      params: { query, page },
-    }
-  );
+  const endpoint = type ? `search/${type}` : `search/multi`;
+  const response = await tmdb.get(endpoint, {
+    params: { query, page, include_adult: false },
+  });
   console.log(response.data.results);
-  
+
+  return response.data;
+  // const endpoint = type ? `https://api.themoviedb.org/3/search/movie?include_adult=true&language=en-US&page=1`
+  // // const response = await tmdb.get(
+  // //   `https://api.themoviedb.org/3/search/multi?include_adult=false&language=en-US&page=1`,
+  // //   {
+  // //     params: { query, page },
+  // //   }
+  // // );
+  console.log(response.data.results);
+
   return response.data;
 };
 
