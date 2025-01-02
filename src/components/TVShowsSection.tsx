@@ -7,7 +7,7 @@ interface TVShowsSectionProps {
   currentTvShows: TVShowChange[];
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  tvPostPerPage: number;
+  postPerPage: number;
 }
 
 const TVShowsSection: React.FC<TVShowsSectionProps> = ({
@@ -15,19 +15,17 @@ const TVShowsSection: React.FC<TVShowsSectionProps> = ({
   currentTvShows,
   currentPage,
   setCurrentPage,
-  tvPostPerPage,
-}:TVShowsSectionProps) => {
+  postPerPage,
+}: TVShowsSectionProps) => {
   return (
     <div className="flex flex-col">
-      <div className="px-4">
-        <h1 className="text-2xl font-bold">Trending TV Shows</h1>
+      <div className="p-4">
+        <h1 className="text-2xl font-bold text-center">Trending TV Shows</h1>
       </div>
-      <div className="flex gap-4 p-4">
-        <TVShowCards tvShows={currentTvShows} />
-      </div>
+      <TVShowCards tvShows={currentTvShows} />
       <Pagination
         totalPosts={tvShows.length}
-        postsPerPage={tvPostPerPage}
+        postsPerPage={postPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

@@ -20,12 +20,10 @@ const PeopleSection: React.FC<PeopleSectionProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <div className="px-4">
-        <h1 className="text-2xl font-bold">Trending People</h1>
+      <div className="p-4">
+        <h1 className="text-2xl font-bold text-center">Trending People</h1>
       </div>
-      <div className="flex gap-4 p-4">
         <PeopleCards people={currentPeople} />
-      </div>
       <Pagination
         totalPosts={people.length}
         postsPerPage={peoplePostPerPage}

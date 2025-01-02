@@ -20,8 +20,8 @@ const MoviesSection: React.FC<MoviesSectionProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <div className="px-4">
-        <h1 className="text-2xl font-bold">Trending Movies</h1>
+      <div className="p-4">
+        <h1 className="text-2xl font-bold text-center">Trending Movies</h1>
       </div>
       <MovieCards movies={currentMovies} />
       <Pagination
