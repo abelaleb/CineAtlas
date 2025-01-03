@@ -206,6 +206,7 @@ const BrowseSearchPage = () => {
               postsPerPage={20}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
+              fetchPopularMovies={() => {}}
             />
           </>
         )}
