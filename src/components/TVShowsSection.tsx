@@ -1,4 +1,4 @@
-import { TVShowChange } from '@/api/tmdb';
+import { TVShowChange } from '@/types/types';
 import { TVShowCards } from './Cards';
 import Pagination from './Pagination';
 

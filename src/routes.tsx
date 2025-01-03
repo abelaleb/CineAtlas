@@ -6,6 +6,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import BrowseSearchPage from './pages/BrowseSearchPage';
 import HomePage from './pages/HomePage';
 import PopularMovies from './pages/PopularMovies';
+import TvDetailsPage from './pages/TvDetailsPage';
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -20,6 +21,7 @@ const routes: RouteObject[] = [
         children: [{ path: ':pageId', element: <PopularMovies /> }],
       },
       { path: 'movie/:movieId', element: <MovieDetailsPage /> },
+      {path: 'tv/:series_id', element: <TvDetailsPage />},
       { path: '*', element: <NotFoundPage /> },
     ],
   },

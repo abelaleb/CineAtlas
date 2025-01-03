@@ -1,48 +1,49 @@
-import { useEffect, useState } from 'react';
-import { MovieChange, MovieDetails } from '@/types/types';
+import { TVShowChange, TVShowDetails } from '@/types/types';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { image200, imageOriginal } from '@/Constants/Constants';
 import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MovieCards } from '@/components/Cards';
-import { fetchMovieDetails, fetchSimilarMovies } from '@/api/tmdb';
-
-const MovieDetailsPage = () => {
-  const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
-  const [similarMovies, setSimilarMovies] = useState<MovieChange[]>([]);
-  const { movieId } = useParams();
+import { TVShowCards } from '@/components/Cards';
+import { fetchTvShowDetails, fetchSimilarTvShows } from '@/api/tmdb';
+const TvShowDetailsPage = () => {
+  const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(
+    null
+  );
+  const [similarTvShows, setSimilarTvShows] = useState<TVShowChange[]>([]);
+  const { series_id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (movieId) {
-        const details = await fetchMovieDetails(Number(movieId));
-        const similar = await fetchSimilarMovies(Number(movieId));
-        setMovieDetails(details);
-        setSimilarMovies(similar.results);
+      if (series_id) {
+        const details = await fetchTvShowDetails(Number(series_id));
+        const similar = await fetchSimilarTvShows(Number(series_id));
+        setTvShowDetails(details);
+        setSimilarTvShows(similar.results);
         
       }
     };
 
     fetchData().catch((err) =>
-      console.error('Error fetching movie details:', err)
+      console.error('Error fetching tv show details:', err)
     );
-  },[movieId]);
+  }, [series_id]);
 
   return (
-    <div className="flex flex-col  w-full h-full pt-[68px]">
-      {movieDetails ? (
+    <div className="flex flex-col w-full h-full pt-[68px]">
+      {tvShowDetails ? (
         <div className="flex flex-col items-center justify-center ">
           <div className="flex h-[70vh] w-[100vw] items-center justify-center relative">
             <img
-              src={imageOriginal + movieDetails.backdrop_path}
-              alt={movieDetails.original_title}
+              src={imageOriginal + tvShowDetails?.backdrop_path}
+              alt={tvShowDetails?.original_name}
               className="h-full w-auto object-cover overflow-hidden relative z-10 "
             />
             <div
               className="absolute inset-0 bg-cover bg-center blur-sm w-full "
               style={{
                 backgroundImage: `url(${
-                  image200 + movieDetails.backdrop_path
+                  image200 + tvShowDetails?.backdrop_path
                 })`,
               }}
             ></div>
@@ -54,38 +55,39 @@ const MovieDetailsPage = () => {
                   <div className="flex justify-center items-top gap-4">
                     <img
                       src={
-                        movieDetails.poster_path
-                          ? image200 + movieDetails.poster_path
+                        tvShowDetails?.poster_path
+                          ? image200 + tvShowDetails.poster_path
                           : ''
                       }
-                      className="w-[207px] h-[307px]  relative rounded-xl p-1"
+                      className="w-[207px] h-[307px] relative rounded-xl p-1"
+                      alt="TV Show Poster"
                     />
                     <div className="flex flex-col gap-4">
                       <div className="text-4xl font-bold">
-                        {movieDetails.title}
+                        {tvShowDetails?.name || tvShowDetails?.original_name}
                       </div>
                       <div className="py-4 font-normal">
-                        {movieDetails.overview}
+                        {tvShowDetails?.overview}
                       </div>
 
                       <div className="grid grid-cols-2 justify-start">
                         <div className="col-span-1 flex flex-col gap-1">
                           <div className="font-normal">
                             <span className="font-bold">Released: </span>
-                            {movieDetails.release_date &&
+                            {tvShowDetails?.first_air_date &&
                               format(
-                                new Date(movieDetails.release_date),
+                                new Date(tvShowDetails.first_air_date),
                                 'MMM dd, yyyy'
                               )}
                           </div>
                           <div className="font-normal">
                             <span className="font-bold">Genre: </span>
-                            {movieDetails.genres.map((item, index) => (
+                            {tvShowDetails?.genres?.map((item, index) => (
                               <span key={item.id}>
                                 {`${item.name}${
-                                  index != movieDetails.genres.length - 1
+                                  index !== tvShowDetails.genres.length - 1
                                     ? ', '
-                                    : '  .'
+                                    : ' .'
                                 }`}
                               </span>
                             ))}
@@ -93,20 +95,21 @@ const MovieDetailsPage = () => {
                         </div>
                         <div className="col-span-1 flex flex-col gap-1">
                           <div className="font-normal">
-                            <span className="font-bold">Duration: </span>
-                            {movieDetails.runtime}
+                            <span className="font-bold">Episodes: </span>
+                            {tvShowDetails?.number_of_episodes}
                           </div>
 
                           <div className="font-normal">
                             <span className="font-bold">Productions: </span>
-                            {movieDetails.production_companies.map(
+                            {tvShowDetails?.production_companies?.map(
                               (item, index) => (
                                 <span key={item.id}>
                                   {`${item.name}${
-                                    index !=
-                                    movieDetails.production_companies.length - 1
+                                    index !==
+                                    tvShowDetails.production_companies.length -
+                                      1
                                       ? ', '
-                                      : '  .'
+                                      : ' .'
                                   }`}
                                 </span>
                               )
@@ -125,9 +128,10 @@ const MovieDetailsPage = () => {
         <p>Loading...</p>
       )}
       <div className="w-[calc(100vw-4rem)]">
-        <MovieCards movies={similarMovies} />
+        <TVShowCards tvShows={similarTvShows} />
       </div>
     </div>
   );
 };
-export default MovieDetailsPage;
+
+export default TvShowDetailsPage;

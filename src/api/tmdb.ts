@@ -52,7 +52,14 @@ export const fetchSimilarMovies = async(movie_id: number)=>{
   const {data} = await tmdb.get(`/movie/${movie_id}/similar`)
   return data;
 }
-
+export const fetchTvShowDetails = async(series_id: number)=>{
+  const {data} = await tmdb.get(`/tv/${series_id}`)
+  return data;
+}
+export const fetchSimilarTvShows = async(series_id: number)=>{
+  const {data} = await tmdb.get(`/tv/${series_id}/similar`)
+  return data;
+}
 export const search = async (
   query: string,
   page = 1,
