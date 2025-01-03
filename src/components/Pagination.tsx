@@ -5,7 +5,6 @@ interface PaginationProps {
   postsPerPage: number;
   setCurrentPage: (page: number) => void;
   currentPage: number;
-  fetchPopularMovies: () => void; // Add this prop
 }
 
 const Pagination = ({
@@ -13,7 +12,6 @@ const Pagination = ({
   postsPerPage,
   setCurrentPage,
   currentPage,
-  fetchPopularMovies,
 }: PaginationProps) => {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
   const pages = [];
@@ -23,7 +21,6 @@ const Pagination = ({
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    fetchPopularMovies(); // Fetch new data when page changes
   };
 
   return (
@@ -78,4 +75,4 @@ const Pagination = ({
   );
 };
 
-export default Pagination;
+export default  Pagination ;

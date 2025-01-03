@@ -30,12 +30,12 @@ export interface MovieChange {
   vote_average: number;
   vote_count: number;
 }
-export interface MovieDetails{
+export interface MovieDetails {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: null;
   budget: number;
-  genres: Array<{id:number,name:string}>;
+  genres: Array<{ id: number; name: string }>;
   homepage: string;
   id: number;
   imdb_id: string;
@@ -44,12 +44,17 @@ export interface MovieDetails{
   overview: string;
   popularity: number;
   poster_path: string;
-  production_companies: Array<{id:number,name:string,logo_path:string,origin_country:string}>;
-  production_countries: Array<{iso_3166_1:string,name:string}>;
+  production_companies: Array<{
+    id: number;
+    name: string;
+    logo_path: string;
+    origin_country: string;
+  }>;
+  production_countries: Array<{ iso_3166_1: string; name: string }>;
   release_date: string;
   revenue: number;
   runtime: number;
-  spoken_languages: Array<{english_name:string,iso_639_1:string}>;
+  spoken_languages: Array<{ english_name: string; iso_639_1: string }>;
   status: string;
   tagline: string;
   title: string;
@@ -158,7 +163,29 @@ export const getPopularMovies = async (
   });
   // console.log('Popular Movies', response.data.results);
   return response.data;
-}; 
+};
 
+// const getDetails = async <T>(
+//   type: 'movie' | 'tv' | 'person',
+//   page = 1,
+//   movie_id: number
+// ): Promise<PaginatedResponse<T>> => {
+//   try {
+//     const response = await tmdb.get(`${type}/${movie_id}`, {
+//       params: { page },
+//     });
+//     // console.log(`Details ${type}:`, response.data.results);
+//     return response.data;
+//   } catch (error) {
+//     console.error(`Error fetching trending ${type}:`, error);
+//     throw error;
+//   }
+// };
+
+// export const getMovieDetails = (page = 1) =>
+//   getDetails<MovieChange>('movie', page,);
+// export const getTvDetails = (page = 1) => getDetails<TVShowChange>('tv', page);
+// export const getPeopleDetails = (page = 1) =>
+//   getDetails<PersonChange>('person', page);
 
 export default tmdb;

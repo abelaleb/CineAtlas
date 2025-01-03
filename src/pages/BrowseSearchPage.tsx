@@ -25,7 +25,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -34,8 +33,9 @@ import { ImageIcon, Star } from 'lucide-react';
 
 const BrowseSearchPage = () => {
   const [query, setQuery] = useState<string>('');
-  const [searchCategory, setSearchCategory] = useState<string>('movies');
+  const [searchCategory, setSearchCategory] = useState<string>('all');
   const [searchResults, setSearchResults] = useState<searchChange[]>([]);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalResults, setTotalResults] = useState<number>(0);
@@ -48,7 +48,20 @@ const BrowseSearchPage = () => {
       try {
         let response;
         if (!query.trim()) {
-          response = await getTrendingAll(currentPage);
+          switch (searchCategory) {
+            case 'movies':
+              response = await getTrendingAll(currentPage);
+              break;
+            case 'tvShows':
+              response = await getTrendingAll(currentPage);
+              break;
+            case 'people':
+              response = await getTrendingAll(currentPage);
+              break;
+            default:
+              response = await getTrendingAll(currentPage);
+              break;
+          }
         } else {
           switch (searchCategory) {
             case 'movies':
@@ -65,24 +78,27 @@ const BrowseSearchPage = () => {
               break;
           }
         }
-
         setSearchResults(response.results);
         setTotalResults(response.total_results);
+      
       } catch (err) {
         console.error('Error fetching results:', err);
       } finally {
         setLoading(false);
       }
     };
-    if (triggerSearch || currentPage !== 1) {
-      fetchResults();
-      setTriggerSearch(false);
-    }
+    fetchResults();
   }, [searchCategory, query, currentPage, triggerSearch]);
 
   const handleSearch = () => {
     setCurrentPage(1); // Reset to first page on new search
     setTriggerSearch(true);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
@@ -111,6 +127,7 @@ const BrowseSearchPage = () => {
             type="text"
             placeholder={`Search ${searchCategory}...`}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyPress}
             style={{ width: '300px', height: '32px' }}
           />
           <Button onClick={handleSearch} disabled={loading}>
@@ -186,7 +203,6 @@ const BrowseSearchPage = () => {
                         </div>
                       </div>
                     </CardTitle>
-                    <CardDescription>{item.original_name}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
@@ -194,7 +210,9 @@ const BrowseSearchPage = () => {
                     </div>
                     <div>
                       {item.release_date && (
-                        <div>{format(new Date(item.release_date), ' yyyy')}</div>
+                        <div>
+                          {format(new Date(item.release_date), ' yyyy')}
+                        </div>
                       )}
                     </div>
                   </CardContent>

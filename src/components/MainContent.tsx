@@ -11,28 +11,24 @@ import Header from './Header';
 import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';
 import PeopleSection from './PeopleSection';
+import  usePaginatedData  from '@/hooks/usePaginatedData';
+
 
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
   const [people, setPeople] = useState<PersonChange[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [postPerPage] = useState<number>(5);
+
+  const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
   const [currentTvPage, setCurrentTvPage] = useState<number>(1);
   const [currentPeoplePage, setCurrentPeoplePage] = useState<number>(1);
 
-  const lastPostIndex = currentPage * postPerPage;
-  const firstPostIndex = lastPostIndex - postPerPage;
-  const currentMovies = movies.slice(firstPostIndex, lastPostIndex);
+  const postPerPage = 5;
 
-  const lastTvPostIndex = currentTvPage * postPerPage;
-  const firstTvPostIndex = lastTvPostIndex - postPerPage;
-  const currentTvShows = tvShows.slice(firstTvPostIndex, lastTvPostIndex);
-
-  const lastPeoplePostIndex = currentPeoplePage * postPerPage;
-  const firstPeoplePostIndex = lastPeoplePostIndex - postPerPage;
-  const currentPeople = people.slice(firstPeoplePostIndex, lastPeoplePostIndex);
+  const currentMovies = usePaginatedData(movies, postPerPage, currentMoviePage);
+  const currentTvShows = usePaginatedData(tvShows, postPerPage, currentTvPage);
+  const currentPeople = usePaginatedData(people, postPerPage, currentPeoplePage);
 
   useEffect(() => {
     const fetchChanges = async () => {
@@ -60,19 +56,18 @@ const MainContent = () => {
 
   return (
     <div>
-      <div className="flex  w-full ">
+      <div className="flex w-full">
         <Header />
       </div>
       <div>
         <MoviesSection
           movies={movies}
           currentMovies={currentMovies}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          currentPage={currentMoviePage}
+          setCurrentPage={setCurrentMoviePage}
           postPerPage={postPerPage}
-          fetchPopularMovies={() => {}}
         />
-      
+
         <TVShowsSection
           tvShows={tvShows}
           currentTvShows={currentTvShows}
@@ -80,7 +75,7 @@ const MainContent = () => {
           setCurrentPage={setCurrentTvPage}
           postPerPage={postPerPage}
         />
-      
+
         <PeopleSection
           people={people}
           currentPeople={currentPeople}

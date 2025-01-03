@@ -7,6 +7,7 @@ import Pagination from '@/components/Pagination';
 
 const PopularMovies = () => {
   const [popularMovies, setPopularMovies] = useState<MovieChange[]>([]);
+  const [totalPosts, setTotalPosts] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false); // Fixed syntax for useState
   const [postPerPage] = useState<number>(5);
   const { page } = useParams<{ page: string }>();
@@ -19,6 +20,7 @@ const PopularMovies = () => {
       setLoading(true);
       const response = await getPopularMovies('', currentPage); // Pass currentPage
       setPopularMovies(response.results || []);
+      setTotalPosts(response.total_results);
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
@@ -39,16 +41,14 @@ const PopularMovies = () => {
         </div>
       </div>
       <Pagination
-        totalPosts={popularMovies.length}
+        totalPosts={totalPosts}
         postsPerPage={postPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        fetchPopularMovies={fetchPopularMovies} // Pass this prop
       />
       <div>
         {loading ? <p>Loading...</p> : <MovieCards movies={popularMovies} />}
       </div>
-      
     </div>
   );
 };
