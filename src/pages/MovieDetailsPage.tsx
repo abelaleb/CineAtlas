@@ -1,55 +1,32 @@
-import { MovieChange, MovieDetails } from '@/api/tmdb';
+import { useEffect, useState } from 'react';
+import { MovieChange, MovieDetails } from '@/types/types';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { image200, imageOriginal } from '@/Constants/Constants';
-// import { ImageIcon, Star } from 'lucide-react';
 import { format } from 'date-fns';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MovieCards } from '@/components/Cards';
+import { fetchMovieDetails, fetchSimilarMovies } from '@/api/tmdb';
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
   const [similarMovies, setSimilarMovies] = useState<MovieChange[]>([]);
   const { movieId } = useParams();
 
-  const fetchMovieDetails = async (movie_id: number) => {
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie_id}?api_key=191783ac620b958fd36edd0301a0ecd6`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const details = await response.json();
-      setMovieDetails(details);
-      console.log('MovieDetail:', details);
-    } catch (err) {
-      console.error('Error fetching movie details:', err);
-    }
-  };
-  const fetchSimilarMovies = async (movie_id: number) => {
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=191783ac620b958fd36edd0301a0ecd6`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const details = await response.json();
-      setSimilarMovies(details.results);
-      console.log('Similar Movies: ', details);
-    } catch (err) {
-      console.error('Error fetching similar movies:', err);
-    }
-  };
-
   useEffect(() => {
-    if (movieId) {
-      fetchMovieDetails(Number(movieId));
-      fetchSimilarMovies(Number(movieId));
-    }
-    console.log('movieDetails', movieDetails);
-  }, [movieId]);
+    const fetchData = async () => {
+      if (movieId) {
+        const details = await fetchMovieDetails(Number(movieId));
+        const similar = await fetchSimilarMovies(Number(movieId));
+        setMovieDetails(details);
+        setSimilarMovies(similar.results);
+        
+      }
+    };
+
+    fetchData().catch((err) =>
+      console.error('Error fetching movie details:', err)
+    );
+  },[movieId]);
 
   return (
     <div className="flex flex-col  w-full h-full pt-[68px]">

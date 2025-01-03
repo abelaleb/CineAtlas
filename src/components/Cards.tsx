@@ -1,7 +1,7 @@
 import { image200 } from '@/Constants/Constants';
-import { MovieChange, TVShowChange, PersonChange } from '@/api/tmdb';
+import { MovieChange, TVShowChange, PersonChange } from '@/types/types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { ImageIcon, Star } from 'lucide-react';
+import { Image as ImageIcon, Star } from 'lucide-react';
 import { format } from 'date-fns/format';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,9 +17,7 @@ interface PeopleCardProps {
 
 const MovieCards = ({ movies }: MovieCardProps) => {
   const navigate = useNavigate();
-  const handleClick = (movieId: number) => {
-    console.log('movieId', movieId);
-    
+  const handleClick = (movieId: number) => {    
     navigate(`/movie/${movieId}`);
   };
   return (
@@ -62,7 +60,7 @@ const MovieCards = ({ movies }: MovieCardProps) => {
               onClick={() => handleClick(movie.id)}
               className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer "
             >
-              {movie.original_title}
+              {movie.title}
             </div>
             <div>
               {movie.release_date && (
@@ -72,11 +70,17 @@ const MovieCards = ({ movies }: MovieCardProps) => {
           </CardContent>
         </Card>
       ))}
+      {(!movies || movies.length === 0) && <p>No movies available.</p>}
+   
     </div>
   );
 };
 
 const TVShowCards = ({ tvShows }: TVShowCardProps) => {
+  const navigate = useNavigate()
+  const handleClick = (tvShowId: number) => {
+    navigate(`/tv/${tvShowId}`);
+  }
   return (
     <div className="flex flex-wrap gap-8 p-4 justify-center">
       {tvShows?.map((tvShow) => (
@@ -113,7 +117,8 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
+            <div onClick={() => handleClick(tvShow.id)}
+             className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
               {tvShow.original_name}
             </div>
             <div>

@@ -3,16 +3,14 @@ import {
   getTrendingMovies,
   getTrendingTvShows,
   getTrendingPeople,
-  MovieChange,
-  TVShowChange,
-  PersonChange,
+ 
 } from '../api/tmdb';
 import Header from './Header';
 import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';
 import PeopleSection from './PeopleSection';
 import  usePaginatedData  from '@/hooks/usePaginatedData';
-
+import { MovieChange, PersonChange, TVShowChange } from '@/types/types';
 
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);

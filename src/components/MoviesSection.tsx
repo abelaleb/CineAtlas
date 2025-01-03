@@ -1,5 +1,5 @@
 import React from 'react';
-import { MovieChange } from '@/api/tmdb';
+import { MovieChange } from '@/types/types';
 import { MovieCards } from './Cards';
 import Pagination from './Pagination';
 
