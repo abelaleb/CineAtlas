@@ -70,6 +70,7 @@ const MainContent = () => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           postPerPage={postPerPage}
+          fetchPopularMovies={() => {}}
         />
       
         <TVShowsSection

@@ -9,6 +9,7 @@ interface MoviesSectionProps {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   postPerPage: number;
+  fetchPopularMovies: () => void; // Add this prop
 }
 
 const MoviesSection: React.FC<MoviesSectionProps> = ({
@@ -17,6 +18,7 @@ const MoviesSection: React.FC<MoviesSectionProps> = ({
   currentPage,
   setCurrentPage,
   postPerPage,
+  fetchPopularMovies, // Use this prop
 }) => {
   return (
     <div className="flex flex-col">
@@ -29,6 +31,7 @@ const MoviesSection: React.FC<MoviesSectionProps> = ({
         postsPerPage={postPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
+        fetchPopularMovies={fetchPopularMovies} // Pass this prop
       />
     </div>
   );

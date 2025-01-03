@@ -3,7 +3,7 @@ import { MovieChange, TVShowChange, PersonChange } from '@/api/tmdb';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { ImageIcon, Star } from 'lucide-react';
 import { format } from 'date-fns/format';
-
+import { useNavigate } from 'react-router-dom';
 
 interface MovieCardProps {
   movies: MovieChange[];
@@ -16,6 +16,12 @@ interface PeopleCardProps {
 }
 
 const MovieCards = ({ movies }: MovieCardProps) => {
+  const navigate = useNavigate();
+  const handleClick = (movieId: number) => {
+    console.log('movieId', movieId);
+    
+    navigate(`/movie/${movieId}`);
+  };
   return (
     <div className="flex flex-wrap gap-8 p-4 justify-center">
       {movies?.map((movie) => (
@@ -52,7 +58,10 @@ const MovieCards = ({ movies }: MovieCardProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
+            <div
+              onClick={() => handleClick(movie.id)}
+              className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer "
+            >
               {movie.original_title}
             </div>
             <div>
