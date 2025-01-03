@@ -1,4 +1,5 @@
-import { getPopularMovies, MovieChange } from '@/api/tmdb';
+import { getPopularMovies } from '@/api/tmdb';
+import { MovieChange } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; // Import MoviesSection
