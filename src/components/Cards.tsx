@@ -23,7 +23,7 @@ const MovieCards = ({ movies }: MovieCardProps) => {
     navigate(`/movie/${movieId}`);
   };
   return (
-    <div className="flex flex-wrap gap-8 p-4 justify-center">
+    <div className="flex flex-wrap gap-8 p-4 justify-center ">
       {movies?.map((movie) => (
         <Card
           key={movie.id}

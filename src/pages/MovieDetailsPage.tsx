@@ -1,7 +1,7 @@
 import { MovieChange, MovieDetails } from '@/api/tmdb';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { image200, imageOriginal } from '@/Constants/Constants';
-import { ImageIcon, Star } from 'lucide-react';
+// import { ImageIcon, Star } from 'lucide-react';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -52,72 +52,94 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   return (
-    <div className="flex flex-col w-full h-full pt-[68px]">
+    <div className="flex flex-col  w-full h-full pt-[68px]">
       {movieDetails ? (
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex h-[70vh] w-screen items-center justify-center relative">
+        <div className="flex flex-col items-center justify-center ">
+          <div className="flex h-[70vh] w-[100vw] items-center justify-center relative">
             <img
               src={imageOriginal + movieDetails.backdrop_path}
               alt={movieDetails.original_title}
-              className="h-full w-auto object-cover overflow-hidden relative z-10"
+              className="h-full w-auto object-cover overflow-hidden relative z-10 "
             />
             <div
-              className="absolute inset-0 bg-cover bg-center blur-sm"
+              className="absolute inset-0 bg-cover bg-center blur-sm w-full "
               style={{
-                backgroundImage: `url(${imageOriginal + movieDetails.backdrop_path})`,
+                backgroundImage: `url(${
+                  imageOriginal + movieDetails.backdrop_path
+                })`,
               }}
             ></div>
           </div>
-          <div className="text-4xl font-bold">{movieDetails.title}</div>
-          
-          <div className="text-lg">{movieDetails.tagline}</div>
-          <div className="text-xl font-semibold">Overview</div>
-          <div>{movieDetails.overview}</div>
-          <div>
-            <Card className="hover:shadow-lg p-0 h-[390px] w-[210px]">
-              <CardHeader className="p-0">
-                <CardTitle className="p-0 relative group">
-                  <img
-                    src={
-                      movieDetails.poster_path
-                        ? image200 + movieDetails.poster_path
-                        : ''
-                    }
-                    onError={(e) => (e.currentTarget.style.display = 'none')}
-                    className="w-[100%] h-[100%] max-h-[350px] overflow-hidden relative rounded-t-xl p-1"
-                  />
-                  {!movieDetails.poster_path && (
-                    <div className="flex items-center justify-center h-[307px] bg-gray-200 rounded-t-xl">
-                      <ImageIcon className="w-16 h-16 text-gray-400" />
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-t-lg">
-                    <div className="text-white text-lg font-bold self-center flex flex-col items-center">
-                      <div>
-                        <Star />
+          <div className="flex flex-col m-8 rounded-lg w-3/4 relative -mt-40 z-20">
+            <Card className="p-4 hover:shadow-lg">
+              <CardContent>
+                <CardHeader>
+                  <div className="flex justify-center items-top gap-4">
+                    <img
+                      src={
+                        movieDetails.poster_path
+                          ? image200 + movieDetails.poster_path
+                          : ''
+                      }
+                      className="w-[207px] h-[307px]  relative rounded-xl p-1"
+                    />
+                    <div className="flex flex-col gap-4">
+                      <div className="text-4xl font-bold">
+                        {movieDetails.title}
                       </div>
-                      {Number.isInteger(movieDetails.vote_average)
-                        ? movieDetails.vote_average
-                        : movieDetails.vote_average.toFixed(1)}
-                      /10
-                    </div>
-                    <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
-                      {movieDetails.original_language}
+                      <div className="py-4 font-normal">
+                        {movieDetails.overview}
+                      </div>
+
+                      <div className="grid grid-cols-2 justify-start">
+                        <div className="col-span-1 flex flex-col gap-1">
+                          <div className="font-normal">
+                            <span className="font-bold">Released: </span>
+                            {movieDetails.release_date &&
+                              format(
+                                new Date(movieDetails.release_date),
+                                'MMM dd, yyyy'
+                              )}
+                          </div>
+                          <div className="font-normal">
+                            <span className="font-bold">Genre: </span>
+                            {movieDetails.genres.map((item, index) => (
+                              <span key={item.id}>
+                                {`${item.name}${
+                                  index != movieDetails.genres.length - 1
+                                    ? ', '
+                                    : '  .'
+                                }`}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="col-span-1 flex flex-col gap-1">
+                          <div className="font-normal">
+                            <span className="font-bold">Duration: </span>
+                            {movieDetails.runtime}
+                          </div>
+
+                          <div className="font-normal">
+                            <span className="font-bold">Productions: </span>
+                            {movieDetails.production_companies.map(
+                              (item, index) => (
+                                <span key={item.id}>
+                                  {`${item.name}${
+                                    index !=
+                                    movieDetails.production_companies.length - 1
+                                      ? ', '
+                                      : '  .'
+                                  }`}
+                                </span>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer ">
-                  {movieDetails.original_title}
-                </div>
-                <div>
-                  {movieDetails.release_date && (
-                    <div>
-                      {format(new Date(movieDetails.release_date), ' yyyy')}
-                    </div>
-                  )}
-                </div>
+                </CardHeader>
               </CardContent>
             </Card>
           </div>
@@ -125,36 +147,10 @@ const MovieDetailsPage = () => {
       ) : (
         <p>Loading...</p>
       )}
-      <div className="flex flex-col items-center justify-center">
+      <div className="w-[calc(100vw-4rem)]">
         <MovieCards movies={similarMovies} />
       </div>
     </div>
   );
 };
 export default MovieDetailsPage;
-{
-  /*backdrop_path: "/uWOJbarUXfVf6B4o0368dh138eR.jpg"
-budget: 50000000
-genres: (2) [{…}, {…}]
-homepage: "https://www.focusfeatures.com/nosferatu"
-id: 426063
-imdb_id: "tt5040012"
-origin_country: ['US']
-original_language: "en"
-original_title: "Nosferatu"
-overview: "A gothic tale of obsession between a haunted young woman and the terrifying vampire infatuated with her, causing untold horror in its wake."
-popularity: 755.116
-poster_path: "/5qGIxdEO841C0tdY8vOdLoRVrr0.jpg"
-production_companies: (4) [{…}, {…}, {…}, {…}]
-production_countries: [{…}]
-release_date: "2024-12-25"
-revenue: 51234020
-runtime: 132
-spoken_languages: (5) [{…}, {…}, {…}, {…}, {…}]
-status: "Released"
-tagline: "Succumb to the darkness."
-title: "Nosferatu"
-video: false
-vote_average: 6.608
-vote_count: 208 */
-}
