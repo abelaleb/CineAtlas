@@ -30,6 +30,33 @@ export interface MovieChange {
   vote_average: number;
   vote_count: number;
 }
+export interface MovieDetails{
+  adult: boolean;
+  backdrop_path: string;
+  belongs_to_collection: null;
+  budget: number;
+  genres: Array<{id:number,name:string}>;
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: Array<{id:number,name:string,logo_path:string,origin_country:string}>;
+  production_countries: Array<{iso_3166_1:string,name:string}>;
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: Array<{english_name:string,iso_639_1:string}>;
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
 
 export interface TVShowChange {
   adult: boolean;
@@ -51,7 +78,7 @@ export interface TVShowChange {
 
 export interface PersonChange {
   adult: boolean;
-  gender: 0|2;
+  gender: 0 | 2;
   id: number;
   known_for_department: string;
   media_type: string;
@@ -79,51 +106,31 @@ export interface PaginatedResponse<T> {
   total_results: number;
 }
 
-//Fetch data for Movies
-export const getTrendingMovies = async (
+//Fetch data for All
+const getTrending = async <T>(
+  type: 'movie' | 'tv' | 'person' | 'all',
   page = 1
-): Promise<PaginatedResponse<MovieChange>> => {
-  const response = await tmdb.get(`trending/movie/day?language=en-US `, {
-    params: { page },
-  });
-  console.log('Trending Movies: ', response.data.results);
-  return response.data;
+): Promise<PaginatedResponse<T>> => {
+  try {
+    const response = await tmdb.get(`trending/${type}/day`, {
+      params: { page },
+    });
+    // console.log(`Trending ${type}:`, response.data.results);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching trending ${type}:`, error);
+    throw error;
+  }
 };
 
-//Fetch data for TV Shows
-export const getTrendingTvShows = async (
-  page = 1
-): Promise<PaginatedResponse<TVShowChange>> => {
-  const response = await tmdb.get(
-    `https://api.themoviedb.org/3/trending/tv/day?language=en-US`,
-    { params: { page } }
-  );
-  console.log('Trending tvShows: ', response.data.results);
-  return response.data;
-};
-
-//Fetch data for People
-export const getTrendingPeople = async (
-  page = 1
-): Promise<PaginatedResponse<PersonChange>> => {
-  const response = await tmdb.get(
-    `https://api.themoviedb.org/3/trending/person/day?language=en-US`,
-    { params: { page } }
-  );
-  console.log('Trending people: ', response.data.results);
-  return response.data;
-};
-
-// Fetch data for all trending items
-export const getTrendingAll = async (
-  page = 1
-): Promise<PaginatedResponse<searchChange>> => {
-  const response = await tmdb.get(`trending/all/day?language=en-US`, {
-    params: { page },
-  });
-  console.log('Trending All: ', response.data.results);
-  return response.data;
-};
+export const getTrendingMovies = (page = 1) =>
+  getTrending<MovieChange>('movie', page);
+export const getTrendingTvShows = (page = 1) =>
+  getTrending<TVShowChange>('tv', page);
+export const getTrendingPeople = (page = 1) =>
+  getTrending<PersonChange>('person', page);
+export const getTrendingAll = (page = 1) =>
+  getTrending<searchChange>('all', page);
 
 export const search = async (
   query: string,
@@ -134,9 +141,24 @@ export const search = async (
   const response = await tmdb.get(endpoint, {
     params: { query, page, include_adult: false },
   });
-  console.log("search response",response.data.results);
+  // console.log('search response', response.data.results);
 
   return response.data;
 };
+export const getPopularMovies = async (
+  query: string = '',
+  page = 1
+): Promise<PaginatedResponse<MovieChange>> => {
+  const response = await tmdb.get(`movie/popular`, {
+    params: {
+      query,
+      page,
+      include_adult: false,
+    },
+  });
+  // console.log('Popular Movies', response.data.results);
+  return response.data;
+}; 
+
 
 export default tmdb;
