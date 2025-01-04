@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import App from './App';
-import ActorPage from './pages/ActorPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import BrowseSearchPage from './pages/BrowseSearchPage';
 import HomePage from './pages/HomePage';
 import PopularMovies from './pages/PopularMovies';
 import TvDetailsPage from './pages/TvDetailsPage';
+import PersonDetailsPage from './pages/PersonDetailsPage';
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -14,7 +14,6 @@ const routes: RouteObject[] = [
     children: [
       { path: '', element: <HomePage /> },
       { path: 'search', element: <BrowseSearchPage /> },
-      { path: 'actor', element: <ActorPage /> },
       {
         path: 'movies',
         element: <PopularMovies />,
@@ -22,6 +21,8 @@ const routes: RouteObject[] = [
       },
       { path: 'movie/:movieId', element: <MovieDetailsPage /> },
       {path: 'tv/:series_id', element: <TvDetailsPage />},
+      
+      { path: 'person/:personId', element: <PersonDetailsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

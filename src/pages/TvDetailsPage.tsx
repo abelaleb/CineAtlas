@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { TVShowCards } from '@/components/Cards';
 import { fetchTvShowDetails, fetchSimilarTvShows } from '@/api/tmdb';
+
 const TvShowDetailsPage = () => {
   const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(
     null

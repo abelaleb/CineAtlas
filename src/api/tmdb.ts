@@ -60,6 +60,15 @@ export const fetchSimilarTvShows = async(series_id: number)=>{
   const {data} = await tmdb.get(`/tv/${series_id}/similar`)
   return data;
 }
+
+export const fetchPersonDetails = async(person_id: number)=>{
+  const {data} = await tmdb.get(`/person/${person_id}`)
+  return data;
+}
+export const fetchCredits = async (person_id:number)=>{
+  const {data} = await tmdb.get(`/person/${person_id}/combined_credits`)
+  return data;
+}
 export const search = async (
   query: string,
   page = 1,

@@ -14,7 +14,15 @@ interface TVShowCardProps {
 interface PeopleCardProps {
   people: PersonChange[];
 }
-
+const CombinedCards = ({ movies, tvShows, people }: MovieCardProps & TVShowCardProps & PeopleCardProps) => {
+  return (
+    <div>
+      <MovieCards movies={movies} />
+      <TVShowCards tvShows={tvShows} />
+      <PeopleCards people={people} />
+    </div>
+  );
+}
 const MovieCards = ({ movies }: MovieCardProps) => {
   const navigate = useNavigate();
   const handleClick = (movieId: number) => {    
@@ -134,6 +142,10 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
 };
 
 const PeopleCards = ({ people }: PeopleCardProps) => {
+  const navigate = useNavigate()
+  const handleClick = (personId: number) => {
+    navigate(`/person/${personId}`);
+  }
   return (
     <div className="flex flex-wrap gap-8 p-4 justify-center">
       {people?.map((person) => (
@@ -167,8 +179,10 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
-              {person.original_name}
+            <div
+            onClick={() => handleClick(person.id)}
+             className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
+              {person.name}
             </div>
             <div>{person.media_type}</div>
           </CardContent>
@@ -178,4 +192,4 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
   );
 };
 
-export { MovieCards, TVShowCards, PeopleCards };
+export { MovieCards, TVShowCards, PeopleCards, CombinedCards };
