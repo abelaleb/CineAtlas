@@ -14,15 +14,19 @@ interface TVShowCardProps {
 interface PeopleCardProps {
   people: PersonChange[];
 }
-const CombinedCards = ({ movies, tvShows, people }: MovieCardProps & TVShowCardProps & PeopleCardProps) => {
+const CombinedCards = ({items}:{items: (MovieChange|TVShowChange|PersonChange)[]})=>{ 
+const movies = items.filter((item)=> item.media_type ==='movie') as MovieChange[]
+const tvShows = items.filter((item)=> item.media_type ==='tv') as TVShowChange[]
+const people = items.filter((item)=> item.media_type ==='person') as PersonChange[]
   return (
-    <div>
-      <MovieCards movies={movies} />
-      <TVShowCards tvShows={tvShows} />
-      <PeopleCards people={people} />
-    </div>
+    <>
+     {movies.length>0 && <MovieCards movies={movies} />}
+      {tvShows.length>0 && <TVShowCards tvShows={tvShows} />}
+      {people.length>0 && <PeopleCards people={people} />}
+    </>
   );
 }
+
 const MovieCards = ({ movies }: MovieCardProps) => {
   const navigate = useNavigate();
   const handleClick = (movieId: number) => {    
@@ -149,44 +153,43 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
   return (
     <div className="flex flex-wrap gap-8 p-4 justify-center">
       {people?.map((person) => (
-        <Card
+        <div
           key={person.id}
-          className="hover:shadow-lg p-0 h-[390px] w-[210px]"
+          className="hover:shadow-lg p-0 flex flex-col items-center"
         >
-          <CardHeader className="p-0">
-            <CardTitle className="p-0 relative group">
+          <div className="p-0 relative group">
+            <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
               <img
                 src={person.profile_path ? image200 + person.profile_path : ''}
                 onError={(e) => (e.currentTarget.style.display = 'none')}
-                className="w-[100%] h-[100%] max-h-[350px] overflow-hidden relative rounded-t-xl p-1"
+                className="w-full h-full object-cover rounded-full"
               />
               {!person.profile_path && (
-                <div className="flex items-center justify-center h-[307px] bg-gray-200 rounded-t-xl p-1">
-                  <ImageIcon className="w-16 h-16 max-h-[350px] text-gray-400" />
-                </div>
+                <ImageIcon className="w-16 h-16 text-gray-400" />
               )}
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-t-lg">
-                <div className="text-white text-lg font-bold self-center flex flex-col items-center">
-                  <div>
-                    <Star />
-                  </div>
-                  {person.known_for_department}
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-full">
+              <div className="text-white text-lg font-bold self-center flex flex-col items-center">
+                <div>
+                  <Star />
                 </div>
-                <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
-                  {person.gender}
-                </div>
+                {person.known_for_department}
               </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+              <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
+                {person.gender}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center mt-4">
             <div
-            onClick={() => handleClick(person.id)}
-             className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
+              onClick={() => handleClick(person.id)}
+              className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer text-center"
+            >
               {person.name}
             </div>
             <div>{person.media_type}</div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ))}
     </div>
   );
