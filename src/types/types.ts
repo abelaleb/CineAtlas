@@ -1,5 +1,3 @@
-
-
 export interface MovieChange {
   adult: false;
   backdrop_path: string;
@@ -68,7 +66,20 @@ export interface MovieDetails {
   vote_average: number;
   vote_count: number;
 }
-
+export interface MovieCreditDetials {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
 export interface TVShowDetails {
   adult: boolean;
   backdrop_path: string | null;
@@ -161,7 +172,19 @@ export interface TVShowDetails {
   vote_average: number;
   vote_count: number;
 }
-
+export interface TvShowCredits {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  character: string;
+  credit_id: string;
+  order: number;
+}
 export interface PersonChange {
   adult: boolean;
   gender: 0 | 2;
@@ -175,62 +198,62 @@ export interface PersonChange {
 }
 
 export interface PersonalDetails {
-    adult: boolean;
-    also_known_as: string[];
-    biography: string;
-    birthday: string | null;
-    deathday: string | null;
-    gender: number;
-    homepage: string | null;
-    id: number;
-    imdb_id: string;
-    known_for_department: string;
-    name: string;
-    place_of_birth: string | null;
-    popularity: number;
-    profile_path: string | null;
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: string | null;
+  deathday: string | null;
+  gender: number;
+  homepage: string | null;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string | null;
+  popularity: number;
+  profile_path: string | null;
 }
 export interface CreditsResponse {
-    cast: Array<{
-        adult: boolean;
-        backdrop_path: string;
-        genre_ids: number[];
-        id: number;
-        original_language: string;
-        original_title: string;
-        overview: string;
-        popularity: number;
-        poster_path: string;
-        release_date: string;
-        title: string;
-        video: boolean;
-        vote_average: number;
-        vote_count: number;
-        character: string;
-        credit_id: string;
-        order: number;
-        media_type: string;
-    }>;
-    crew: Array<{
-        adult: boolean;
-        backdrop_path: string;
-        genre_ids: number[];
-        id: number;
-        original_language: string;
-        original_title: string;
-        overview: string;
-        popularity: number;
-        poster_path: string;
-        release_date: string;
-        title: string;
-        video: boolean;
-        vote_average: number;
-        vote_count: number;
-        credit_id: string;
-        department: string;
-        job: string;
-        media_type: string;
-    }>;
+  cast: Array<{
+    adult: boolean;
+    backdrop_path?: string;
+    genre_ids?: number[];
+    id: number;
+    original_language?: string;
+    original_title?: string;
+    overview?: string;
+    popularity?: number;
+    poster_path?: string;
+    release_date?: string;
+    title?: string;
+    video?: boolean;
+    vote_average?: number;
+    vote_count?: number;
+    character?: string;
+    credit_id?: string;
+    order?: number;
+    media_type: string;
+  }>;
+  crew: Array<{
+    adult: boolean;
+    backdrop_path: string;
+    genre_ids: number[];
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+    credit_id: string;
+    department: string;
+    job: string;
+    media_type: string;
+  }>;
 }
 
 export interface searchChange {
@@ -245,8 +268,8 @@ export interface searchChange {
   release_date: number;
 }
 export interface PaginatedResponse<T> {
-    page: number;
-    results: T[];
-    total_pages: number;
-    total_results: number;
-  }
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
+}

@@ -1,32 +1,38 @@
 import { useEffect, useState } from 'react';
-import { MovieChange, MovieDetails } from '@/types/types';
+import { MovieChange, MovieCreditDetials, MovieDetails } from '@/types/types';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { image200, imageOriginal } from '@/Constants/Constants';
 import { format } from 'date-fns';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { MovieCards } from '@/components/Cards';
-import { fetchMovieDetails, fetchSimilarMovies } from '@/api/tmdb';
+import {
+  fetchMovieCredits,
+  fetchMovieDetails,
+  fetchSimilarMovies,
+} from '@/api/tmdb';
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
   const [similarMovies, setSimilarMovies] = useState<MovieChange[]>([]);
+  const [movieCredits, setMovieCredits] = useState<MovieCreditDetials[]>([]);
   const { movieId } = useParams();
-
   useEffect(() => {
     const fetchData = async () => {
       if (movieId) {
         const details = await fetchMovieDetails(Number(movieId));
         const similar = await fetchSimilarMovies(Number(movieId));
+        const credits = await fetchMovieCredits(Number(movieId));
         setMovieDetails(details);
         setSimilarMovies(similar.results);
-        
+        setMovieCredits(credits.cast);
+        console.log(movieCredits[0].name);
       }
     };
 
     fetchData().catch((err) =>
       console.error('Error fetching movie details:', err)
     );
-  },[movieId]);
+  }, [movieId]);
 
   return (
     <div className="flex flex-col  w-full h-full pt-[68px]">
@@ -111,6 +117,15 @@ const MovieDetailsPage = () => {
                                 </span>
                               )
                             )}
+                          </div>
+                          <div>
+                            <span className="font-bold">Cast: </span>
+                            {movieCredits.slice(0, 4).map((cast, index) => (
+                              <Link to={`/person/${cast.id}`} key={cast.id} className="text-blue-500 hover:text-blue-950">
+                                {cast.name}
+                                {index < 3 ? ', ' : '.'}
+                              </Link>
+                            ))}
                           </div>
                         </div>
                       </div>

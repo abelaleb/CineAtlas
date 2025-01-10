@@ -1,17 +1,18 @@
-import { TVShowChange, TVShowDetails } from '@/types/types';
+import { TVShowChange, TvShowCredits, TVShowDetails } from '@/types/types';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { image200, imageOriginal } from '@/Constants/Constants';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { TVShowCards } from '@/components/Cards';
-import { fetchTvShowDetails, fetchSimilarTvShows } from '@/api/tmdb';
+import { fetchTvShowDetails, fetchSimilarTvShows, fetchTvShowCredits } from '@/api/tmdb';
 
 const TvShowDetailsPage = () => {
   const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(
     null
   );
   const [similarTvShows, setSimilarTvShows] = useState<TVShowChange[]>([]);
+  const [tvShowCredits,setTvShowCredits]  = useState<TvShowCredits[]>([])
   const { series_id } = useParams();
 
   useEffect(() => {
@@ -19,8 +20,11 @@ const TvShowDetailsPage = () => {
       if (series_id) {
         const details = await fetchTvShowDetails(Number(series_id));
         const similar = await fetchSimilarTvShows(Number(series_id));
+        const credits = await fetchTvShowCredits(Number(series_id))
         setTvShowDetails(details);
         setSimilarTvShows(similar.results);
+        setTvShowCredits(credits.cast)
+        console.log("tvshowCredits",tvShowCredits);
         
       }
     };
@@ -115,6 +119,15 @@ const TvShowDetailsPage = () => {
                                 </span>
                               )
                             )}
+                          </div>
+                          <div>
+                            <span className="font-bold">Cast: </span>
+                            {tvShowCredits.slice(0, 4).map((cast, index) => (
+                              <Link to={`/person/${cast.id}`} key={cast.id} className="text-blue-500 hover:text-blue-950">
+                                {cast.name}
+                                {index < 3 ? ', ' : '.'}
+                              </Link>
+                            ))}
                           </div>
                         </div>
                       </div>

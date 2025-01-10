@@ -26,7 +26,7 @@ const getTrending = async <T>(
 ): Promise<PaginatedResponse<T>> => {
   try {
     const response = await tmdb.get(`trending/${type}/day`, {
-      params: { page },
+      params: { page, include_adult: false },
     });
     return response.data;
   } catch (error) {
@@ -48,6 +48,10 @@ export const fetchMovieDetails = async(movie_id: number)=>{
   const {data} = await tmdb.get(`/movie/${movie_id}`)
   return data;
 }
+export const fetchMovieCredits = async(movie_id: number)=>{
+  const {data} = await tmdb.get(`/movie/${movie_id}/credits`)
+  return data;
+}
 export const fetchSimilarMovies = async(movie_id: number)=>{
   const {data} = await tmdb.get(`/movie/${movie_id}/similar`)
   return data;
@@ -56,11 +60,14 @@ export const fetchTvShowDetails = async(series_id: number)=>{
   const {data} = await tmdb.get(`/tv/${series_id}`)
   return data;
 }
+export const fetchTvShowCredits = async(series_id: number)=>{
+  const {data} = await tmdb.get(`/tv/${series_id}/credits`)
+  return data;
+}
 export const fetchSimilarTvShows = async(series_id: number)=>{
   const {data} = await tmdb.get(`/tv/${series_id}/similar`)
   return data;
 }
-
 export const fetchPersonDetails = async(person_id: number)=>{
   const {data} = await tmdb.get(`/person/${person_id}`)
   return data;
