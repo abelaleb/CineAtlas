@@ -7,7 +7,9 @@ import { fetchCredits, fetchPersonDetails } from '@/api/tmdb';
 import DynamicCard from '@/components/DynamicCard';
 
 const PersonDetailsPage = () => {
-  const [personDetails, setPersonDetails] = useState<PersonalDetails | null>(null);
+  const [personDetails, setPersonDetails] = useState<PersonalDetails | null>(
+    null
+  );
   const [creditsResponse, setCreditsResponse] = useState<MovieChange[]>([]);
   const { personId } = useParams();
 
@@ -35,7 +37,9 @@ const PersonDetailsPage = () => {
           <div className="flex justify-center items-start">
             <div
               style={{
-                backgroundImage: `url(${imageOriginal + personDetails.profile_path})`,
+                backgroundImage: `url(${
+                  imageOriginal + personDetails.profile_path
+                })`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}

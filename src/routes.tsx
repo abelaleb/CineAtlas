@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import PopularMovies from './pages/PopularMovies';
 import TvDetailsPage from './pages/TvDetailsPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
+import PopularTvShows from './pages/PopularTvShows';
+import PopularPeople from './pages/PopularPeople';
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -19,9 +21,11 @@ const routes: RouteObject[] = [
         element: <PopularMovies />,
         children: [{ path: ':pageId', element: <PopularMovies /> }],
       },
+      { path: 'tvshows', element: <PopularTvShows /> },
+      {path:'person',element:<PopularPeople/>},
       { path: 'movie/:movieId', element: <MovieDetailsPage /> },
-      {path: 'tv/:series_id', element: <TvDetailsPage />},
-      
+      { path: 'tv/:series_id', element: <TvDetailsPage /> },
+
       { path: 'person/:personId', element: <PersonDetailsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

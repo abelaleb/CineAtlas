@@ -101,5 +101,32 @@ export const getPopularMovies = async (
   });
   return response.data;
 };
+export const fetchPopularTvShows = async (
+  query: string = '',
+  page = 1,
+): Promise<PaginatedResponse<TVShowChange>> => {
+  const response = await tmdb.get(`tv/popular`, {
+    params: {
+      query,
+      page,
+      include_adult: false,
+    },
+  });
+  return response.data;
+};
+export const fetchPopularPeople = async (
+  query: string = '',
+  page = 1,
+): Promise<PaginatedResponse<PersonChange>> => {
+  const response = await tmdb.get(`person/popular`, {
+    params: {
+      query,
+      page,
+      include_adult: false,
+    },
+  });
+  return response.data;
+};
+
 
 export default tmdb;

@@ -18,7 +18,7 @@ export default function SidebarLayout() {
     { title: 'Trending', url: '/trending', icon: TrendingUp },
     { title: 'Movies', url: '/movies', icon: Popcorn },
     { title: 'TV Shows', url: '/tvshows', icon: Tv },
-    { title: 'People', url: '/actor', icon: Star },
+    { title: 'People', url: '/person', icon: Star },
   ];
 
   return (
