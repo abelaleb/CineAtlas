@@ -44,38 +44,38 @@ export const getTrendingPeople = (page = 1) =>
 export const getTrendingAll = (page = 1) =>
   getTrending<searchChange>('all', page);
 
-export const fetchMovieDetails = async(movie_id: number)=>{
-  const {data} = await tmdb.get(`/movie/${movie_id}`)
+export const fetchMovieDetails = async (movie_id: number) => {
+  const { data } = await tmdb.get(`/movie/${movie_id}`);
   return data;
-}
-export const fetchMovieCredits = async(movie_id: number)=>{
-  const {data} = await tmdb.get(`/movie/${movie_id}/credits`)
+};
+export const fetchMovieCredits = async (movie_id: number) => {
+  const { data } = await tmdb.get(`/movie/${movie_id}/credits`);
   return data;
-}
-export const fetchSimilarMovies = async(movie_id: number)=>{
-  const {data} = await tmdb.get(`/movie/${movie_id}/similar`)
+};
+export const fetchSimilarMovies = async (movie_id: number) => {
+  const { data } = await tmdb.get(`/movie/${movie_id}/similar`);
   return data;
-}
-export const fetchTvShowDetails = async(series_id: number)=>{
-  const {data} = await tmdb.get(`/tv/${series_id}`)
+};
+export const fetchTvShowDetails = async (series_id: number) => {
+  const { data } = await tmdb.get(`/tv/${series_id}`);
   return data;
-}
-export const fetchTvShowCredits = async(series_id: number)=>{
-  const {data} = await tmdb.get(`/tv/${series_id}/credits`)
+};
+export const fetchTvShowCredits = async (series_id: number) => {
+  const { data } = await tmdb.get(`/tv/${series_id}/credits`);
   return data;
-}
-export const fetchSimilarTvShows = async(series_id: number)=>{
-  const {data} = await tmdb.get(`/tv/${series_id}/similar`)
+};
+export const fetchSimilarTvShows = async (series_id: number) => {
+  const { data } = await tmdb.get(`/tv/${series_id}/similar`);
   return data;
-}
-export const fetchPersonDetails = async(person_id: number)=>{
-  const {data} = await tmdb.get(`/person/${person_id}`)
+};
+export const fetchPersonDetails = async (person_id: number) => {
+  const { data } = await tmdb.get(`/person/${person_id}`);
   return data;
-}
-export const fetchCredits = async (person_id:number)=>{
-  const {data} = await tmdb.get(`/person/${person_id}/combined_credits`)
+};
+export const fetchCredits = async (person_id: number) => {
+  const { data } = await tmdb.get(`/person/${person_id}/combined_credits`);
   return data;
-}
+};
 export const search = async (
   query: string,
   page = 1,
@@ -101,22 +101,5 @@ export const getPopularMovies = async (
   });
   return response.data;
 };
-
-// const getDetails = async <T>(
-//   type: 'movie' | 'tv' | 'person',
-//   page = 1,
-//   movie_id: number
-// ): Promise<PaginatedResponse<T>> => {
-//   try {
-//     const response = await tmdb.get(`${type}/${movie_id}`, {
-//       params: { page },
-//     });
-//     // console.log(`Details ${type}:`, response.data.results);
-//     return response.data;
-//   } catch (error) {
-//     console.error(`Error fetching trending ${type}:`, error);
-//     throw error;
-//   }
-// };
 
 export default tmdb;

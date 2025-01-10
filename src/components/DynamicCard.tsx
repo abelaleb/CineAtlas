@@ -3,7 +3,7 @@ import { MovieChange, TVShowChange, PersonChange } from '@/types/types';
 
 interface DynamicCardProps {
   mediaType: 'movie' | 'tv' | 'person';
-  data: MovieChange | TVShowChange | PersonChange;
+  data: MovieChange | TVShowChange | PersonChange ;
 }
 
 const DynamicCard = ({ mediaType, data }: DynamicCardProps) => {

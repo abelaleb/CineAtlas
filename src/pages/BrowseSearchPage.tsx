@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { search, getTrendingAll } from '@/api/tmdb';
 import { searchChange } from '@/types/types';
 import { useEffect, useState } from 'react';
-import { image200 } from '@/Constants/Constants';
+// import { image200 } from '@/Constants/Constants';
 import SelectScrollable from '@/components/SelectScrollable';
 import Pagination from '@/components/Pagination';
 
@@ -23,14 +23,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { format } from 'date-fns';
-import { ImageIcon, Star } from 'lucide-react';
+// import {
+//   Card,
+//   CardContent,
+//   CardHeader,
+//   CardTitle,
+// } from '@/components/ui/card';
+// import { format } from 'date-fns';
+// import { ImageIcon, Star } from 'lucide-react';
+import DynamicCard from '@/components/DynamicCard';
 
 const BrowseSearchPage = () => {
   const [query, setQuery] = useState<string>('');
@@ -89,7 +90,7 @@ const BrowseSearchPage = () => {
       }
     };
     fetchResults();
-  }, [searchCategory, query, currentPage, triggerSearch]);
+  }, [searchCategory, currentPage, triggerSearch]);
 
   const handleSearch = () => {
     setCurrentPage(1); // Reset to first page on new search
@@ -172,52 +173,53 @@ const BrowseSearchPage = () => {
           <>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6  ">
               {searchResults.map((item) => (
-                <Card key={item.id} className="hover:shadow-lg p-0 h-full">
-                  <CardHeader className="p-0">
-                    <CardTitle className="p-0 relative group">
-                      {item.poster_path || item.backdrop_path ? (
-                        <img
-                          src={
-                            item.poster_path
-                              ? image200 + item.poster_path
-                              : image200 + item.backdrop_path
-                          }
-                          className="w-[100%] h-[100%] max-h-[350px] overflow-hidden relative rounded-t-xl p-1"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center h-[307px] bg-gray-200 rounded-t-xl">
-                          <ImageIcon className="w-16 h-16 text-gray-400" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-t-lg">
-                        <div className="text-white text-lg font-bold self-center flex flex-col items-center">
-                          <div>
-                            <Star />
-                          </div>
-                          {Number.isInteger(item.vote_average)
-                            ? item.vote_average
-                            : item.vote_average.toFixed(1)}
-                          /10
-                        </div>
-                        <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
-                          {item.original_language}
-                        </div>
-                      </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
-                      {item.original_title || item.original_name}
-                    </div>
-                    <div>
-                      {item.release_date && (
-                        <div>
-                          {format(new Date(item.release_date), ' yyyy')}
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                // <Card key={item.id} className="hover:shadow-lg p-0 h-full">
+                //   <CardHeader className="p-0">
+                //     <CardTitle className="p-0 relative group">
+                //       {item.poster_path || item.backdrop_path ? (
+                //         <img
+                //           src={
+                //             item.poster_path
+                //               ? image200 + item.poster_path
+                //               : image200 + item.backdrop_path
+                //           }
+                //           className="w-[100%] h-[100%] max-h-[350px] overflow-hidden relative rounded-t-xl p-1"
+                //         />
+                //       ) : (
+                //         <div className="flex items-center justify-center h-[307px] bg-gray-200 rounded-t-xl">
+                //           <ImageIcon className="w-16 h-16 text-gray-400" />
+                //         </div>
+                //       )}
+                //       <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-t-lg">
+                //         <div className="text-white text-lg font-bold self-center flex flex-col items-center">
+                //           <div>
+                //             <Star />
+                //           </div>
+                //           {Number.isInteger(item.vote_average)
+                //             ? item.vote_average
+                //             : item.vote_average.toFixed(1)}
+                //           /10
+                //         </div>
+                //         <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
+                //           {item.original_language}
+                //         </div>
+                //       </div>
+                //     </CardTitle>
+                //   </CardHeader>
+                //   <CardContent>
+                //     <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
+                //       {item.original_title || item.original_name}
+                //     </div>
+                //     <div>
+                //       {item.release_date && (
+                //         <div>
+                //           {format(new Date(item.release_date), ' yyyy')}
+                //         </div>
+                //       )}
+                //     </div>
+                //   </CardContent>
+                // </Card>
+                <DynamicCard key={item.id} mediaType={item.media_type} data={item} />
               ))}
             </div>
             <Pagination
