@@ -1,7 +1,7 @@
 import React from 'react';
-import { PersonChange } from '@/api/tmdb';
 import { PeopleCards } from './Cards';
 import Pagination from './Pagination';
+import { PersonChange } from '@/types/types';
 
 interface PeopleSectionProps {
   people: PersonChange[];

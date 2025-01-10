@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { search, searchChange, getTrendingAll } from '@/api/tmdb';
+import { search, getTrendingAll } from '@/api/tmdb';
+import { searchChange } from '@/types/types';
 import { useEffect, useState } from 'react';
 import { image200 } from '@/Constants/Constants';
 import SelectScrollable from '@/components/SelectScrollable';
@@ -224,7 +225,6 @@ const BrowseSearchPage = () => {
               postsPerPage={20}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
-              fetchPopularMovies={() => {}}
             />
           </>
         )}
