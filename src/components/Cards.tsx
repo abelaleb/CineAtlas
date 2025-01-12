@@ -1,7 +1,7 @@
 import { image200 } from '@/Constants/Constants';
 import { MovieChange, TVShowChange, PersonChange } from '@/types/types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Image as ImageIcon, Star } from 'lucide-react';
+import { Clapperboard, Image as ImageIcon, Star, Tv } from 'lucide-react';
 import { format } from 'date-fns/format';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,22 +14,32 @@ interface TVShowCardProps {
 interface PeopleCardProps {
   people: PersonChange[];
 }
-const CombinedCards = ({items}:{items: (MovieChange|TVShowChange|PersonChange)[]})=>{ 
-const movies = items.filter((item)=> item.media_type ==='movie') as MovieChange[]
-const tvShows = items.filter((item)=> item.media_type ==='tv') as TVShowChange[]
-const people = items.filter((item)=> item.media_type ==='person') as PersonChange[]
+const CombinedCards = ({
+  items,
+}: {
+  items: (MovieChange | TVShowChange | PersonChange)[];
+}) => {
+  const movies = items.filter(
+    (item) => item.media_type === 'movie'
+  ) as MovieChange[];
+  const tvShows = items.filter(
+    (item) => item.media_type === 'tv'
+  ) as TVShowChange[];
+  const people = items.filter(
+    (item) => item.media_type === 'person'
+  ) as PersonChange[];
   return (
     <>
-     {movies.length>0 && <MovieCards movies={movies} />}
-      {tvShows.length>0 && <TVShowCards tvShows={tvShows} />}
-      {people.length>0 && <PeopleCards people={people} />}
+      {movies.length > 0 && <MovieCards movies={movies} />}
+      {tvShows.length > 0 && <TVShowCards tvShows={tvShows} />}
+      {people.length > 0 && <PeopleCards people={people} />}
     </>
   );
-}
+};
 
 const MovieCards = ({ movies }: MovieCardProps) => {
   const navigate = useNavigate();
-  const handleClick = (movieId: number) => {    
+  const handleClick = (movieId: number) => {
     navigate(`/movie/${movieId}`);
   };
   return (
@@ -74,25 +84,25 @@ const MovieCards = ({ movies }: MovieCardProps) => {
             >
               {movie.title}
             </div>
-            <div>
+            <div className="flex items-center gap-1">
               {movie.release_date && (
                 <div>{format(new Date(movie.release_date), ' yyyy')}</div>
               )}
+              <Clapperboard />
             </div>
           </CardContent>
         </Card>
       ))}
       {(!movies || movies.length === 0) && <p>No movies available.</p>}
-   
     </div>
   );
 };
 
 const TVShowCards = ({ tvShows }: TVShowCardProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleClick = (tvShowId: number) => {
     navigate(`/tv/${tvShowId}`);
-  }
+  };
   return (
     <div className="flex flex-wrap gap-8 p-4 justify-center">
       {tvShows?.map((tvShow) => (
@@ -129,14 +139,17 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div onClick={() => handleClick(tvShow.id)}
-             className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
-              {tvShow.original_name}
+            <div
+              onClick={() => handleClick(tvShow.id)}
+              className=" text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer"
+            >
+              {tvShow.name}
             </div>
-            <div>
+            <div className="flex items-center gap-1">
               {tvShow.first_air_date && (
                 <div>{format(new Date(tvShow.first_air_date), ' yyyy')}</div>
-              )}
+              )}{' '}
+              <Tv style={{ height: '1.25rem' }} />
             </div>
           </CardContent>
         </Card>
@@ -146,18 +159,18 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
 };
 
 const PeopleCards = ({ people }: PeopleCardProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleClick = (personId: number) => {
     navigate(`/person/${personId}`);
-  }
+  };
   return (
     <div className="flex flex-wrap gap-8 p-4 justify-center">
       {people?.map((person) => (
         <div
           key={person.id}
-          className="hover:shadow-lg p-0 flex flex-col items-center"
+          className="hover:shadow-lg  flex flex-col items-center  p-4 "
         >
-          <div className="p-0 relative group">
+          <div className="p-0 relative group rounded-full">
             <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
               <img
                 src={person.profile_path ? image200 + person.profile_path : ''}
