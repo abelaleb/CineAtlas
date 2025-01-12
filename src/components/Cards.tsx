@@ -164,13 +164,14 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
     navigate(`/person/${personId}`);
   };
   return (
-    <div className="flex flex-wrap gap-8 p-4 justify-center">
+    // <div className="flex flex-wrap gap-8 justify-center bg-red-100">
+    <>
       {people?.map((person) => (
         <div
           key={person.id}
-          className="hover:shadow-lg  flex flex-col items-center  p-4 "
+          className="hover:shadow-lg  flex flex-col items-center  p-4 relative"
         >
-          <div className="p-0 relative group rounded-full">
+          <div className="p-0  group rounded-full">
             <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
               <img
                 src={person.profile_path ? image200 + person.profile_path : ''}
@@ -204,7 +205,8 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
           </div>
         </div>
       ))}
-    </div>
+    </>
+    // </div>
   );
 };
 

@@ -103,7 +103,7 @@ export const getPopularMovies = async (
 };
 export const fetchPopularTvShows = async (
   query: string = '',
-  page = 1,
+  page = 1
 ): Promise<PaginatedResponse<TVShowChange>> => {
   const response = await tmdb.get(`tv/popular`, {
     params: {
@@ -116,7 +116,7 @@ export const fetchPopularTvShows = async (
 };
 export const fetchPopularPeople = async (
   query: string = '',
-  page = 1,
+  page = 1
 ): Promise<PaginatedResponse<PersonChange>> => {
   const response = await tmdb.get(`person/popular`, {
     params: {
@@ -127,6 +127,5 @@ export const fetchPopularPeople = async (
   });
   return response.data;
 };
-
 
 export default tmdb;

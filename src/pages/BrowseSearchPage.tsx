@@ -1,7 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { search, getTrendingAll } from '@/api/tmdb';
-import { searchChange } from '@/types/types';
+import {
+  search,
+  getTrendingAll,
+  getTrendingMovies,
+  getTrendingTvShows,
+  getTrendingPeople,
+} from '@/api/tmdb';
+import {
+  MovieChange,
+  PersonChange,
+  searchChange,
+  TVShowChange,
+} from '@/types/types';
 import { useEffect, useState } from 'react';
 // import { image200 } from '@/Constants/Constants';
 import SelectScrollable from '@/components/SelectScrollable';
@@ -36,7 +47,9 @@ import DynamicCard from '@/components/DynamicCard';
 const BrowseSearchPage = () => {
   const [query, setQuery] = useState<string>('');
   const [searchCategory, setSearchCategory] = useState<string>('all');
-  const [searchResults, setSearchResults] = useState<searchChange[]>([]);
+  const [searchResults, setSearchResults] = useState<
+    searchChange[] | PersonChange[] | MovieChange[] | TVShowChange[]
+  >([]);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -52,13 +65,13 @@ const BrowseSearchPage = () => {
         if (!query.trim()) {
           switch (searchCategory) {
             case 'movies':
-              response = await getTrendingAll(currentPage);
+              response = await getTrendingMovies(currentPage);
               break;
             case 'tvShows':
-              response = await getTrendingAll(currentPage);
+              response = await getTrendingTvShows(currentPage);
               break;
             case 'people':
-              response = await getTrendingAll(currentPage);
+              response = await getTrendingPeople(currentPage);
               break;
             default:
               response = await getTrendingAll(currentPage);
@@ -80,9 +93,10 @@ const BrowseSearchPage = () => {
               break;
           }
         }
+        console.log(response.results);
+
         setSearchResults(response.results);
         setTotalResults(response.total_results);
-      
       } catch (err) {
         console.error('Error fetching results:', err);
       } finally {
@@ -171,55 +185,13 @@ const BrowseSearchPage = () => {
         {loading && <div>Loading...</div>}
         {!loading && searchResults.length > 0 && (
           <>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6  ">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 p-0 m-0  ">
               {searchResults.map((item) => (
-                // <Card key={item.id} className="hover:shadow-lg p-0 h-full">
-                //   <CardHeader className="p-0">
-                //     <CardTitle className="p-0 relative group">
-                //       {item.poster_path || item.backdrop_path ? (
-                //         <img
-                //           src={
-                //             item.poster_path
-                //               ? image200 + item.poster_path
-                //               : image200 + item.backdrop_path
-                //           }
-                //           className="w-[100%] h-[100%] max-h-[350px] overflow-hidden relative rounded-t-xl p-1"
-                //         />
-                //       ) : (
-                //         <div className="flex items-center justify-center h-[307px] bg-gray-200 rounded-t-xl">
-                //           <ImageIcon className="w-16 h-16 text-gray-400" />
-                //         </div>
-                //       )}
-                //       <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-t-lg">
-                //         <div className="text-white text-lg font-bold self-center flex flex-col items-center">
-                //           <div>
-                //             <Star />
-                //           </div>
-                //           {Number.isInteger(item.vote_average)
-                //             ? item.vote_average
-                //             : item.vote_average.toFixed(1)}
-                //           /10
-                //         </div>
-                //         <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
-                //           {item.original_language}
-                //         </div>
-                //       </div>
-                //     </CardTitle>
-                //   </CardHeader>
-                //   <CardContent>
-                //     <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
-                //       {item.original_title || item.original_name}
-                //     </div>
-                //     <div>
-                //       {item.release_date && (
-                //         <div>
-                //           {format(new Date(item.release_date), ' yyyy')}
-                //         </div>
-                //       )}
-                //     </div>
-                //   </CardContent>
-                // </Card>
-                <DynamicCard key={item.id} mediaType={item.media_type} data={item} />
+                <DynamicCard
+                  key={item.id}
+                  mediaType={item.media_type}
+                  data={item}
+                />
               ))}
             </div>
             <Pagination

@@ -1,9 +1,56 @@
+export interface PersonChange {
+  adult: boolean;
+  gender: 0 | 2;
+  id: number;
+  known_for_department: string;
+  media_type: 'movie' | 'tv' | 'person'; // Fixed type
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  // Add missing fields with optional properties
+  backdrop_path?: string;
+  title?: string;
+  original_language?: string;
+  original_title?: string;
+  overview?: string;
+  poster_path?: string;
+  genre_ids?: Array<number>;
+  release_date?: string;
+  video?: boolean;
+  vote_average?: number;
+  vote_count?: number;
+}
+
+export interface TVShowChange {
+  adult: boolean;
+  backdrop_path: string;
+  first_air_date: string | number | Date;
+  genre_ids: Array<number>;
+  id: number;
+  media_type: 'movie' | 'tv' | 'person'; // Fixed type
+  name: string;
+  origin_country: Array<string>;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  // Add missing fields with optional properties
+  title?: string;
+  original_title?: string;
+  release_date?: string;
+  video?: boolean;
+}
+
 export interface MovieChange {
   adult: boolean;
   backdrop_path: string;
   genre_ids: Array<number>;
   id: number;
-  media_type: string;
+  media_type: 'movie' | 'tv' | 'person'; // Fixed type
   original_language: string;
   original_title: string;
   overview: string;
@@ -16,27 +63,27 @@ export interface MovieChange {
   vote_count: number;
 }
 
-export interface TVShowChange {
+export interface searchChange {
   adult: boolean;
-  backdrop_path: string;
-  first_air_date: string | number | Date;
-  genre_ids: Array<number>;
+  backdrop_path: string ;
   id: number;
-  media_type: string;
-  name: string;
-  origin_country: Array<string>;
+  title: string;
   original_language: string;
-  original_name: string;
+  original_title: string;
   overview: string;
-  popularity: number;
   poster_path: string;
+  media_type: 'movie' | 'tv' | 'person';
+  genre_ids: Array<number>;
+  popularity: number;
+  release_date: string;
+  video: boolean;
   vote_average: number;
   vote_count: number;
 }
 
 export interface MovieDetails {
   adult: boolean;
-  backdrop_path: string;
+  backdrop_path: string | null;
   belongs_to_collection: null;
   budget: number;
   genres: Array<{ id: number; name: string }>;
@@ -185,17 +232,6 @@ export interface TvShowCredits {
   credit_id: string;
   order: number;
 }
-export interface PersonChange {
-  adult: boolean;
-  gender: 0 | 2;
-  id: number;
-  known_for_department: string;
-  media_type: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: null;
-}
 
 export interface PersonalDetails {
   adult: boolean;
@@ -256,23 +292,6 @@ export interface CreditsResponse {
   }>;
 }
 
-export interface searchChange {
-  adult: boolean;
-  backdrop_path: string;
-  id: number;
-  title: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  poster_path: string;
-  media_type: 'movie' | 'tv' | 'person';
-  genre_ids: Array<number>;
-  popularity: number;
-  release_date: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
 export interface PaginatedResponse<T> {
   page: number;
   results: T[];
