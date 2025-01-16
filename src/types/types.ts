@@ -50,7 +50,7 @@ export interface MovieChange {
   backdrop_path: string;
   genre_ids: Array<number>;
   id: number;
-  media_type: 'movie' | 'tv' | 'person'; // Fixed type
+  media_type: 'movie' | 'tv' | 'person';
   original_language: string;
   original_title: string;
   overview: string;
