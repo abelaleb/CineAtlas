@@ -38,6 +38,7 @@ const MainContent = () => {
         setMovies(movieData.results || []);
         setTvShows(tvData.results || []);
         setPeople(personData.results || []);
+    
       } catch (err) {
         console.error('Error fetching data:', err);
       } finally {

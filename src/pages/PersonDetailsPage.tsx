@@ -1,17 +1,19 @@
-import { MovieChange, PersonalDetails } from '@/types/types';
+import { MovieChange, PersonalDetails, TVShowChange } from '@/types/types';
 import { imageOriginal } from '@/Constants/Constants';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchCredits,fetchPersonDetails} from '@/api/people';
-
+import { fetchPersonCredits, fetchPersonDetails } from '@/api/people';
 import DynamicCard from '@/components/DynamicCard';
 
 const PersonDetailsPage = () => {
   const [personDetails, setPersonDetails] = useState<PersonalDetails | null>(
     null
   );
-  const [creditsResponse, setCreditsResponse] = useState<MovieChange[]>([]);
+  const [creditsResponse, setCreditsResponse] = useState<
+    MovieChange[] | TVShowChange[]
+  >([]);
+
   const { personId } = useParams();
 
   useEffect(() => {
@@ -19,7 +21,8 @@ const PersonDetailsPage = () => {
       if (personId) {
         try {
           const details = await fetchPersonDetails(Number(personId));
-          const credits = await fetchCredits(Number(personId));
+          const credits = await fetchPersonCredits(Number(personId));
+
           setPersonDetails(details);
           setCreditsResponse(credits.cast); // Assuming `cast` is an array of movies
         } catch (err) {
@@ -69,7 +72,7 @@ const PersonDetailsPage = () => {
           ))}
         </div>
       ) : (
-        <div>Loading credits...</div>
+        <div>Loading person credits...</div>
       )}
     </div>
   );

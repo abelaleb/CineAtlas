@@ -8,18 +8,17 @@ export const getTrendingPeople = async (
   const response = await tmdb.get(`trending/person/day`, {
     params: { page, include_adult: false },
   });
-  return handleResponse(response.data);
+  return handleResponse(response);
 };
-
 export const fetchPersonDetails = async (person_id: number) => {
-  const { data } = await tmdb.get(`/person/${person_id}`);
-  return handleResponse(data);
+  const response = await tmdb.get(`/person/${person_id}`);
+  return handleResponse(response);
 };
 
-export const fetchCredits = async (person_id: number) => {
-  const { data } = await tmdb.get(`/person/${person_id}/combined_credits`);
-  return handleResponse(data);
-};
+export const fetchPersonCredits = async (person_id: number)=>{
+  const response = await tmdb.get(`/person/${person_id}/combined_credits`);
+  return handleResponse(response);
+}
 
 export const fetchPopularPeople = async (
   query: string = '',

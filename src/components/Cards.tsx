@@ -165,11 +165,11 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
   };
   return (
     // <div className="flex flex-wrap gap-8 p-4 justify-center">
-    <>
+    <div className="flex flex-wrap gap-8 p-4 justify-center">
       {people?.map((person) => (
         <div
           key={person.id}
-          className="shadow-xl  flex flex-col items-center  p-4 "
+          className="shadow-xl items-center  p-4 "
         >
           <div className="p-0  group rounded-full relative">
             <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
@@ -205,7 +205,7 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
           </div>
         </div>
       ))}
-    </> 
+    </div> 
   );
 };
 

@@ -25,7 +25,6 @@ const MovieDetailsPage = () => {
         setMovieDetails(details);
         setSimilarMovies(similar.results);
         setMovieCredits(credits.cast);
-        console.log(movieCredits[0].name);
       }
     };
 
@@ -121,7 +120,7 @@ const MovieDetailsPage = () => {
                           <div>
                             <span className="font-bold">Cast: </span>
                             {movieCredits.slice(0, 4).map((cast, index) => (
-                              <Link to={`/person/${cast.id}`} key={cast.id} className="text-blue-500 hover:text-blue-950">
+                              <Link to={`/person/${cast.id}`} key={cast.id} className="text-blue-700 hover:text-blue-950">
                                 {cast.name}
                                 {index < 3 ? ', ' : '.'}
                               </Link>
