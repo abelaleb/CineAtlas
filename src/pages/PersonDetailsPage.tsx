@@ -3,7 +3,8 @@ import { imageOriginal } from '@/Constants/Constants';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchCredits, fetchPersonDetails } from '@/api/tmdb';
+import { fetchCredits,fetchPersonDetails} from '@/api/people';
+
 import DynamicCard from '@/components/DynamicCard';
 
 const PersonDetailsPage = () => {

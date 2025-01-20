@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TVShowCards } from '@/components/Cards';
-import { fetchTvShowDetails, fetchSimilarTvShows, fetchTvShowCredits } from '@/api/tmdb';
+import { fetchTvShowDetails, fetchSimilarTvShows, fetchTvShowCredits } from '@/api/tvShows';
 
 const TvShowDetailsPage = () => {
   const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(

@@ -1,4 +1,4 @@
-import { fetchPopularTvShows } from '@/api/tmdb';
+import { fetchPopularTvShows } from '@/api/tvShows';
 import { TVShowChange } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';

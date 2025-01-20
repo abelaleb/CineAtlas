@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
-import {
-  getTrendingMovies,
-  getTrendingTvShows,
-  getTrendingPeople,
- 
-} from '../api/tmdb';
+import { getTrendingMovies } from '@/api/movies';
+import { getTrendingPeople } from '@/api/people';
+import { getTrendingTvShows } from '@/api/tvShows';
 import Header from './Header';
 import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';

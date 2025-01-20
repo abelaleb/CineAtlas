@@ -1,4 +1,4 @@
-import { fetchPopularPeople } from '@/api/tmdb';
+import { fetchPopularPeople } from '@/api/people';
 import { PersonChange } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';

@@ -9,7 +9,7 @@ import {
   fetchMovieCredits,
   fetchMovieDetails,
   fetchSimilarMovies,
-} from '@/api/tmdb';
+} from '@/api/movies';
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
