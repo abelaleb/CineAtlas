@@ -3,14 +3,12 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import Router from './routes.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import { ThemeProvider } from './components/Theme-provider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <ThemeProvider defaultTheme="dark" storageKey = "vite-ui-theme">
       <RouterProvider router={Router} />
-    </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>
 );
