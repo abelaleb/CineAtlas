@@ -8,7 +8,6 @@ export interface PersonChange {
   original_name: string;
   popularity: number;
   profile_path: string | null;
-  // Add missing fields with optional properties
   backdrop_path?: string;
   title?: string;
   original_language?: string;
@@ -38,7 +37,6 @@ export interface TVShowChange {
   poster_path: string;
   vote_average: number;
   vote_count: number;
-  // Add missing fields with optional properties
   title?: string;
   original_title?: string;
   release_date?: string;
@@ -50,7 +48,8 @@ export interface MovieChange {
   backdrop_path: string;
   genre_ids: Array<number>;
   id: number;
-  media_type: 'movie' | 'tv' | 'person';
+  media_type: 'movie' | 'tv' | 'person'; // Fixed type
+  [key: string]: any;
   original_language: string;
   original_title: string;
   overview: string;
@@ -65,14 +64,14 @@ export interface MovieChange {
 
 export interface searchChange {
   adult: boolean;
-  backdrop_path: string ;
+  backdrop_path: string;
   id: number;
   title: string;
   original_language: string;
   original_title: string;
   overview: string;
   poster_path: string;
-  media_type: 'movie' | 'tv' | 'person';
+  media_type: 'movie' | 'tv' | 'person'; // Fixed type
   genre_ids: Array<number>;
   popularity: number;
   release_date: string;
@@ -113,6 +112,7 @@ export interface MovieDetails {
   vote_average: number;
   vote_count: number;
 }
+
 export interface MovieCreditDetials {
   adult: boolean;
   gender: number;
@@ -127,6 +127,7 @@ export interface MovieCreditDetials {
   credit_id: string;
   order: number;
 }
+
 export interface TVShowDetails {
   adult: boolean;
   backdrop_path: string | null;
@@ -219,6 +220,7 @@ export interface TVShowDetails {
   vote_average: number;
   vote_count: number;
 }
+
 export interface TvShowCredits {
   adult: boolean;
   gender: number;
@@ -249,6 +251,7 @@ export interface PersonalDetails {
   popularity: number;
   profile_path: string | null;
 }
+
 export interface CreditsResponse {
   cast: Array<{
     adult: boolean;
@@ -268,7 +271,7 @@ export interface CreditsResponse {
     character?: string;
     credit_id?: string;
     order?: number;
-    media_type: string;
+    media_type: 'movie' | 'tv' | 'person'; // Fixed type
   }>;
   crew: Array<{
     adult: boolean;
@@ -288,7 +291,7 @@ export interface CreditsResponse {
     credit_id: string;
     department: string;
     job: string;
-    media_type: string;
+    media_type: 'movie' | 'tv' | 'person'; // Fixed type
   }>;
 }
 

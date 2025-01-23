@@ -1,16 +1,30 @@
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-interface selectOptions{
-    value: string;
-    label: string;
+interface selectOptions {
+  value: string;
+  label: string;
 }
-interface selectScrollableProps{
-    placeholder: string;
-    options: selectOptions[];
+
+interface selectScrollableProps {
+  placeholder: string;
+  options: selectOptions[];
+  onValueChange: (value: string) => void;
 }
-const SelectScrollable = ({ placeholder, options }:selectScrollableProps) => {
+
+const SelectScrollable = ({
+  placeholder,
+  options,
+  onValueChange,
+}: selectScrollableProps) => {
   return (
-    <Select>
+    <Select onValueChange={onValueChange}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

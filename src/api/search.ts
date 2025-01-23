@@ -1,14 +1,24 @@
+import { API_KEY } from '@/Constants/Constants';
 import tmdb from './axiosInstance';
-import { PaginatedResponse, searchChange } from '@/types/types';
-import { handleResponse } from './responseHandler';
-export const search = async (
+export const fetchSearchData = async (
   query: string,
-  page = 1,
-  type?: 'movie' | 'tv' | 'person'
-): Promise<PaginatedResponse<searchChange>> => {
-  const endpoint = type ? `search/${type}` : `search/multi`;
-  const response = await tmdb.get(endpoint, {
-    params: { query, page, include_adult: false },
-  });
-  return handleResponse(response.data);
+  page: number = 1,
+  mediaType: string = 'multi',
+  includeAdult:boolean = false
+) => {
+    try {
+    const response = await tmdb.get(`/search/${mediaType}`,  {
+      params: {
+        api_key: API_KEY,
+        query,
+        page,
+        include_adult: includeAdult,
+        language: 'en-US',
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching searching data:",err)
+    throw err;
+  }
 };

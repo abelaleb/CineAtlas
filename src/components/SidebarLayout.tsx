@@ -1,5 +1,5 @@
 // components/SidebarLayout.tsx
-import { Compass, Home, Popcorn, Star, TrendingUp, Tv } from 'lucide-react';
+import {  Star, TrendingUp } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -10,14 +10,16 @@ import {
   useSidebar,
 } from './ui/sidebar';
 import { Link } from 'react-router-dom';
-
+import { FcHome, FcSearch,  } from 'react-icons/fc';
+import { FcFilmReel } from "react-icons/fc";
+import { IoTvSharp } from "react-icons/io5";
 export default function SidebarLayout() {
   const { state } = useSidebar();
   const sidebarItems = [
-    { title: 'Browse', url: '/search', icon: Compass },
+    { title: 'Browse', url: '/search', icon: FcSearch },
     { title: 'Trending', url: '/trending', icon: TrendingUp },
-    { title: 'Movies', url: '/movies', icon: Popcorn },
-    { title: 'TV Shows', url: '/tvshows', icon: Tv },
+    { title: 'Movies', url: '/movies', icon: FcFilmReel },
+    { title: 'TV Shows', url: '/tvshows', icon: IoTvSharp },
     { title: 'People', url: '/person', icon: Star },
   ];
 
@@ -30,20 +32,18 @@ export default function SidebarLayout() {
         width: state === 'collapsed' ? '3rem' : '16rem',
       }}
     >
-      <SidebarHeader
-        className=" hover:bg-gray-300 flex justify-center items-center p-4"
-      >
+      <SidebarHeader className=" hover:bg-gray-300 flex justify-center items-center p-4">
         {state === 'expanded' ? (
           <div className="p-4 flex gap-4 justify-start items-center">
             <Link to="/" className="flex justify-start items-center gap-2">
-              <Home className=" h-5 w-5" />
+              <FcHome className="h-5 w-5" />
               Home
             </Link>
           </div>
         ) : (
           <div className="flex justify-center items-center">
             <Link to="/">
-              <Home className="h-5 w-5" />
+              <FcHome className="h-5 w-5" />
             </Link>
           </div>
         )}
