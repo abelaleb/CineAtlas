@@ -1,5 +1,4 @@
 // components/SidebarLayout.tsx
-import {  Star, TrendingUp } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -10,16 +9,15 @@ import {
   useSidebar,
 } from './ui/sidebar';
 import { Link } from 'react-router-dom';
-import { FcHome, FcSearch,  } from 'react-icons/fc';
-import { FcFilmReel } from "react-icons/fc";
-import { IoTvSharp } from "react-icons/io5";
+import { Home, Search, TrendingUp, Film, Tv2Icon, Star } from 'lucide-react';
+
 export default function SidebarLayout() {
   const { state } = useSidebar();
   const sidebarItems = [
-    { title: 'Browse', url: '/search', icon: FcSearch },
+    { title: 'Browse', url: '/search', icon: Search },
     { title: 'Trending', url: '/trending', icon: TrendingUp },
-    { title: 'Movies', url: '/movies', icon: FcFilmReel },
-    { title: 'TV Shows', url: '/tvshows', icon: IoTvSharp },
+    { title: 'Movies', url: '/movies', icon: Film },
+    { title: 'TV Shows', url: '/tvshows', icon: Tv2Icon },
     { title: 'People', url: '/person', icon: Star },
   ];
 
@@ -36,14 +34,14 @@ export default function SidebarLayout() {
         {state === 'expanded' ? (
           <div className="p-4 flex gap-4 justify-start items-center">
             <Link to="/" className="flex justify-start items-center gap-2">
-              <FcHome className="h-5 w-5" />
+              <Home className="h-5 w-5" />
               Home
             </Link>
           </div>
         ) : (
           <div className="flex justify-center items-center">
             <Link to="/">
-              <FcHome className="h-5 w-5" />
+              <Home className="h-5 w-5" />
             </Link>
           </div>
         )}
