@@ -37,7 +37,7 @@ const MovieDetailsPage = () => {
     <div className="flex flex-col  w-full h-full pt-[68px]">
       {movieDetails ? (
         <div className="flex flex-col items-center justify-center ">
-          <div className="flex h-[70vh] w-[100vw] items-center justify-center relative">
+          <div className="flex h-[70vh] w-full items-center justify-center relative">
             <img
               src={imageOriginal + movieDetails.backdrop_path}
               alt={movieDetails.original_title}
@@ -120,7 +120,11 @@ const MovieDetailsPage = () => {
                           <div>
                             <span className="font-bold">Cast: </span>
                             {movieCredits.slice(0, 4).map((cast, index) => (
-                              <Link to={`/person/${cast.id}`} key={cast.id} className="text-blue-700 hover:text-blue-950">
+                              <Link
+                                to={`/person/${cast.id}`}
+                                key={cast.id}
+                                className="text-blue-700 hover:text-blue-950"
+                              >
                                 {cast.name}
                                 {index < 3 ? ', ' : '.'}
                               </Link>

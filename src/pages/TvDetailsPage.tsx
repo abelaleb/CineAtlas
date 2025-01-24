@@ -5,14 +5,18 @@ import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TVShowCards } from '@/components/Cards';
-import { fetchTvShowDetails, fetchSimilarTvShows, fetchTvShowCredits } from '@/api/tvShows';
+import {
+  fetchTvShowDetails,
+  fetchSimilarTvShows,
+  fetchTvShowCredits,
+} from '@/api/tvShows';
 
 const TvShowDetailsPage = () => {
   const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(
     null
   );
   const [similarTvShows, setSimilarTvShows] = useState<TVShowChange[]>([]);
-  const [tvShowCredits,setTvShowCredits]  = useState<TvShowCredits[]>([])
+  const [tvShowCredits, setTvShowCredits] = useState<TvShowCredits[]>([]);
   const { series_id } = useParams();
 
   useEffect(() => {
@@ -20,12 +24,10 @@ const TvShowDetailsPage = () => {
       if (series_id) {
         const details = await fetchTvShowDetails(Number(series_id));
         const similar = await fetchSimilarTvShows(Number(series_id));
-        const credits = await fetchTvShowCredits(Number(series_id))
+        const credits = await fetchTvShowCredits(Number(series_id));
         setTvShowDetails(details);
         setSimilarTvShows(similar.results);
-        setTvShowCredits(credits.cast)
-        console.log("tvshowCredits",tvShowCredits);
-        
+        setTvShowCredits(credits.cast);
       }
     };
 
@@ -35,10 +37,10 @@ const TvShowDetailsPage = () => {
   }, [series_id]);
 
   return (
-    <div className="flex flex-col w-full h-full pt-[68px]">
+    <div className="flex flex-col h-full w-full pt-[68px]">
       {tvShowDetails ? (
         <div className="flex flex-col items-center justify-center ">
-          <div className="flex h-[70vh] w-[100vw] items-center justify-center relative">
+          <div className="flex h-[70vh] w-full items-center justify-center relative ">
             <img
               src={imageOriginal + tvShowDetails?.backdrop_path}
               alt={tvShowDetails?.original_name}
@@ -123,7 +125,11 @@ const TvShowDetailsPage = () => {
                           <div>
                             <span className="font-bold">Cast: </span>
                             {tvShowCredits.slice(0, 4).map((cast, index) => (
-                              <Link to={`/person/${cast.id}`} key={cast.id} className="text-blue-500 hover:text-blue-950">
+                              <Link
+                                to={`/person/${cast.id}`}
+                                key={cast.id}
+                                className="text-blue-500 hover:text-blue-950"
+                              >
                                 {cast.name}
                                 {index < 3 ? ', ' : '.'}
                               </Link>
