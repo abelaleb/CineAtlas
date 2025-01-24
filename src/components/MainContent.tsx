@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { getTrendingMovies } from '@/api/movies';
 import { getTrendingPeople } from '@/api/people';
 import { getTrendingTvShows } from '@/api/tvShows';
-import Header from './Header';
 import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';
 import PeopleSection from './PeopleSection';
 import  usePaginatedData  from '@/hooks/usePaginatedData';
 import { MovieChange, PersonChange, TVShowChange } from '@/types/types';
+import TrendingCarousel from './Carousel';
 
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
@@ -52,8 +52,8 @@ const MainContent = () => {
 
   return (
     <div>
-      <div className="flex w-full">
-        <Header />
+      <div className="flex w-full ">
+        <TrendingCarousel />
       </div>
       <div>
         <MoviesSection
