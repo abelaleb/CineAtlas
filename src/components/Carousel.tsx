@@ -77,7 +77,7 @@ const TrendingCarousel = () => {
     <div className="relative w-full">
       <Carousel
         setApi={setApi}
-        className={`w-full h-[500px] transition-all ${
+        className={`w-full h-[400px] transition-all ${
           calculateTransitionType(prevIndex, current) === 'fast-transition'
             ? 'duration-0'
             : 'duration-700'
@@ -100,7 +100,7 @@ const TrendingCarousel = () => {
                         ? imageOriginal + item.backdropPath
                         : '/placeholder.svg'
                     }
-                    className="w-full h-[500px] object-cover object-center"
+                    className="w-full h-[400px] object-cover object-[50%_25%]"
                     alt={`Slide ${index + 1}`}
                   />
                 </CardContent>
