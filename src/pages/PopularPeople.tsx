@@ -35,7 +35,7 @@ const PopularMovies = () => {
   return (
     <div className="flex flex-col pt-[68px] m-20">
       <div className="flex py-8">
-        <div className="flex-1 text-2xl font-black">Popular Tv Shows</div>
+        <div className="flex-1 text-2xl font-black">Popular People</div>
         <div>
           <Button>Filter</Button>
         </div>

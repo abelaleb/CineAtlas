@@ -19,7 +19,7 @@ const MoviesSection: React.FC<MoviesSectionProps> = ({
   postPerPage,
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center ">
       <div className="p-4">
         <h1 className="text-2xl font-bold text-center">Trending Movies</h1>
       </div>

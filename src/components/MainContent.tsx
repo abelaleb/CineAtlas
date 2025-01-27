@@ -55,7 +55,7 @@ const MainContent = () => {
       <div className="flex w-full ">
         <TrendingCarousel />
       </div>
-      <div>
+      <div className='flex flex-col justify-center'>
         <MoviesSection
           movies={movies}
           currentMovies={currentMovies}

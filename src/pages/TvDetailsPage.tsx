@@ -147,7 +147,7 @@ const TvShowDetailsPage = () => {
       ) : (
         <p>Loading...</p>
       )}
-      <div className="w-[calc(100vw-4rem)]">
+      <div className="w-[calc(100vw-5rem)]">
         <TVShowCards tvShows={similarTvShows} />
       </div>
     </div>

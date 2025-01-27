@@ -142,7 +142,7 @@ const MovieDetailsPage = () => {
       ) : (
         <p>Loading...</p>
       )}
-      <div className="w-[calc(100vw-4rem)]">
+      <div className="w-[calc(100vw-5rem)]">
         <MovieCards movies={similarMovies} />
       </div>
     </div>

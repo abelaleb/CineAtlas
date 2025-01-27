@@ -43,7 +43,7 @@ const MovieCards = ({ movies }: MovieCardProps) => {
     navigate(`/movie/${movieId}`);
   };
   return (
-    <div className="flex flex-wrap  p-4 justify-start ">
+    <div className="flex flex-wrap  p-4 justify-center gap-2 ">
       {movies?.map((movie) => (
         <Card
           key={movie.id}
@@ -85,8 +85,9 @@ const MovieCards = ({ movies }: MovieCardProps) => {
             <div className="flex items-center gap-1">
               {movie.release_date && (
                 <div>{format(new Date(movie.release_date), ' yyyy')}</div>
-              )}.
-              <Clapperboard className='h-4 w-4'/>
+              )}
+              .
+              <Clapperboard className="h-4 w-4" />
             </div>
           </CardContent>
         </Card>
@@ -102,7 +103,7 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
     navigate(`/tv/${tvShowId}`);
   };
   return (
-    <div className="flex flex-wrap gap-8 p-4 justify-center">
+    <div className="flex flex-wrap p-4 justify-center gap-2">
       {tvShows?.map((tvShow) => (
         <Card
           key={tvShow.id}
@@ -144,8 +145,9 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
             <div className="flex items-center gap-1">
               {tvShow.first_air_date && (
                 <div>{format(new Date(tvShow.first_air_date), ' yyyy')}</div>
-              )}.
-              <Tv className='h-4 w-4'/>
+              )}
+              .
+              <Tv className="h-4 w-4" />
             </div>
           </CardContent>
         </Card>
@@ -160,15 +162,14 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
     navigate(`/person/${personId}`);
   };
   return (
-    // <div className="flex flex-wrap gap-8 p-4 justify-center">
-    <div className="flex flex-wrap gap-8 p-4 justify-center">
+    <div className="flex flex-wrap p-4 justify-center gap-2 ">
       {people?.map((person) => (
-        <div
+        <Card
           key={person.id}
           className="shadow-xl items-center p-4 hover:cursor-pointer hover:shadow-lg border-2 border-gray-200"
           onClick={() => handleClick(person.id)}
         >
-          <div className="p-0  group rounded-full relative">
+          <CardHeader className="p-0 group rounded-full relative">
             <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
               <img
                 src={person.profile_path ? image200 + person.profile_path : ''}
@@ -190,14 +191,14 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
                 {person.gender}
               </div>
             </div>
-          </div>
-          <div className="flex flex-col items-center mt-4">
+          </CardHeader>
+          <CardContent className="flex flex-col items-center mt-4">
             <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer text-center">
               {person.name}
             </div>
             <div>{person.media_type}</div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );

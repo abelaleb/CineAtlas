@@ -147,7 +147,7 @@ const BrowseSearchPage = () => {
           </Select>
         </div>
 
-        <div className="flex gap-4 justify-center items-center  ">
+        <div className="flex gap-2 justify-center items-center  ">
           <Input
             type="text"
             placeholder={`Search ${searchCategory}...`}
@@ -208,7 +208,7 @@ const BrowseSearchPage = () => {
         {loading && <div>Loading...</div>}
         {!loading && searchResults.length > 0 && (
           <>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6  ">
+            <div className="flex flex-wrap gap-2 justify-center">
               {searchResults.map((result) => (
                 <DynamicCard
                   key={result.id}
