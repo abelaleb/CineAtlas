@@ -7,7 +7,7 @@ import {
   useSidebar,
 } from './ui/sidebar';
 import { NavLink } from 'react-router-dom';
-import { Home, Search, TrendingUp, Film, Tv2Icon, Star } from 'lucide-react';
+import { Home, Search, Dices, Film, Tv, User } from 'lucide-react';
 import logo from '../../public/logo.svg';
 
 export default function SidebarLayout() {
@@ -15,10 +15,10 @@ export default function SidebarLayout() {
   const sidebarItems = [
     { title: 'Home', url: '/', icon: Home },
     { title: 'Browse', url: '/search', icon: Search },
-    { title: 'Trending', url: '/trending', icon: TrendingUp },
+    { title: 'Trending', url: '/trending', icon: Dices },
     { title: 'Movies', url: '/movies', icon: Film },
-    { title: 'TV Shows', url: '/tvshows', icon: Tv2Icon },
-    { title: 'People', url: '/person', icon: Star },
+    { title: 'TV Shows', url: '/tvshows', icon: Tv },
+    { title: 'People', url: '/person', icon: User },
   ];
 
   return (
