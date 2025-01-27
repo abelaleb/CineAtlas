@@ -52,3 +52,7 @@ export const getPopularMovies = async (
   });
   return handleResponse(response);
 };
+export const fetchPopularMovies = async (page = 1) => {
+  const response = await tmdb.get(`/movie/popular`, { params: { page } });
+  return handleResponse(response);
+};

@@ -43,7 +43,7 @@ const MovieCards = ({ movies }: MovieCardProps) => {
     navigate(`/movie/${movieId}`);
   };
   return (
-    <div className="flex flex-wrap  p-4 justify-center gap-2 ">
+    <div className="flex flex-wrap justify-center gap-2 ">
       {movies?.map((movie) => (
         <Card
           key={movie.id}
@@ -103,7 +103,7 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
     navigate(`/tv/${tvShowId}`);
   };
   return (
-    <div className="flex flex-wrap p-4 justify-center gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       {tvShows?.map((tvShow) => (
         <Card
           key={tvShow.id}
@@ -162,15 +162,16 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
     navigate(`/person/${personId}`);
   };
   return (
-    <div className="flex flex-wrap p-4 justify-center gap-2 ">
+    <div className="flex flex-wrap justify-center gap-2 ">
       {people?.map((person) => (
         <Card
           key={person.id}
-          className="shadow-xl items-center p-4 hover:cursor-pointer hover:shadow-lg border-2 border-gray-200"
+          // className="shadow-xl items-center p-4 hover:cursor-pointer hover:shadow-lg "
+          className='hover:shadow-lg p-0 h-[290px] w-[210px] hover:cursor-pointer border-2 border-gray-50'
           onClick={() => handleClick(person.id)}
         >
           <CardHeader className="p-0 group rounded-full relative">
-            <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
+            <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 m-1 flex items-center justify-center bg-gray-200 ">
               <img
                 src={person.profile_path ? image200 + person.profile_path : ''}
                 onError={(e) => (e.currentTarget.style.display = 'none')}

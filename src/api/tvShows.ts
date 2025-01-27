@@ -24,12 +24,8 @@ export const fetchSimilarTvShows = async (series_id: number) => {
   return handleResponse(response);
 };
 
-export const fetchPopularTvShows = async (
-  query: string = '',
-  page = 1
-): Promise<PaginatedResponse<TVShowChange>> => {
-  const response = await tmdb.get(`tv/popular`, {
-    params: { query, page, include_adult: false },
-  });
+
+export const fetchPopularTvShows = async (page = 1) => {
+  const response = await tmdb.get(`/tv/popular`, { params: { page } });
   return handleResponse(response);
 };

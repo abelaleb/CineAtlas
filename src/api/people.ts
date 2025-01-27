@@ -20,12 +20,7 @@ export const fetchPersonCredits = async (person_id: number)=>{
   return handleResponse(response);
 }
 
-export const fetchPopularPeople = async (
-  query: string = '',
-  page = 1
-): Promise<PaginatedResponse<PersonChange>> => {
-  const response = await tmdb.get(`person/popular`, {
-    params: { query, page, include_adult: false },
-  });
+export const fetchPopularPeople = async (page = 1) => {
+  const response = await tmdb.get(`/person/popular`, { params: { page } });
   return handleResponse(response);
 };

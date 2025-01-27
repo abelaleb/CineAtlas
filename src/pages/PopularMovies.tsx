@@ -34,7 +34,7 @@ const PopularMovies = () => {
   }, [currentPage]);
 
   return (
-    <div className="flex flex-col pt-[68px] m-20">
+    <div className="flex flex-col pt-[68px] ">
       <div className="flex py-8">
         <div className="flex-1 text-2xl font-black">Popular Movies</div>
         <div>
