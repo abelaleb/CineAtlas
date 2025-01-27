@@ -9,6 +9,7 @@ import TvDetailsPage from './pages/TvDetailsPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import PopularTvShows from './pages/PopularTvShows';
 import PopularPeople from './pages/PopularPeople';
+import SpinPage from './pages/SpinPage';
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -25,7 +26,7 @@ const routes: RouteObject[] = [
       {path:'person',element:<PopularPeople/>},
       { path: 'movie/:movieId', element: <MovieDetailsPage /> },
       { path: 'tv/:series_id', element: <TvDetailsPage /> },
-
+      { path: 'spin', element: <SpinPage /> },
       { path: 'person/:personId', element: <PersonDetailsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

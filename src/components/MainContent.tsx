@@ -19,7 +19,7 @@ const MainContent = () => {
   const [currentTvPage, setCurrentTvPage] = useState<number>(1);
   const [currentPeoplePage, setCurrentPeoplePage] = useState<number>(1);
 
-  const postPerPage = 5;
+  const postPerPage = 6;
 
   const currentMovies = usePaginatedData(movies, postPerPage, currentMoviePage);
   const currentTvShows = usePaginatedData(tvShows, postPerPage, currentTvPage);

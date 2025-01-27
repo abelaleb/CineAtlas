@@ -43,11 +43,12 @@ const MovieCards = ({ movies }: MovieCardProps) => {
     navigate(`/movie/${movieId}`);
   };
   return (
-    <div className="flex flex-wrap gap-8 p-4 justify-center ">
+    <div className="flex flex-wrap  p-4 justify-start ">
       {movies?.map((movie) => (
         <Card
           key={movie.id}
-          className="hover:shadow-lg p-0 h-[390px] w-[210px]"
+          className="hover:shadow-lg p-0 h-[390px] w-[210px] hover:cursor-pointer"
+          onClick={() => handleClick(movie.id)}
         >
           <CardHeader className="p-0">
             <CardTitle className="p-0 relative group">
@@ -72,23 +73,20 @@ const MovieCards = ({ movies }: MovieCardProps) => {
                   /10
                 </div>
                 <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
-                  {movie.original_language}
+                  {movie.original_language.toUpperCase()}
                 </div>
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div
-              onClick={() => handleClick(movie.id)}
-              className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer "
-            >
+            <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer ">
               {movie.title}
             </div>
             <div className="flex items-center gap-1">
               {movie.release_date && (
                 <div>{format(new Date(movie.release_date), ' yyyy')}</div>
-              )}
-              <Clapperboard />
+              )}.
+              <Clapperboard className='h-4 w-4'/>
             </div>
           </CardContent>
         </Card>
@@ -108,7 +106,8 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
       {tvShows?.map((tvShow) => (
         <Card
           key={tvShow.id}
-          className="hover:shadow-lg p-0 h-[390px] w-[210px]"
+          className="hover:shadow-lg p-0 h-[390px] w-[210px] hover:cursor-pointer"
+          onClick={() => handleClick(tvShow.id)}
         >
           <CardHeader className="p-0">
             <CardTitle className="p-0 relative group">
@@ -139,17 +138,14 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div
-              onClick={() => handleClick(tvShow.id)}
-              className=" text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer"
-            >
+            <div className=" text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer">
               {tvShow.name}
             </div>
             <div className="flex items-center gap-1">
               {tvShow.first_air_date && (
                 <div>{format(new Date(tvShow.first_air_date), ' yyyy')}</div>
-              )}{' '}
-              <Tv style={{ height: '1.25rem' }} />
+              )}.
+              <Tv className='h-4 w-4'/>
             </div>
           </CardContent>
         </Card>
@@ -169,7 +165,8 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
       {people?.map((person) => (
         <div
           key={person.id}
-          className="shadow-xl items-center  p-4 "
+          className="shadow-xl items-center p-4 hover:cursor-pointer hover:shadow-lg border-2 border-gray-200"
+          onClick={() => handleClick(person.id)}
         >
           <div className="p-0  group rounded-full relative">
             <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 flex items-center justify-center bg-gray-200">
@@ -195,17 +192,14 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
             </div>
           </div>
           <div className="flex flex-col items-center mt-4">
-            <div
-              onClick={() => handleClick(person.id)}
-              className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer text-center"
-            >
+            <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer text-center">
               {person.name}
             </div>
             <div>{person.media_type}</div>
           </div>
         </div>
       ))}
-    </div> 
+    </div>
   );
 };
 
