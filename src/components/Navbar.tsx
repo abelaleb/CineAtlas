@@ -5,7 +5,7 @@ import { useSidebar } from './ui/sidebar';
 import { Button } from './ui/button';
 import { Menu } from 'lucide-react';
 import { useTheme } from './Theme-provider';
-import logo from '../../public/logo.svg';
+import logo from '@/assets/images/logo.svg';
 import { MovieChange, TVShowChange, PersonChange } from '@/types/types';
 import { useState, useEffect } from 'react';
 import { searchInput } from '@/api/search';
