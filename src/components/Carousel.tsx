@@ -89,7 +89,7 @@ const TrendingCarousel = () => {
               <Card className="border-none relative">
                 <CardContent className="p-0">
                   <span
-                    className="text-white absolute top-4 left-4 right-0 flex space-x-2 text-2xl font-bold hover:underline hover:cursor-pointer "
+                    className="text-textSecondary absolute top-4 left-4 right-0 flex space-x-2 text-2xl font-bold hover:underline hover:cursor-pointer "
                     onClick={() => handleClick(item.id, item.mediaType)}
                   >
                     {item.title}

@@ -5,6 +5,7 @@ export default {
   	extend: {
   		colors: {
   			text: 'var(--text)',
+			textSecondary: 'var(--text-secondary)',
   			background: 'hsl(var(--background))',
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',

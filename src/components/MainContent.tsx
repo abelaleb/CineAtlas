@@ -5,7 +5,7 @@ import { getTrendingTvShows } from '@/api/tvShows';
 import MoviesSection from './MoviesSection';
 import TVShowsSection from './TVShowsSection';
 import PeopleSection from './PeopleSection';
-import  usePaginatedData  from '@/hooks/usePaginatedData';
+import usePaginatedData from '@/hooks/usePaginatedData';
 import { MovieChange, PersonChange, TVShowChange } from '@/types/types';
 import TrendingCarousel from './Carousel';
 
@@ -23,7 +23,11 @@ const MainContent = () => {
 
   const currentMovies = usePaginatedData(movies, postPerPage, currentMoviePage);
   const currentTvShows = usePaginatedData(tvShows, postPerPage, currentTvPage);
-  const currentPeople = usePaginatedData(people, postPerPage, currentPeoplePage);
+  const currentPeople = usePaginatedData(
+    people,
+    postPerPage,
+    currentPeoplePage
+  );
 
   useEffect(() => {
     const fetchChanges = async () => {
@@ -38,7 +42,6 @@ const MainContent = () => {
         setMovies(movieData.results || []);
         setTvShows(tvData.results || []);
         setPeople(personData.results || []);
-    
       } catch (err) {
         console.error('Error fetching data:', err);
       } finally {
@@ -51,11 +54,11 @@ const MainContent = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="pt-[68px] flex flex-col w-full h-full">
       <div className="flex w-full ">
         <TrendingCarousel />
       </div>
-      <div className='flex flex-col justify-center'>
+      <div className="flex flex-col justify-center">
         <MoviesSection
           movies={movies}
           currentMovies={currentMovies}

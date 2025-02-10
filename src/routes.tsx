@@ -3,19 +3,19 @@ import App from './App';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import BrowseSearchPage from './pages/BrowseSearchPage';
-import HomePage from './pages/HomePage';
 import PopularMovies from './pages/PopularMovies';
 import TvDetailsPage from './pages/TvDetailsPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import PopularTvShows from './pages/PopularTvShows';
 import PopularPeople from './pages/PopularPeople';
 import SpinPage from './pages/SpinPage';
+import MainContent from './components/MainContent';
 const routes: RouteObject[] = [
   {
     path: '/',
     element: <App />,
     children: [
-      { path: '', element: <HomePage /> },
+      { path: '', element: <MainContent /> },
       { path: 'search', element: <BrowseSearchPage /> },
       {
         path: 'movies',
