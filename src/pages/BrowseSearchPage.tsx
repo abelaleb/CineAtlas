@@ -126,7 +126,7 @@ const BrowseSearchPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[100%] gap-4 justify-top items-center  pt-[68px] ">
+    <div className="flex flex-col w-full h-[100%] gap-4 justify-top items-center  pt-[68px]">
       <div className="flex justify-center items-center w-3/4 pt-10 gap-4">
         <div>Search Items :</div>
         <div className="flex h-[32px] justify-center items-center">

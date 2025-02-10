@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 function App() {
   return (
     <SidebarProvider defaultOpen={false}>
-      <div className="flex w-full h-screen ">
+      <div className="flex w-full h-screen scrollbar-light dark:scrollbar-dark overflow-y-auto">
         <SidebarLayout />
         <div className="flex flex-col w-full h-full">
           <div className="fixed top-0 right-0 left-0 z-50">
