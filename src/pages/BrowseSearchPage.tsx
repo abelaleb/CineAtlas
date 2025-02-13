@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { getTrendingAll } from '@/api/trends';
 import { fetchSearchData } from '@/api/search';
 import {
   MovieChange,
@@ -71,38 +70,20 @@ const BrowseSearchPage = () => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        let response;
-        if (!query.trim()) {
-          switch (searchCategory) {
-            case 'movies':
-              response = await getTrendingAll(currentPage);
-              break;
-            case 'tvShows':
-              response = await getTrendingAll(currentPage);
-              break;
-            case 'people':
-              response = await getTrendingAll(currentPage);
-              break;
-            default:
-              response = await getTrendingAll(currentPage);
-              break;
-          }
-        } else {
-          switch (searchCategory) {
-            case 'movies':
-              response = await fetchSearchData(query, currentPage, 'movie');
-              break;
-            case 'tvShows':
-              response = await fetchSearchData(query, currentPage, 'tv');
-              break;
-            case 'people':
-              response = await fetchSearchData(query, currentPage, 'person');
-              break;
-            default:
-              response = await fetchSearchData(query, currentPage);
-              break;
-          }
+        let mediaType = 'multi';
+        if (searchCategory === 'movie') {
+          mediaType = 'movie';
+        } else if (searchCategory === 'tv') {
+          mediaType = 'tv';
+        } else if (searchCategory === 'person') {
+          mediaType = 'person';
         }
+        const searchTerm = query.trim();
+        const response = await fetchSearchData(
+          searchTerm,
+          currentPage,
+          mediaType
+        );
         setSearchResults(response.results);
         setTotalResults(response.total_results);
       } catch (err) {
@@ -115,8 +96,8 @@ const BrowseSearchPage = () => {
   }, [searchCategory, currentPage, triggerSearch]);
 
   const handleSearch = () => {
-    setCurrentPage(1); // Reset to first page on new search
-    setTriggerSearch(true);
+    setCurrentPage(1);
+    setTriggerSearch((prev) => !prev);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -138,9 +119,9 @@ const BrowseSearchPage = () => {
               <SelectGroup>
                 <SelectLabel>Search</SelectLabel>
                 <SelectItem value="all">All</SelectItem>
-                <SelectItem value="movies">Movies</SelectItem>
-                <SelectItem value="tvShows">Tv Shows</SelectItem>
-                <SelectItem value="people">People</SelectItem>
+                <SelectItem value="movie">Movies</SelectItem>
+                <SelectItem value="tv">Tv Shows</SelectItem>
+                <SelectItem value="person">People</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -208,13 +189,19 @@ const BrowseSearchPage = () => {
         {!loading && searchResults.length > 0 && (
           <>
             <div className="flex flex-wrap gap-2 justify-center">
-              {searchResults.map((result) => (
-                <DynamicCard
-                  key={result.id}
-                  mediaType={result.media_type}
-                  data={result}
-                />
-              ))}
+              {searchResults.map((result) => {
+                const cardMediaType = result.media_type || searchCategory;
+
+                return (
+                  <DynamicCard
+                    key={result.id}
+                    mediaType={
+                      cardMediaType as  'movie' | 'tv' | 'person'
+                    }
+                    data={result}
+                  />
+                );
+              })}
             </div>
             <Pagination
               totalPosts={totalResults}

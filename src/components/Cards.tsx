@@ -69,11 +69,11 @@ const MovieCards = ({ movies }: MovieCardProps) => {
                   </div>
                   {Number.isInteger(movie.vote_average)
                     ? movie.vote_average
-                    : movie.vote_average.toFixed(1)}
+                    : movie.vote_average?.toFixed(1)}
                   /10
                 </div>
                 <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">
-                  {movie.original_language.toUpperCase()}
+                  {movie.original_language?.toUpperCase()}
                 </div>
               </div>
             </CardTitle>
@@ -129,7 +129,7 @@ const TVShowCards = ({ tvShows }: TVShowCardProps) => {
                   </div>
                   {Number.isInteger(tvShow.vote_average)
                     ? tvShow.vote_average
-                    : tvShow.vote_average.toFixed(1)}
+                    : tvShow.vote_average?.toFixed(1)}
                   /10
                 </div>
                 <div className="text-black text-sm bg-white bg-opacity-50 p-4 rounded-lg">

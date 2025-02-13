@@ -9,13 +9,13 @@ import PersonDetailsPage from './pages/PersonDetailsPage';
 import PopularTvShows from './pages/PopularTvShows';
 import PopularPeople from './pages/PopularPeople';
 import SpinPage from './pages/SpinPage';
-import MainContent from './components/MainContent';
+import Home from './components/Home';
 const routes: RouteObject[] = [
   {
     path: '/',
     element: <App />,
     children: [
-      { path: '', element: <MainContent /> },
+      { path: '', element: <Home /> },
       { path: 'search', element: <BrowseSearchPage /> },
       {
         path: 'movies',
