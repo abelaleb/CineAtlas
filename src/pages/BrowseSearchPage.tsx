@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { fetchSearchData } from '@/api/search';
+import { fetchDiscoverData } from '@/api/discover';
 import {
   MovieChange,
   PersonChange,
@@ -41,28 +42,34 @@ const BrowseSearchPage = () => {
   const [totalResults, setTotalResults] = useState<number>(0);
   const [triggerSearch, setTriggerSearch] = useState<boolean>(false);
 
+  const [selectedGenre, setSelectedGenre] = useState<string>('');
+  const [selectedRating, setSelectedRating] = useState<string>('');
+  const [selectedYear, setSelectedYear] = useState<string>('');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
+  const [selectedOrder, setSelectedOrder] = useState<string>('');
+
   const handleGenreChange = (value: string) => {
-    // Handle genre change
-    console.log('Selected genre:', value);
+    setSelectedGenre(value);
+    // console.log('Selected genre:', value);
   };
 
   const handleRatingChange = (value: string) => {
-    // Handle rating change
+    setSelectedRating(value);
     console.log('Selected rating:', value);
   };
 
   const handleYearChange = (value: string) => {
-    // Handle year change
+    setSelectedYear(value);
     console.log('Selected year:', value);
   };
 
   const handleLanguageChange = (value: string) => {
-    // Handle language change
+    setSelectedLanguage(value);
     console.log('Selected language:', value);
   };
 
   const handleOrderChange = (value: string) => {
-    // Handle order change
+    setSelectedOrder(value);
     console.log('Selected order:', value);
   };
 
@@ -70,22 +77,68 @@ const BrowseSearchPage = () => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        let mediaType = 'multi';
-        if (searchCategory === 'movie') {
-          mediaType = 'movie';
-        } else if (searchCategory === 'tv') {
-          mediaType = 'tv';
+        // Decide which endpoint to use:
+        // If a query is provided and search category is person, or if you want text search, use fetchSearchData.
+        // Otherwise, use fetchDiscoverData for movie and tv to incorporate filters.
+        if (query.trim() && searchCategory === 'all') {
+          // For simplicity, if "all" is selected and there's a query, we can stick with search.
+          const response = await fetchSearchData(
+            query.trim(),
+            currentPage,
+            'multi'
+          );
+          setSearchResults(response.results);
+          setTotalResults(response.total_results);
+        } else if (
+          query.trim() &&
+          searchCategory !== 'all' &&
+          searchCategory !== 'person'
+        ) {
+          // When a query and specific category (movie or tv) are provided, you have two options:
+          // Option 1: Use search API (but you won't be able to filter by genre/year/etc).
+          // Option 2: Use discover API and then filter results.
+          // Here, we assume discover endpoint is preferred for movies and tv shows.
+          const response = await fetchDiscoverData(
+            searchCategory as 'movie' | 'tv',
+            currentPage,
+            {
+              genre: selectedGenre,
+              year: selectedYear,
+              rating: selectedRating,
+              language: selectedLanguage,
+              order: selectedOrder,
+            }
+          );
+          setSearchResults(response.results);
+          setTotalResults(response.total_results);
+        } else if (
+          !query.trim() &&
+          (searchCategory === 'movie' || searchCategory === 'tv')
+        ) {
+          // If no text query, simply use the discover endpoint with filters
+          const response = await fetchDiscoverData(
+            searchCategory as 'movie' | 'tv',
+            currentPage,
+            {
+              genre: selectedGenre,
+              year: selectedYear,
+              rating: selectedRating,
+              language: selectedLanguage,
+              order: selectedOrder,
+            }
+          );
+          setSearchResults(response.results);
+          setTotalResults(response.total_results);
         } else if (searchCategory === 'person') {
-          mediaType = 'person';
+          // For person search, always use the search API
+          const response = await fetchSearchData(
+            query.trim(),
+            currentPage,
+            'person'
+          );
+          setSearchResults(response.results);
+          setTotalResults(response.total_results);
         }
-        const searchTerm = query.trim();
-        const response = await fetchSearchData(
-          searchTerm,
-          currentPage,
-          mediaType
-        );
-        setSearchResults(response.results);
-        setTotalResults(response.total_results);
       } catch (err) {
         console.error('Error fetching results from tmdb:', err);
       } finally {
@@ -93,7 +146,18 @@ const BrowseSearchPage = () => {
       }
     };
     fetchResults();
-  }, [searchCategory, currentPage, triggerSearch]);
+    // Trigger refetch when any filter or search criteria changes
+  }, [
+    searchCategory,
+    currentPage,
+    triggerSearch,
+    query,
+    selectedGenre,
+    selectedRating,
+    selectedYear,
+    selectedLanguage,
+    selectedOrder,
+  ]);
 
   const handleSearch = () => {
     setCurrentPage(1);
@@ -141,48 +205,50 @@ const BrowseSearchPage = () => {
         </div>
       </div>
 
-      <div className="flex w-full gap-4 justify-center items-center ">
-        <div className=" p-4 rounded-md">
-          <h2 className="font-semibold mb-2">Genre:</h2>
-          <SelectScrollable
-            placeholder="Select genre"
-            options={genreOptions}
-            onValueChange={handleGenreChange}
-          />
+      {(searchCategory == 'movie' || searchCategory == 'tv') && (
+        <div className="flex w-full gap-4 justify-center items-center ">
+          <div className=" p-4 rounded-md">
+            <h2 className="font-semibold mb-2">Genre:</h2>
+            <SelectScrollable
+              placeholder="Select genre"
+              options={genreOptions}
+              onValueChange={handleGenreChange}
+            />
+          </div>
+          <div className=" p-4 rounded-md">
+            <h2 className="font-semibold mb-2">Ratings:</h2>
+            <SelectScrollable
+              placeholder="Select rating"
+              options={ratingOptions}
+              onValueChange={handleRatingChange}
+            />
+          </div>
+          <div className=" p-4 rounded-md">
+            <h2 className="font-semibold mb-2">Year:</h2>
+            <SelectScrollable
+              placeholder="Select year"
+              options={yearOptions}
+              onValueChange={handleYearChange}
+            />
+          </div>
+          <div className=" p-4 rounded-md">
+            <h2 className="font-semibold mb-2">Language:</h2>
+            <SelectScrollable
+              placeholder="Select language"
+              options={languageOptions}
+              onValueChange={handleLanguageChange}
+            />
+          </div>
+          <div className=" p-4 rounded-md">
+            <h2 className="font-semibold mb-2">Ordered by:</h2>
+            <SelectScrollable
+              placeholder="Select order"
+              options={orderOptions}
+              onValueChange={handleOrderChange}
+            />
+          </div>
         </div>
-        <div className=" p-4 rounded-md">
-          <h2 className="font-semibold mb-2">Ratings:</h2>
-          <SelectScrollable
-            placeholder="Select rating"
-            options={ratingOptions}
-            onValueChange={handleRatingChange}
-          />
-        </div>
-        <div className=" p-4 rounded-md">
-          <h2 className="font-semibold mb-2">Year:</h2>
-          <SelectScrollable
-            placeholder="Select year"
-            options={yearOptions}
-            onValueChange={handleYearChange}
-          />
-        </div>
-        <div className=" p-4 rounded-md">
-          <h2 className="font-semibold mb-2">Language:</h2>
-          <SelectScrollable
-            placeholder="Select language"
-            options={languageOptions}
-            onValueChange={handleLanguageChange}
-          />
-        </div>
-        <div className=" p-4 rounded-md">
-          <h2 className="font-semibold mb-2">Ordered by:</h2>
-          <SelectScrollable
-            placeholder="Select order"
-            options={orderOptions}
-            onValueChange={handleOrderChange}
-          />
-        </div>
-      </div>
+      )}
 
       <div className="w-full ">
         {loading && <div>Loading...</div>}
@@ -195,9 +261,7 @@ const BrowseSearchPage = () => {
                 return (
                   <DynamicCard
                     key={result.id}
-                    mediaType={
-                      cardMediaType as  'movie' | 'tv' | 'person'
-                    }
+                    mediaType={cardMediaType as 'movie' | 'tv' | 'person'}
                     data={result}
                   />
                 );
