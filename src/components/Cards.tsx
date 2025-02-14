@@ -167,21 +167,21 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
         <Card
           key={person.id}
           // className="shadow-xl items-center p-4 hover:cursor-pointer hover:shadow-lg "
-          className='hover:shadow-lg p-0 h-[290px] w-[210px] hover:cursor-pointer border-2 border-gray-50'
+          className="hover:shadow-lg p-0 h-[290px] w-[210px] hover:cursor-pointer border-2 border-gray-50"
           onClick={() => handleClick(person.id)}
         >
           <CardHeader className="p-0 group rounded-full relative">
-            <div className="w-[200px] h-[200px] overflow-hidden relative rounded-full p-1 m-1 flex items-center justify-center bg-gray-200 ">
+            <div className="w-[200px] h-[200px] overflow-hidden relative p-1 m-1 flex items-center justify-center bg-gray-200 ">
               <img
                 src={person.profile_path ? image200 + person.profile_path : ''}
                 onError={(e) => (e.currentTarget.style.display = 'none')}
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-cover "
               />
               {!person.profile_path && (
                 <ImageIcon className="w-16 h-16 text-gray-400" />
               )}
             </div>
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 rounded-full">
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center gap-4 opacity-0 group-hover:opacity-100 hover:text-gray-500 hover:cursor-pointer transition-opacity duration-300 ">
               <div className="text-white text-lg font-bold self-center flex flex-col items-center">
                 <div>
                   <Star />
@@ -197,7 +197,7 @@ const PeopleCards = ({ people }: PeopleCardProps) => {
             <div className="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap hover:text-gray-500 hover:cursor-pointer text-center">
               {person.name}
             </div>
-            <div>{person.media_type}</div>
+            <div>{person.known_for_department}</div>
           </CardContent>
         </Card>
       ))}

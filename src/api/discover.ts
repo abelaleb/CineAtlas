@@ -1,13 +1,14 @@
-// api/discover.ts
+// src/api/discover.ts
+
 import { API_KEY } from '@/Constants/Constants';
 import tmdb from './axiosInstance';
 
-interface DiscoverFilters {
+export interface DiscoverFilters {
   genre?: string;
   year?: string;
   rating?: string;
   language?: string;
-  order?: string;
+  sort_by?: string;
 }
 
 export const fetchDiscoverData = async (
@@ -16,26 +17,42 @@ export const fetchDiscoverData = async (
   filters: DiscoverFilters = {}
 ) => {
   const endpoint = `/discover/${mediaType}`;
-  const params: any = {
+  //eslint-disable-next-line
+  const params: Record<string, any> = {
     api_key: API_KEY,
+    include_adult: false,
     page,
-    language: 'en-US',
   };
 
-  if (filters.genre) {
+  if (filters.genre && filters.genre !== 'all') {
     params.with_genres = filters.genre;
   }
+
   if (filters.year) {
-    params[mediaType === 'movie' ? 'primary_release_year' : 'first_air_date_year'] = filters.year;
+    if (filters.year.includes('-')) {
+      const [startYear, endYear] = filters.year.split('-');
+      if (mediaType === 'movie') {
+        params['primary_release_date.gte'] = `${startYear}-01-01`;
+        params['primary_release_date.lte'] = `${endYear}-12-31`;
+      } else {
+        params['first_air_date.gte'] = `${startYear}-01-01`;
+        params['first_air_date.lte'] = `${endYear}-12-31`;
+      }
+    } else {
+      params[
+        mediaType === 'movie' ? 'primary_release_year' : 'first_air_date_year'
+      ] = filters.year;
+    }
   }
+
   if (filters.rating) {
     params['vote_average.gte'] = filters.rating;
   }
   if (filters.language) {
     params.with_original_language = filters.language;
   }
-  if (filters.order) {
-    params.sort_by = filters.order;
+  if (filters.sort_by) {
+    params.sort_by = filters.sort_by;
   }
 
   try {

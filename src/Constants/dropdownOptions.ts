@@ -1,3 +1,6 @@
+// src/Constants/dropdownOptions.ts
+import ascendingIcon from '../assets/images/Ascending.svg';
+import descendingIcon from '../assets/images/Descending.svg';
 export const genreOptions = [
   { value: 'all', label: 'All' },
   { value: '28', label: 'Action' },
@@ -12,14 +15,24 @@ export const genreOptions = [
 ];
 
 export const ratingOptions = [
-  { value: '5', label: '5 Stars' },
-  { value: '4', label: '4 Stars & Up' },
-  { value: '3', label: '3 Stars & Up' },
-  { value: '2', label: '2 Stars & Up' },
-  { value: '1', label: '1 Star & Up' },
+  { value: 'all', label: 'All' },
+  { value: '10', label: '🔟 10' },
+  { value: '9', label: '9️⃣ 9' },
+  { value: '8', label: '🎱 8' },
+  { value: '7', label: '7️⃣ 7' },
+  { value: '6', label: '6️⃣ 6' },
+  { value: '5', label: '5️⃣ 5' },
+  { value: '4', label: '4️⃣ 4' },
+  { value: '3', label: '3️⃣ 3' },
+  { value: '2', label: '2️⃣ 2' },
+  { value: '1', label: '1️⃣ 1' },
+  { value: '0', label: '0️⃣ 0' },
 ];
 
 export const yearOptions = [
+  { value: 'all', label: 'All' },
+  { value: '2025', label: '2025' },
+  { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
   { value: '2022', label: '2022' },
   { value: '2021', label: '2021' },
@@ -30,17 +43,40 @@ export const yearOptions = [
 ];
 
 export const languageOptions = [
-  { value: 'english', label: 'English' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'french', label: 'French' },
-  { value: 'german', label: 'German' },
-  { value: 'japanese', label: 'Japanese' },
-  { value: 'korean', label: 'Korean' },
+  { value: ' ', label: 'All' },
+  { value: 'en', label: 'English' },
+  { value: 'es', label: 'Spanish' },
+  { value: 'fr', label: 'French' },
+  { value: 'de', label: 'German' },
+  { value: 'ja', label: 'Japanese' },
+  { value: 'ko', label: 'Korean' },
 ];
 
-export const orderOptions = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'oldest', label: 'Oldest' },
-  { value: 'rating', label: 'Rating' },
-  { value: 'title', label: 'Title' },
+export const sortOptions = [
+  { value: 'none', label: 'All' },
+
+  {
+    value: 'vote_count.desc',
+    label: 'Vote Count',
+    icon: descendingIcon,
+  },
+  {
+    value: 'vote_count.asc',
+    label: 'Vote Count',
+    icon: ascendingIcon,
+  },
+  { value: 'popularity.desc', label: 'Popularity', icon: descendingIcon },
+  { value: 'popularity.asc', label: 'Popularity', icon: ascendingIcon },
+  { value: 'title.desc', label: 'Title (Z-A)', icon: descendingIcon },
+  { value: 'title.asc', label: 'Title (A-Z)', icon: ascendingIcon },
+  {
+    value: 'vote_average.desc',
+    label: 'Average Vote ',
+    icon: descendingIcon,
+  },
+  {
+    value: 'vote_average.asc',
+    label: 'Average Vote',
+    icon: ascendingIcon,
+  },
 ];

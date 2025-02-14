@@ -13,7 +13,7 @@ import SelectScrollable from '@/components/SelectScrollable';
 import Pagination from '@/components/Pagination';
 
 import {
-  orderOptions,
+  sortOptions,
   genreOptions,
   ratingOptions,
   yearOptions,
@@ -77,11 +77,7 @@ const BrowseSearchPage = () => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        // Decide which endpoint to use:
-        // If a query is provided and search category is person, or if you want text search, use fetchSearchData.
-        // Otherwise, use fetchDiscoverData for movie and tv to incorporate filters.
         if (query.trim() && searchCategory === 'all') {
-          // For simplicity, if "all" is selected and there's a query, we can stick with search.
           const response = await fetchSearchData(
             query.trim(),
             currentPage,
@@ -94,10 +90,6 @@ const BrowseSearchPage = () => {
           searchCategory !== 'all' &&
           searchCategory !== 'person'
         ) {
-          // When a query and specific category (movie or tv) are provided, you have two options:
-          // Option 1: Use search API (but you won't be able to filter by genre/year/etc).
-          // Option 2: Use discover API and then filter results.
-          // Here, we assume discover endpoint is preferred for movies and tv shows.
           const response = await fetchDiscoverData(
             searchCategory as 'movie' | 'tv',
             currentPage,
@@ -106,7 +98,7 @@ const BrowseSearchPage = () => {
               year: selectedYear,
               rating: selectedRating,
               language: selectedLanguage,
-              order: selectedOrder,
+              sort_by: selectedOrder,
             }
           );
           setSearchResults(response.results);
@@ -115,7 +107,6 @@ const BrowseSearchPage = () => {
           !query.trim() &&
           (searchCategory === 'movie' || searchCategory === 'tv')
         ) {
-          // If no text query, simply use the discover endpoint with filters
           const response = await fetchDiscoverData(
             searchCategory as 'movie' | 'tv',
             currentPage,
@@ -124,13 +115,12 @@ const BrowseSearchPage = () => {
               year: selectedYear,
               rating: selectedRating,
               language: selectedLanguage,
-              order: selectedOrder,
+              sort_by: selectedOrder,
             }
           );
           setSearchResults(response.results);
           setTotalResults(response.total_results);
         } else if (searchCategory === 'person') {
-          // For person search, always use the search API
           const response = await fetchSearchData(
             query.trim(),
             currentPage,
@@ -146,7 +136,6 @@ const BrowseSearchPage = () => {
       }
     };
     fetchResults();
-    // Trigger refetch when any filter or search criteria changes
   }, [
     searchCategory,
     currentPage,
@@ -243,7 +232,7 @@ const BrowseSearchPage = () => {
             <h2 className="font-semibold mb-2">Ordered by:</h2>
             <SelectScrollable
               placeholder="Select order"
-              options={orderOptions}
+              options={sortOptions}
               onValueChange={handleOrderChange}
             />
           </div>

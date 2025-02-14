@@ -7,7 +7,7 @@ import {
   useSidebar,
 } from './ui/sidebar';
 import { NavLink } from 'react-router-dom';
-import { Home, Search, Dices, Film, Tv, User } from 'lucide-react';
+import { Home, Search, Dices, Film, Tv} from 'lucide-react';
 import logo from '@/assets/images/logo.svg';
 
 export default function SidebarLayout() {
@@ -18,13 +18,12 @@ export default function SidebarLayout() {
     { title: 'Trending', url: '/trending', icon: Dices },
     { title: 'Movies', url: '/movies', icon: Film },
     { title: 'TV Shows', url: '/tvshows', icon: Tv },
-    { title: 'People', url: '/person', icon: User },
   ];
 
   return (
     <Sidebar
       collapsible="icon"
-      className="fixed left-0 top-0 h-full pt-[68px] z-60 border-r border-gray-800 bg-white"
+      className="fixed left-0 top-0 h-full pt-[68px] z-60 border-r border-gray-800"
       style={{
         transition: 'width 0.2s',
         width: state === 'collapsed' ? '3rem' : '16rem',
