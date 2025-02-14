@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import DynamicCard from '@/components/DynamicCard';
+import Spinner from '@/components/Spinner';
 
 const BrowseSearchPage = () => {
   const [query, setQuery] = useState<string>('');
@@ -240,7 +241,7 @@ const BrowseSearchPage = () => {
       )}
 
       <div className="w-full ">
-        {loading && <div>Loading...</div>}
+      {loading && <section className="p-8 h-screen"><Spinner /></section> }
         {!loading && searchResults.length > 0 && (
           <>
             <div className="flex flex-wrap gap-2 justify-center">

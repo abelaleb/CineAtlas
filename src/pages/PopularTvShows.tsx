@@ -19,6 +19,7 @@ import {
   languageOptions,
   sortOptions,
 } from '@/Constants/dropdownOptions';
+import Spinner from '@/components/Spinner';
 
 const PopularTvShows = () => {
   const { page } = useParams<{ page: string }>();
@@ -63,7 +64,7 @@ const PopularTvShows = () => {
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [currentPage,filters]);
+  }, [currentPage, filters]);
 
   return (
     <main className="flex flex-col pt-[68px] max-w-screen-xl ">
@@ -94,11 +95,7 @@ const PopularTvShows = () => {
         </div>
       </section>
       <section className="p-8">
-        {loading ? (
-          <p className="text-center text-lg">Loading...</p>
-        ) : (
-          <TVShowCards tvShows={tvShowResults} />
-        )}
+        {loading ? <Spinner /> : <TVShowCards tvShows={tvShowResults} />}
       </section>
       <Pagination
         totalPosts={totalTvShowResults}

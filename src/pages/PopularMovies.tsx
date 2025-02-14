@@ -12,10 +12,13 @@ import {
   languageOptions,
   sortOptions,
 } from '@/Constants/dropdownOptions';
+import Spinner from '@/components/Spinner';
 
 const PopularMovies = () => {
   const { page } = useParams<{ page: string }>();
-  const [currentPage, setCurrentPage] = useState<number>(page ? parseInt(page, 10) : 1);
+  const [currentPage, setCurrentPage] = useState<number>(
+    page ? parseInt(page, 10) : 1
+  );
   const [movieResults, setMovieResults] = useState<MovieChange[]>([]);
   const [totalMovieResults, setTotalMovieResults] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,8 +63,10 @@ const PopularMovies = () => {
   return (
     <main className="flex flex-col pt-[68px] max-w-screen-xl">
       <section className="flex flex-col p-8">
-        <h1 className="text-2xl font-black mb-4 text-center">Find Your Movies</h1>
-    
+        <h1 className="text-2xl font-black mb-4 text-center">
+          Find Your Movies
+        </h1>
+
         <div className="flex flex-wrap gap-4 justify-center items-center">
           {[
             { label: 'Genre', key: 'genre', options: genreOptions },
@@ -75,15 +80,17 @@ const PopularMovies = () => {
               <SelectScrollable
                 placeholder={`Select ${label.toLowerCase()}`}
                 options={options}
-                onValueChange={(value) => handleFilterChange(key as keyof DiscoverFilters, value)}
+                onValueChange={(value) =>
+                  handleFilterChange(key as keyof DiscoverFilters, value)
+                }
               />
             </div>
           ))}
         </div>
       </section>
 
-      <section className="p-8">
-        {loading ? <p className="text-center text-lg">Loading...</p> : <MovieCards movies={movieResults} />}
+      <section className="p-8 h-screen">
+        {loading ? <Spinner /> : <MovieCards movies={movieResults} />}
       </section>
 
       <Pagination
