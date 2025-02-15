@@ -8,6 +8,7 @@ import PeopleSection from './PeopleSection';
 import usePaginatedData from '@/hooks/usePaginatedData';
 import { MovieChange, PersonChange, TVShowChange } from '@/types/types';
 import TrendingCarousel from './Carousel';
+import Spinner from './Spinner';
 
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
@@ -51,7 +52,7 @@ const MainContent = () => {
     fetchChanges();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner/>;
 
   return (
     <div className="pt-[68px] flex flex-col w-full h-full">

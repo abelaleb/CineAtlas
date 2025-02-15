@@ -1,6 +1,6 @@
 const Spinner = () => {
     return (
-      <div className="flex justify-center items-center h-32">
+      <div className="flex justify-center items-center h-full w-full ">
         <div className="relative w-14 h-14">
           {Array.from({ length: 12 }).map((_, i) => (
             <div

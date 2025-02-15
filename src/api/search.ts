@@ -22,18 +22,3 @@ export const fetchSearchData = async (
     throw err;
   }
 };
-export const searchInput = async (query: string) => {
-  try {
-    const response = await tmdb.get(`/search/multi`, {
-      params: {
-        query,
-        page: 1,
-        include_adult: false,
-        language: 'en-US',
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching searching data:', error);
-  }
-};

@@ -49,6 +49,7 @@ export interface MovieChange {
   genre_ids: Array<number>;
   id: number;
   media_type: 'movie' | 'tv' | 'person'; 
+  //eslint-disable-next-line
   [key: string]: any;
   original_language: string;
   original_title: string;
@@ -71,9 +72,11 @@ export interface searchChange {
   original_title: string;
   overview: string;
   poster_path: string;
-  media_type: 'movie' | 'tv' | 'person'; // Fixed type
+  media_type: 'movie' | 'tv' | 'person'; 
+  name: string;
   genre_ids: Array<number>;
   popularity: number;
+  profile_path:string;
   release_date: string;
   video: boolean;
   vote_average: number;

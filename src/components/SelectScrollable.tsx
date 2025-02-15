@@ -44,6 +44,7 @@ const SelectScrollable = ({
                     src={option.icon}
                     alt={option.label}
                     className="w-5 h-5"
+                    width='5px'
                   />
                 )}
               </div>

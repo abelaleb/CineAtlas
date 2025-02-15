@@ -3,21 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, FilmIcon, Tv2Icon, User } from 'lucide-react';
-import { searchInput } from '@/api/search';
-import { MovieChange, TVShowChange, PersonChange } from '@/types/types';
+import { fetchSearchData } from '@/api/search';
+import {
+  searchChange,
+} from '@/types/types';
+import { image200 } from '@/Constants/Constants';
 
 const SearchBar = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<
-    MovieChange[] | TVShowChange[] | PersonChange[]
+   searchChange[] 
   >([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   useEffect(() => {
     if (searchQuery.trim() !== '') {
       const fetchSearchResults = async () => {
-        const results = await searchInput(searchQuery);
+        const results = await fetchSearchData(searchQuery);
         setSearchResults(results.results);
       };
       fetchSearchResults();
@@ -63,7 +66,6 @@ const SearchBar = () => {
               onMouseDown={(e) => e.preventDefault()} // Prevents input blur when clicking
             >
               <div className="flex items-center space-x-2">
-                <span className="font-normal">{result.title || result.name}</span>
                 <span className="text-sm text-muted-foreground">
                   {result.media_type === 'movie' ? (
                     <FilmIcon />
@@ -71,7 +73,33 @@ const SearchBar = () => {
                     <Tv2Icon />
                   ) : (
                     <User />
-                  )}
+                  )}{' '}
+                </span>
+                <span className="font-normal">
+                  {result.title || result.name}
+                </span>
+                <span>{result.release_date}</span>
+                <span>
+                  {result.backdrop_path ? (
+                    <img
+                      src={image200 + result.backdrop_path}
+                      alt="image"
+                      width="100px"
+                      height="100%"
+                    />
+                  ) : result.poster_path ? (
+                    <img
+                      src={image200 + result.poster_path}
+                      alt="image"
+                      width="100px"
+                      height="100%"
+                    />
+                  ) : result.profile_path?(<img
+                    src={image200 + result.profile_path}
+                    alt="image"
+                    width="100px"
+                    height="100%"
+                  />): null}
                 </span>
               </div>
             </a>
