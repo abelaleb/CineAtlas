@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { fetchSearchData } from '@/api/search';
-import { fetchDiscoverData } from '@/api/discover';
 import {
   MovieChange,
   PersonChange,
@@ -9,15 +8,7 @@ import {
   TVShowChange,
 } from '@/types/types';
 import { useEffect, useState } from 'react';
-import SelectScrollable from '@/components/SelectScrollable';
 import Pagination from '@/components/Pagination';
-import {
-  sortOptions,
-  genreOptions,
-  ratingOptions,
-  yearOptions,
-  languageOptions,
-} from '@/Constants/dropdownOptions';
 import {
   Select,
   SelectContent,
@@ -35,7 +26,7 @@ const BrowseSearchPage = () => {
   // Use useSearchParams to get the current query from the URL
   const [searchParams, setSearchParams] = useSearchParams();
   const initialQuery = searchParams.get('query') || '';
-  
+
   // State variables
   const [query, setQuery] = useState<string>(initialQuery);
   const [searchCategory, setSearchCategory] = useState<string>('all');
@@ -46,34 +37,6 @@ const BrowseSearchPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [triggerSearch, setTriggerSearch] = useState<boolean>(false);
-
-  // Filter state variables for movies/tv shows
-  const [selectedGenre, setSelectedGenre] = useState<string>('');
-  const [selectedRating, setSelectedRating] = useState<string>('');
-  const [selectedYear, setSelectedYear] = useState<string>('');
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
-  const [selectedOrder, setSelectedOrder] = useState<string>('');
-
-  // Handlers for filter changes
-  const handleGenreChange = (value: string) => {
-    setSelectedGenre(value);
-  };
-
-  const handleRatingChange = (value: string) => {
-    setSelectedRating(value);
-  };
-
-  const handleYearChange = (value: string) => {
-    setSelectedYear(value);
-  };
-
-  const handleLanguageChange = (value: string) => {
-    setSelectedLanguage(value);
-  };
-
-  const handleOrderChange = (value: string) => {
-    setSelectedOrder(value);
-  };
 
   useEffect(() => {
     const urlQuery = searchParams.get('query') || '';
@@ -86,46 +49,35 @@ const BrowseSearchPage = () => {
       setLoading(true);
       try {
         if (query.trim() && searchCategory === 'all') {
-          const response = await fetchSearchData(query.trim(), currentPage, 'multi');
-          setSearchResults(response.results);
-          setTotalResults(response.total_results);
-        } else if (
-          query.trim() &&
-          searchCategory !== 'all' &&
-          searchCategory !== 'person'
-        ) {
-          const response = await fetchDiscoverData(
-            searchCategory as 'movie' | 'tv',
+          const response = await fetchSearchData(
+            query.trim(),
             currentPage,
-            {
-              genre: selectedGenre,
-              year: selectedYear,
-              rating: selectedRating,
-              language: selectedLanguage,
-              sort_by: selectedOrder,
-            }
+            'multi'
           );
           setSearchResults(response.results);
           setTotalResults(response.total_results);
-        } else if (
-          !query.trim() &&
-          (searchCategory === 'movie' || searchCategory === 'tv')
-        ) {
-          const response = await fetchDiscoverData(
-            searchCategory as 'movie' | 'tv',
+        } else if (searchCategory === 'movie') {
+          const response = await fetchSearchData(
+            query.trim(),
             currentPage,
-            {
-              genre: selectedGenre,
-              year: selectedYear,
-              rating: selectedRating,
-              language: selectedLanguage,
-              sort_by: selectedOrder,
-            }
+            'movie'
+          );
+          setSearchResults(response.results);
+          setTotalResults(response.total_results);
+        } else if (searchCategory === 'tv') {
+          const response = await fetchSearchData(
+            query.trim(),
+            currentPage,
+            'tv'
           );
           setSearchResults(response.results);
           setTotalResults(response.total_results);
         } else if (searchCategory === 'person') {
-          const response = await fetchSearchData(query.trim(), currentPage, 'person');
+          const response = await fetchSearchData(
+            query.trim(),
+            currentPage,
+            'person'
+          );
           setSearchResults(response.results);
           setTotalResults(response.total_results);
         }
@@ -141,11 +93,6 @@ const BrowseSearchPage = () => {
     currentPage,
     triggerSearch,
     query,
-    selectedGenre,
-    selectedRating,
-    selectedYear,
-    selectedLanguage,
-    selectedOrder,
   ]);
 
   // Update URL and trigger search when a new search is performed
@@ -196,51 +143,6 @@ const BrowseSearchPage = () => {
           </Button>
         </div>
       </div>
-
-      {(searchCategory === 'movie' || searchCategory === 'tv') && (
-        <div className="flex w-full gap-4 justify-center items-center">
-          <div className="p-4 rounded-md">
-            <h2 className="font-semibold mb-2">Genre:</h2>
-            <SelectScrollable
-              placeholder="Select genre"
-              options={genreOptions}
-              onValueChange={handleGenreChange}
-            />
-          </div>
-          <div className="p-4 rounded-md">
-            <h2 className="font-semibold mb-2">Ratings:</h2>
-            <SelectScrollable
-              placeholder="Select rating"
-              options={ratingOptions}
-              onValueChange={handleRatingChange}
-            />
-          </div>
-          <div className="p-4 rounded-md">
-            <h2 className="font-semibold mb-2">Year:</h2>
-            <SelectScrollable
-              placeholder="Select year"
-              options={yearOptions}
-              onValueChange={handleYearChange}
-            />
-          </div>
-          <div className="p-4 rounded-md">
-            <h2 className="font-semibold mb-2">Language:</h2>
-            <SelectScrollable
-              placeholder="Select language"
-              options={languageOptions}
-              onValueChange={handleLanguageChange}
-            />
-          </div>
-          <div className="p-4 rounded-md">
-            <h2 className="font-semibold mb-2">Ordered by:</h2>
-            <SelectScrollable
-              placeholder="Select order"
-              options={sortOptions}
-              onValueChange={handleOrderChange}
-            />
-          </div>
-        </div>
-      )}
 
       <div className="w-full">
         {loading && (
