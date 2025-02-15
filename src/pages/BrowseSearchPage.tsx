@@ -11,7 +11,6 @@ import {
 import { useEffect, useState } from 'react';
 import SelectScrollable from '@/components/SelectScrollable';
 import Pagination from '@/components/Pagination';
-
 import {
   sortOptions,
   genreOptions,
@@ -30,60 +29,64 @@ import {
 } from '@/components/ui/select';
 import DynamicCard from '@/components/DynamicCard';
 import Spinner from '@/components/Spinner';
+import { useSearchParams } from 'react-router-dom';
 
 const BrowseSearchPage = () => {
-  const [query, setQuery] = useState<string>('');
+  // Use useSearchParams to get the current query from the URL
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialQuery = searchParams.get('query') || '';
+  
+  // State variables
+  const [query, setQuery] = useState<string>(initialQuery);
   const [searchCategory, setSearchCategory] = useState<string>('all');
   const [searchResults, setSearchResults] = useState<
     searchChange[] | MovieChange[] | TVShowChange[] | PersonChange[]
   >([]);
-
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalResults, setTotalResults] = useState<number>(0);
   const [triggerSearch, setTriggerSearch] = useState<boolean>(false);
 
+  // Filter state variables for movies/tv shows
   const [selectedGenre, setSelectedGenre] = useState<string>('');
   const [selectedRating, setSelectedRating] = useState<string>('');
   const [selectedYear, setSelectedYear] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('');
   const [selectedOrder, setSelectedOrder] = useState<string>('');
 
+  // Handlers for filter changes
   const handleGenreChange = (value: string) => {
     setSelectedGenre(value);
-    // console.log('Selected genre:', value);
   };
 
   const handleRatingChange = (value: string) => {
     setSelectedRating(value);
-    console.log('Selected rating:', value);
   };
 
   const handleYearChange = (value: string) => {
     setSelectedYear(value);
-    console.log('Selected year:', value);
   };
 
   const handleLanguageChange = (value: string) => {
     setSelectedLanguage(value);
-    console.log('Selected language:', value);
   };
 
   const handleOrderChange = (value: string) => {
     setSelectedOrder(value);
-    console.log('Selected order:', value);
   };
+
+  useEffect(() => {
+    const urlQuery = searchParams.get('query') || '';
+    setQuery(urlQuery);
+    setCurrentPage(1);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchResults = async () => {
       setLoading(true);
       try {
         if (query.trim() && searchCategory === 'all') {
-          const response = await fetchSearchData(
-            query.trim(),
-            currentPage,
-            'multi'
-          );
+          const response = await fetchSearchData(query.trim(), currentPage, 'multi');
           setSearchResults(response.results);
           setTotalResults(response.total_results);
         } else if (
@@ -122,11 +125,7 @@ const BrowseSearchPage = () => {
           setSearchResults(response.results);
           setTotalResults(response.total_results);
         } else if (searchCategory === 'person') {
-          const response = await fetchSearchData(
-            query.trim(),
-            currentPage,
-            'person'
-          );
+          const response = await fetchSearchData(query.trim(), currentPage, 'person');
           setSearchResults(response.results);
           setTotalResults(response.total_results);
         }
@@ -149,9 +148,11 @@ const BrowseSearchPage = () => {
     selectedOrder,
   ]);
 
+  // Update URL and trigger search when a new search is performed
   const handleSearch = () => {
     setCurrentPage(1);
     setTriggerSearch((prev) => !prev);
+    setSearchParams({ query });
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -161,7 +162,7 @@ const BrowseSearchPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[100%] gap-4 justify-top items-center  pt-[68px]">
+    <div className="flex flex-col w-full h-[100%] gap-4 justify-top items-center pt-[68px]">
       <div className="flex justify-center items-center w-3/4 pt-10 gap-4">
         <div>Search Items :</div>
         <div className="flex h-[32px] justify-center items-center">
@@ -181,12 +182,13 @@ const BrowseSearchPage = () => {
           </Select>
         </div>
 
-        <div className="flex gap-2 justify-center items-center  ">
+        <div className="flex gap-2 justify-center items-center">
           <Input
             type="text"
             placeholder={`Search ${searchCategory}...`}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyPress}
+            value={query}
             style={{ width: '300px', height: '32px' }}
           />
           <Button onClick={handleSearch} disabled={loading}>
@@ -195,9 +197,9 @@ const BrowseSearchPage = () => {
         </div>
       </div>
 
-      {(searchCategory == 'movie' || searchCategory == 'tv') && (
-        <div className="flex w-full gap-4 justify-center items-center ">
-          <div className=" p-4 rounded-md">
+      {(searchCategory === 'movie' || searchCategory === 'tv') && (
+        <div className="flex w-full gap-4 justify-center items-center">
+          <div className="p-4 rounded-md">
             <h2 className="font-semibold mb-2">Genre:</h2>
             <SelectScrollable
               placeholder="Select genre"
@@ -205,7 +207,7 @@ const BrowseSearchPage = () => {
               onValueChange={handleGenreChange}
             />
           </div>
-          <div className=" p-4 rounded-md">
+          <div className="p-4 rounded-md">
             <h2 className="font-semibold mb-2">Ratings:</h2>
             <SelectScrollable
               placeholder="Select rating"
@@ -213,7 +215,7 @@ const BrowseSearchPage = () => {
               onValueChange={handleRatingChange}
             />
           </div>
-          <div className=" p-4 rounded-md">
+          <div className="p-4 rounded-md">
             <h2 className="font-semibold mb-2">Year:</h2>
             <SelectScrollable
               placeholder="Select year"
@@ -221,7 +223,7 @@ const BrowseSearchPage = () => {
               onValueChange={handleYearChange}
             />
           </div>
-          <div className=" p-4 rounded-md">
+          <div className="p-4 rounded-md">
             <h2 className="font-semibold mb-2">Language:</h2>
             <SelectScrollable
               placeholder="Select language"
@@ -229,7 +231,7 @@ const BrowseSearchPage = () => {
               onValueChange={handleLanguageChange}
             />
           </div>
-          <div className=" p-4 rounded-md">
+          <div className="p-4 rounded-md">
             <h2 className="font-semibold mb-2">Ordered by:</h2>
             <SelectScrollable
               placeholder="Select order"
@@ -240,14 +242,17 @@ const BrowseSearchPage = () => {
         </div>
       )}
 
-      <div className="w-full ">
-      {loading && <section className="p-8 h-screen"><Spinner /></section> }
+      <div className="w-full">
+        {loading && (
+          <section className="p-8 h-screen">
+            <Spinner />
+          </section>
+        )}
         {!loading && searchResults.length > 0 && (
           <>
             <div className="flex flex-wrap gap-2 justify-center">
               {searchResults.map((result) => {
                 const cardMediaType = result.media_type || searchCategory;
-
                 return (
                   <DynamicCard
                     key={result.id}
@@ -265,7 +270,6 @@ const BrowseSearchPage = () => {
             />
           </>
         )}
-
         {!loading && searchResults.length === 0 && <div>No results found.</div>}
       </div>
     </div>
