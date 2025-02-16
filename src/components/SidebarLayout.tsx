@@ -8,16 +8,16 @@ import {
 } from './ui/sidebar';
 import { NavLink } from 'react-router-dom';
 import { Home, Search, Dices, Film, Tv} from 'lucide-react';
-import logo from '@/assets/images/logo.svg';
+import logo from '../../public/logo.svg';
 
 export default function SidebarLayout() {
   const { state } = useSidebar();
   const sidebarItems = [
     { title: 'Home', url: '/', icon: Home },
     { title: 'Browse', url: '/search', icon: Search },
-    { title: 'Trending', url: '/trending', icon: Dices },
     { title: 'Movies', url: '/movies', icon: Film },
     { title: 'TV Shows', url: '/tvshows', icon: Tv },
+    { title: 'Random', url: '/random', icon: Dices },
   ];
 
   return (

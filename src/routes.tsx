@@ -7,8 +7,8 @@ import PopularMovies from './pages/PopularMovies';
 import TvDetailsPage from './pages/TvDetailsPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import PopularTvShows from './pages/PopularTvShows';
-import SpinPage from './pages/SpinPage';
-import Home from './components/Home';
+import Home from './pages/Home';
+import RandomTitlesPage from './pages/RandomTitlePage';
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -24,7 +24,7 @@ const routes: RouteObject[] = [
       { path: 'tvshows', element: <PopularTvShows /> },
       { path: 'movie/:movieId', element: <MovieDetailsPage /> },
       { path: 'tv/:series_id', element: <TvDetailsPage /> },
-      { path: 'spin', element: <SpinPage /> },
+      { path: 'random', element: <RandomTitlesPage /> },
       { path: 'person/:personId', element: <PersonDetailsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

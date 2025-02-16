@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { getTrendingMovies } from '@/api/movies';
 import { getTrendingPeople } from '@/api/people';
 import { getTrendingTvShows } from '@/api/tvShows';
-import MoviesSection from './MoviesSection';
-import TVShowsSection from './TVShowsSection';
-import PeopleSection from './PeopleSection';
+import MoviesSection from '../components/MoviesSection';
+import TVShowsSection from '../components/TVShowsSection';
+import PeopleSection from '../components/PeopleSection';
 import usePaginatedData from '@/hooks/usePaginatedData';
 import { MovieChange, PersonChange, TVShowChange } from '@/types/types';
-import TrendingCarousel from './Carousel';
-import Spinner from './Spinner';
+import TrendingCarousel from '../components/Carousel';
+import Spinner from '../components/Spinner';
 
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
