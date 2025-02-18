@@ -8,7 +8,7 @@ import {
 } from './ui/sidebar';
 import { NavLink } from 'react-router-dom';
 import { Home, Search, Dices, Film, Tv} from 'lucide-react';
-import logo from '../../public/logo.svg';
+import logo from '@/assets/images/logo.svg';
 
 export default function SidebarLayout() {
   const { state } = useSidebar();
