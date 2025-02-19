@@ -4,7 +4,7 @@ import logo from '@/assets/images/logo.svg';
 const Logo = () => {
   return (
     <Link to="/">
-      <div className="flex items-center justify-center gap-1 pl-8 text-center group transition-transform duration-200 hover:scale-105 active:scale-95">
+      <div className="flex items-center justify-center gap-1 text-center group transition-transform duration-200 hover:scale-105 active:scale-95">
         <img
           src={logo}
           alt="logo"

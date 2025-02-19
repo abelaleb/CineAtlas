@@ -1,21 +1,21 @@
 // src/components/Navbar.tsx
-import SidebarToggle from './Navbar/SidebarToggle';
-import Logo from './Navbar/Logo';
-import SearchBar from './Navbar/SearchBar';
-import ThemeToggle from './Navbar/ThemeToggle';
+import SidebarToggle from "./Navbar/SidebarToggle";
+import Logo from "./Navbar/Logo";
+import SearchBar from "./Navbar/SearchBar";
+import ThemeToggle from "./Navbar/ThemeToggle";
 
 const Navbar = () => {
   return (
-    <div className="grid grid-cols-4 items-center justify-between p-4 bg-secondary">
-      <div className="flex items-center gap-4">
-        <SidebarToggle />
+    <div className="flex py-3 bg-secondary gap-4 md:gap-24">
+      <div className="flex items-center justify-start gap-4 ">
+       <SidebarToggle />
         <Logo />
       </div>
-      <div className="flex items-center justify-between col-span-3 px-4">
-        <div className="w-8/12">
+      <div className="flex justify-end flex-1 items-center  gap-4 md:flex-1 md:justify-between ">
+        <div className="flex p-1 md:flex-1 md:max-w-[600px] lg:max-w-[800px]">
           <SearchBar />
         </div>
-        <div className="flex">
+        <div className="flex p-1 pr-4">
           <ThemeToggle />
         </div>
       </div>
