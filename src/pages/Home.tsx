@@ -55,7 +55,7 @@ const MainContent = () => {
   if (loading) return <Spinner/>;
 
   return (
-    <div className="pt-[68px] flex flex-col w-full h-full">
+    <div className="pt-[56px] flex flex-col w-full h-full">
       <div className="flex w-full ">
         <TrendingCarousel />
       </div>

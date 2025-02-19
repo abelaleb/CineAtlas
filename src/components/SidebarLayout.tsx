@@ -23,9 +23,9 @@ export default function SidebarLayout() {
   return (
     <Sidebar
       collapsible="icon"
-      className="fixed left-0 top-0 h-full pt-[68px] z-60 border-r border-gray-800"
+      className="fixed left-0 top-0 h-full pt-[56px] z-60 border-r border-gray-800"
       style={{
-        transition: 'width 0.2s',
+        transition: 'width 0.1s',
         width: state === 'collapsed' ? '3rem' : '16rem',
       }}
     >

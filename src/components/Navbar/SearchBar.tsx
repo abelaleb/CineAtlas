@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Search, FilmIcon, Tv2Icon, User } from 'lucide-react';
-import { fetchSearchData } from '@/api/search';
-import { searchChange } from '@/types/types';
-import { image200 } from '@/Constants/Constants';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search, FilmIcon, Tv2Icon, User } from "lucide-react";
+import { fetchSearchData } from "@/api/search";
+import { searchChange } from "@/types/types";
+import { image200 } from "@/Constants/Constants";
 
 const SearchBar = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<searchChange[]>([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(true);
 
   useEffect(() => {
-    if (searchQuery.trim() !== '') {
+    if (searchQuery.trim() !== "") {
       const fetchSearchResults = async () => {
         const results = await fetchSearchData(searchQuery);
         setSearchResults(results.results);
@@ -29,13 +29,12 @@ const SearchBar = () => {
   const handleSearchSubmit = () => {
     if (searchQuery.trim()) {
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
-      setIsMobileSearchOpen(false); 
+      setIsMobileSearchOpen(false);
     }
   };
 
-
   const searchInputSection = (
-    <section className="flex md:flex-1 md:w-8/12">
+    <section className="flex md:flex-1 md:w-8/12 sm:flex-1 w-[100%] ">
       <Input
         type="text"
         placeholder="Search..."
@@ -54,62 +53,56 @@ const SearchBar = () => {
       </Button>
     </section>
   );
-  
 
-  const searchResultsDropdown = (
-    isSearchFocused &&
-    searchResults.length > 0 && (
-      <div className="absolute top-full left-0 w-full mt-2 bg-background border border-primary rounded-lg shadow-lg z-50">
-        {searchResults.map((result) => (
-          <a
-            key={result.id}
-            href={`/${result.media_type}/${result.id}`}
-            className="block p-2 hover:bg-accent transition-colors duration-200 cursor-pointer"
-            onMouseDown={(e) => e.preventDefault()} // Prevent input blur when clicking
-          >
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground">
-                {result.media_type === 'movie' ? (
-                  <FilmIcon />
-                ) : result.media_type === 'tv' ? (
-                  <Tv2Icon />
-                ) : (
-                  <User />
-                )}
-              </span>
-              <span className="font-normal">
-                {result.title || result.name}
-              </span>
-              <span>{result.release_date}</span>
-              <span>
-                {result.backdrop_path ? (
-                  <img
-                    src={image200 + result.backdrop_path}
-                    alt="image"
-                    width="100px"
-                    height="100%"
-                  />
-                ) : result.poster_path ? (
-                  <img
-                    src={image200 + result.poster_path}
-                    alt="image"
-                    width="100px"
-                    height="100%"
-                  />
-                ) : result.profile_path ? (
-                  <img
-                    src={image200 + result.profile_path}
-                    alt="image"
-                    width="100px"
-                    height="100%"
-                  />
-                ) : null}
-              </span>
-            </div>
-          </a>
-        ))}
-      </div>
-    )
+  const searchResultsDropdown = isSearchFocused && searchResults.length > 0 && (
+    <div className="absolute top-full left-0 w-full mt-2 bg-background border border-primary rounded-lg shadow-lg z-50">
+      {searchResults.map((result) => (
+        <a
+          key={result.id}
+          href={`/${result.media_type}/${result.id}`}
+          className="block p-2 hover:bg-accent transition-colors duration-200 cursor-pointer"
+          onMouseDown={(e) => e.preventDefault()} 
+        >
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-muted-foreground">
+              {result.media_type === "movie" ? (
+                <FilmIcon />
+              ) : result.media_type === "tv" ? (
+                <Tv2Icon />
+              ) : (
+                <User />
+              )}
+            </span>
+            <span className="font-normal">{result.title || result.name}</span>
+            <span>{result.release_date}</span>
+            <span>
+              {result.backdrop_path ? (
+                <img
+                  src={image200 + result.backdrop_path}
+                  alt="image"
+                  width="100px"
+                  height="100%"
+                />
+              ) : result.poster_path ? (
+                <img
+                  src={image200 + result.poster_path}
+                  alt="image"
+                  width="100px"
+                  height="100%"
+                />
+              ) : result.profile_path ? (
+                <img
+                  src={image200 + result.profile_path}
+                  alt="image"
+                  width="100px"
+                  height="100%"
+                />
+              ) : null}
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
   );
 
   return (
@@ -125,11 +118,15 @@ const SearchBar = () => {
         </Button>
       </div>
 
-      {/* Mobile View: Show the search input below the header when the button is clicked */}
       {isMobileSearchOpen && (
-        <div className="sm:hidden bg-secondary p-4 relative">
-          {searchInputSection}
-          {searchResultsDropdown}
+        <div className=" bg-secondary p-3 fixed top-0 left-0  w-full z-10">
+          <div className="flex w-full justify-between gap-4">
+            {searchInputSection}
+            {searchResultsDropdown}
+            <Button onClick={() => setIsMobileSearchOpen((prev) => !prev)}>
+              X
+            </Button>
+          </div>
         </div>
       )}
     </div>
