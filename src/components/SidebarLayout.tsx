@@ -1,7 +1,10 @@
+"use client";
+
+import type React from "react";
+
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarMenu,
   SidebarMenuItem,
   useSidebar,
@@ -13,7 +16,7 @@ import SidebarToggle from "./Navbar/SidebarToggle";
 import { useEffect, useRef } from "react";
 
 export function SidebarLayout() {
-  const { state } = useSidebar();
+  const { state, isMobile } = useSidebar();
   const sidebarItems = [
     { title: "Home", url: "/", icon: Home },
     { title: "Browse", url: "/search", icon: Search },
@@ -25,62 +28,70 @@ export function SidebarLayout() {
   return (
     <Sidebar
       collapsible="icon"
-      className="fixed left-0 top-0 h-full pt-[56px] z-60 border-r border-gray-800"
-      style={{
-        transition: "width 0.1s",
-        width: state === "collapsed" ? "3rem" : "16rem",
-      }}
+      className={`fixed left-0 top-0 h-full pt-[56px] z-60 border-r border-gray-800 bg-white shadow-lg will-change-transform
+        ${
+          isMobile
+            ? "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] transform  "
+            : "transition-[width,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        }
+        ${state === "collapsed" ? "w-12 translate-x-0" : "w-48 translate-x-0"}
+        ${isMobile && state === "collapsed" && "-translate-x-full "}
+      
+      `} //fix the sidebar transiton when in mobile view
     >
-      <SidebarContent className="col-span-3 ">
+      <SidebarContent className="col-span-3 overflow-hidden">
         <SidebarMenu className="gap-0 p-0 m-0">
-          <SidebarMenuItem
-            className={`h-[56px] bg-secondary md:hidden flex items-center justify-start transition duration-300 ease-in-out gap-4 lg:gap-8 `}
-          >
-            <SidebarToggle />
-            <Link to="/">
-              <div className="flex items-center justify-center gap-1 text-center group transition-transform duration-200 hover:scale-105 active:scale-95">
-                <img
-                  src={logo}
-                  alt="logo"
-                  className="h-6 w-6 transition-transform duration-200 group-hover:rotate-12"
-                />
-                <div className="text-lg font-bold transition-colors duration-200 group-hover:text-primary">
-                  CineAtlas
+          <SidebarMenuItem className="pt-1 pb-1 bg-secondary md:hidden">
+            <div className="flex items-center gap-4 lg:gap-8 justify-start w-full transition-opacity duration-300 ease-in-out">
+              <SidebarToggle />
+              <Link to="/">
+                <div className="flex items-center gap-1 group transition-all duration-300 ease-in-out hover:scale-105 active:scale-95">
+                  <img
+                    src={logo || "/placeholder.svg"}
+                    alt="logo"
+                    className="h-6 w-6 transition-transform duration-300 group-hover:rotate-12"
+                  />
+                  <div className="text-lg font-bold transition-colors duration-300 group-hover:text-primary">
+                    CineAtlas
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </SidebarMenuItem>
           {sidebarItems.map((item, index) => (
             <SidebarMenuItem key={index}>
               <NavLink
                 to={item.url}
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-3 p-3 transition duration-300 ease-in-out ${
+                  `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]
+                  ${
                     isActive
                       ? "bg-gray-800 text-white"
-                      : "hover:bg-gray-200 hover:text-gray-900 "
+                      : "hover:bg-gray-200 hover:text-gray-900"
                   }`
                 }
               >
-                <item.icon className="h-6 w-6" />
-                {state === "expanded" && (
-                  <div className="font-semibold">{item.title}</div>
-                )}
+                <item.icon className="h-6 w-6 min-w-6 transition-transform duration-300" />
+                <span
+                  className={`font-normal whitespace-nowrap transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]
+                    ${
+                      !isMobile && state === "collapsed"
+                        ? "opacity-0 -translate-x-4"
+                        : "opacity-100 translate-x-0"
+                    }
+                  `}
+                >
+                  {item.title}
+                </span>
               </NavLink>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="p-4">
-        {state === "expanded" ? (
-          <p className="text-sm text-gray-500">© 2024 CineAtlas</p>
-        ) : (
-          <img src={logo} alt="logo" className="h-6 w-6" />
-        )}
-      </SidebarFooter>
     </Sidebar>
   );
 }
+
 export function ClickOutsideWrapper({
   children,
 }: {
