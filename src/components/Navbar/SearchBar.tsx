@@ -12,7 +12,7 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<searchChange[]>([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(true);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   useEffect(() => {
     if (searchQuery.trim() !== "") {
@@ -119,7 +119,7 @@ const SearchBar = () => {
       </div>
 
       {isMobileSearchOpen && (
-        <div className=" bg-secondary p-3 fixed top-0 left-0  w-full z-10">
+        <div className=" bg-secondary p-2 fixed top-0 left-0  w-full z-10">
           <div className="flex w-full justify-between gap-4">
             {searchInputSection}
             {searchResultsDropdown}
