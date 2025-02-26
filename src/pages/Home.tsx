@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { getTrendingMovies } from "@/api/movies";
 import { getTrendingPeople } from "@/api/people";
 import { getTrendingTvShows } from "@/api/tvShows";
-// import MoviesSection from "../components/MoviesSection";
 import TVShowsSection from "../components/TVShowsSection";
 import PeopleSection from "../components/PeopleSection";
 import usePaginatedData from "@/hooks/usePaginatedData";
 import { MovieChange, PersonChange, TVShowChange } from "@/types/types";
 import Spinner from "../components/Spinner";
 import MovieSection from "@/components/MovieSection";
+import TrendingCarousel from "@/components/ui/TrendingCarousel";
 
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
@@ -54,18 +54,11 @@ const MainContent = () => {
   if (loading) return <Spinner />;
   return (
     <div className="pt-[56px] flex flex-col h-full">
-      <div className=""></div>
+      <div className="">
+        <TrendingCarousel />
+      </div>
       <div className="flex flex-col justify-center ">
-        {/* <ScrollableMoviesSection movies={movies} /> */}
         <MovieSection movies={movies} />
-        {/* <MoviesSection
-          movies={movies}
-          currentMovies={currentMovies}
-          currentPage={currentMoviePage}
-          setCurrentPage={setCurrentMoviePage}
-          postPerPage={postPerPage}
-        /> */}
-
         <TVShowsSection
           tvShows={tvShows}
           currentTvShows={currentTvShows}
