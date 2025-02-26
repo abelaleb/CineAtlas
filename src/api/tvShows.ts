@@ -3,7 +3,7 @@ import { PaginatedResponse, TVShowChange } from '@/types/types';
 import { handleResponse } from './responseHandler';
 
 export const getTrendingTvShows = async (page = 1): Promise<PaginatedResponse<TVShowChange>> => {
-  const response = await tmdb.get(`trending/tv/day`, {
+  const response = await tmdb.get(`trending/tv/week`, {
     params: { page, include_adult: false },
   });
   return handleResponse(response);

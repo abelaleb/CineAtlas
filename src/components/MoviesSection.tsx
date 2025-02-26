@@ -1,7 +1,7 @@
-import React from 'react';
-import { MovieChange } from '@/types/types';
-import { MovieCards } from './Cards';
-import Pagination from './Pagination';
+import React from "react";
+import { MovieChange } from "@/types/types";
+import { MovieCards } from "./Cards";
+import Pagination from "./Pagination";
 
 interface MoviesSectionProps {
   movies: MovieChange[];
@@ -19,11 +19,15 @@ const MoviesSection: React.FC<MoviesSectionProps> = ({
   postPerPage,
 }) => {
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center w-full ">
       <div className="p-4">
         <h1 className="text-2xl font-bold text-center">Trending Movies</h1>
       </div>
-      <MovieCards movies={currentMovies} />
+      <div className="w-full overflow-hidden" >
+        <div className="flex">
+          <MovieCards movies={currentMovies} />
+        </div>
+      </div>
       <Pagination
         totalPosts={movies.length}
         postsPerPage={postPerPage}

@@ -1,4 +1,4 @@
-import TrendingCarousel from './Carousel';
+import TrendingCarousel from './HeroSectionCarousel';
 const Header = () => {
   
   return (

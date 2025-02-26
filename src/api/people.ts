@@ -5,7 +5,7 @@ import { handleResponse } from './responseHandler';
 export const getTrendingPeople = async (
   page = 1
 ): Promise<PaginatedResponse<PersonChange>> => {
-  const response = await tmdb.get(`trending/person/day`, {
+  const response = await tmdb.get(`trending/person/week`, {
     params: { page, include_adult: false },
   });
   return handleResponse(response);

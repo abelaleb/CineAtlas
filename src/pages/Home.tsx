@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
-import { getTrendingMovies } from '@/api/movies';
-import { getTrendingPeople } from '@/api/people';
-import { getTrendingTvShows } from '@/api/tvShows';
-import MoviesSection from '../components/MoviesSection';
-import TVShowsSection from '../components/TVShowsSection';
-import PeopleSection from '../components/PeopleSection';
-import usePaginatedData from '@/hooks/usePaginatedData';
-import { MovieChange, PersonChange, TVShowChange } from '@/types/types';
-import TrendingCarousel from '../components/Carousel';
-import Spinner from '../components/Spinner';
-
+import { useState, useEffect } from "react";
+import { getTrendingMovies } from "@/api/movies";
+import { getTrendingPeople } from "@/api/people";
+import { getTrendingTvShows } from "@/api/tvShows";
+import MoviesSection from "../components/MoviesSection";
+import TVShowsSection from "../components/TVShowsSection";
+import PeopleSection from "../components/PeopleSection";
+import usePaginatedData from "@/hooks/usePaginatedData";
+import { MovieChange, PersonChange, TVShowChange } from "@/types/types";
+import Spinner from "../components/Spinner";
+import HeroSectionCarousel from "../components/HeroSectionCarousel";
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
@@ -44,22 +43,21 @@ const MainContent = () => {
         setTvShows(tvData.results || []);
         setPeople(personData.results || []);
       } catch (err) {
-        console.error('Error fetching data:', err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
     };
     fetchChanges();
   }, []);
-
-  if (loading) return <Spinner/>;
-
+  if (loading) return <Spinner />;
   return (
-    <div className="pt-[56px] flex flex-col w-full h-full">
-      <div className="flex w-full ">
-        <TrendingCarousel />
+    <div className="pt-[56px] flex flex-col h-full">
+      <div className="">
+        <HeroSectionCarousel /> 
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center ">
+        {/* <ScrollableMoviesSection movies={movies} /> */}
         <MoviesSection
           movies={movies}
           currentMovies={currentMovies}
