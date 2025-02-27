@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { getTrendingMovies } from "@/api/movies";
 import { getTrendingPeople } from "@/api/people";
 import { getTrendingTvShows } from "@/api/tvShows";
-import TVShowsSection from "../components/TVShowsSection";
+import TVShowsSection from "@/components/TVShowsSection";
 import PeopleSection from "../components/PeopleSection";
-import usePaginatedData from "@/hooks/usePaginatedData";
 import { MovieChange, PersonChange, TVShowChange } from "@/types/types";
 import Spinner from "../components/Spinner";
 import MovieSection from "@/components/MovieSection";
@@ -15,20 +14,6 @@ const MainContent = () => {
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
   const [people, setPeople] = useState<PersonChange[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  // const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
-  const [currentTvPage, setCurrentTvPage] = useState<number>(1);
-  const [currentPeoplePage, setCurrentPeoplePage] = useState<number>(1);
-
-  const postPerPage = 6;
-
-  // const currentMovies = usePaginatedData(movies, postPerPage, currentMoviePage);
-  const currentTvShows = usePaginatedData(tvShows, postPerPage, currentTvPage);
-  const currentPeople = usePaginatedData(
-    people,
-    postPerPage,
-    currentPeoplePage
-  );
 
   useEffect(() => {
     const fetchChanges = async () => {
@@ -57,23 +42,10 @@ const MainContent = () => {
       <div className="">
         <TrendingCarousel />
       </div>
-      <div className="flex flex-col justify-center ">
+      <div className="flex flex-col justify-center md:w-[calc(100vw-4rem)] ">
         <MovieSection movies={movies} />
-        <TVShowsSection
-          tvShows={tvShows}
-          currentTvShows={currentTvShows}
-          currentPage={currentTvPage}
-          setCurrentPage={setCurrentTvPage}
-          postPerPage={postPerPage}
-        />
-
-        <PeopleSection
-          people={people}
-          currentPeople={currentPeople}
-          currentPage={currentPeoplePage}
-          setCurrentPage={setCurrentPeoplePage}
-          peoplePostPerPage={postPerPage}
-        />
+        <TVShowsSection tvShows={tvShows} />
+        <PeopleSection people={people} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -7,45 +7,23 @@ import { image200 } from "@/Constants/Constants";
 import { MovieChange } from "@/types/types";
 import { Star, Clapperboard, Image as ImageIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useSidebar } from "./ui/sidebar";
-import { Mousewheel, Pagination } from "swiper/modules";
 
-interface ScrollableMoviesSectionProps {
+interface MovieSectionProps {
   movies: MovieChange[];
 }
 
-const ScrollableMoviesSection: React.FC<ScrollableMoviesSectionProps> = ({
-  movies,
-}) => {
-  // const { state } = useSidebar();
-  // const [width, setWidth] = React.useState<string>("calc(100vw-16rem)");
+const MovieSection: React.FC<MovieSectionProps> = ({ movies }) => {
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   setWidth("calc(100vw - 4rem)");
-  // }, [state]);
-
   const handleClick = (movieId: number) => {
     navigate(`/movie/${movieId}`);
   };
 
   return (
-    <div
-      className="pt-4 w-[calc(100vw-4rem)]"
-      style={
-        {
-          // width: width,
-        }
-      }
-    >
-      <h1 className="text-2xl font-bold text-center mb-4">Trending Movies</h1>
-      <Swiper
-        freeMode={false}
-        spaceBetween={0}
-        slidesPerView="auto"
-        mousewheel={true}
-        modules={[Mousewheel, Pagination]}
-      >
+    <div className="pt-4">
+      <h1 className="text-2xl font-bold text-start pl-10 m-4">
+        Trending Movies
+      </h1>
+      <Swiper freeMode={false} spaceBetween={8} slidesPerView="auto">
         {movies.map((movie) => (
           <SwiperSlide key={movie.id} style={{ width: "210px" }}>
             <Card
@@ -99,4 +77,4 @@ const ScrollableMoviesSection: React.FC<ScrollableMoviesSectionProps> = ({
   );
 };
 
-export default ScrollableMoviesSection;
+export default MovieSection;
