@@ -97,11 +97,12 @@ export function SidebarLayout() {
               © 2024 CineAtlas
             </p>
           ) : (
-            <img
-              src={logo || "/placeholder.svg"}
-              alt="logo"
-              className="h-6 w-6 transition-transform duration-300 hover:rotate-12"
-            />
+            // <img
+            //   src={logo || "/placeholder.svg"}
+            //   alt="logo"
+            //   className="h-6 w-6 transition-transform duration-300 hover:rotate-12"
+            // />
+            null
           )}
         </div>
       </SidebarFooter>

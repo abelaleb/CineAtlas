@@ -37,14 +37,16 @@ const CombinedCards = ({
   );
 };
 
-const MovieCards = ({ movies }: MovieCardProps) => {
+const MovieCards = ({
+  movies,
+  className,
+}: MovieCardProps & { className?: string }) => {
   const navigate = useNavigate();
   const handleClick = (movieId: number) => {
     navigate(`/movie/${movieId}`);
   };
   return (
-    <div className="w-full overflow-hidden" >
-      <div className="flex">
+    <div className={`${className}`}>
         {movies?.map((movie) => (
           <Card
             key={movie.id}
@@ -95,17 +97,16 @@ const MovieCards = ({ movies }: MovieCardProps) => {
         ))}
         {(!movies || movies.length === 0) && <p>No movies available.</p>}
       </div>
-    </div>
   );
 };
 
-const TVShowCards = ({ tvShows }: TVShowCardProps) => {
+const TVShowCards = ({ tvShows,className}: TVShowCardProps & {className?: string}) => {
   const navigate = useNavigate();
   const handleClick = (tvShowId: number) => {
     navigate(`/tv/${tvShowId}`);
   };
   return (
-    <div className="flex flex-wrap justify-center gap-2">
+    <div className={className}>
       {tvShows?.map((tvShow) => (
         <Card
           key={tvShow.id}

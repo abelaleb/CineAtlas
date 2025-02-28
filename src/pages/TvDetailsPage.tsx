@@ -1,15 +1,15 @@
-import { TVShowChange, TvShowCredits, TVShowDetails } from '@/types/types';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { image200, imageOriginal } from '@/Constants/Constants';
-import { format } from 'date-fns';
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { TVShowCards } from '@/components/Cards';
+import { TVShowChange, TvShowCredits, TVShowDetails } from "@/types/types";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { image200, imageOriginal } from "@/Constants/Constants";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { TVShowCards } from "@/components/Cards";
 import {
   fetchTvShowDetails,
   fetchSimilarTvShows,
   fetchTvShowCredits,
-} from '@/api/tvShows';
+} from "@/api/tvShows";
 
 const TvShowDetailsPage = () => {
   const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(
@@ -32,12 +32,12 @@ const TvShowDetailsPage = () => {
     };
 
     fetchData().catch((err) =>
-      console.error('Error fetching tv show details:', err)
+      console.error("Error fetching tv show details:", err)
     );
   }, [series_id]);
 
   return (
-    <div className="flex flex-col h-full w-full pt-[68px]">
+    <div className="flex flex-col h-full w-full pt-[68px] p-4 md:p-6 lg:p-8">
       {tvShowDetails ? (
         <div className="flex flex-col items-center justify-center ">
           <div className="flex h-[70vh] w-full items-center justify-center relative ">
@@ -64,7 +64,7 @@ const TvShowDetailsPage = () => {
                       src={
                         tvShowDetails?.poster_path
                           ? image200 + tvShowDetails.poster_path
-                          : ''
+                          : ""
                       }
                       className="w-[207px] h-[307px] relative rounded-xl p-1"
                       alt="TV Show Poster"
@@ -84,7 +84,7 @@ const TvShowDetailsPage = () => {
                             {tvShowDetails?.first_air_date &&
                               format(
                                 new Date(tvShowDetails.first_air_date),
-                                'MMM dd, yyyy'
+                                "MMM dd, yyyy"
                               )}
                           </div>
                           <div className="font-normal">
@@ -93,8 +93,8 @@ const TvShowDetailsPage = () => {
                               <span key={item.id}>
                                 {`${item.name}${
                                   index !== tvShowDetails.genres.length - 1
-                                    ? ', '
-                                    : ' .'
+                                    ? ", "
+                                    : " ."
                                 }`}
                               </span>
                             ))}
@@ -115,8 +115,8 @@ const TvShowDetailsPage = () => {
                                     index !==
                                     tvShowDetails.production_companies.length -
                                       1
-                                      ? ', '
-                                      : ' .'
+                                      ? ", "
+                                      : " ."
                                   }`}
                                 </span>
                               )
@@ -131,7 +131,7 @@ const TvShowDetailsPage = () => {
                                 className="text-blue-500 hover:text-blue-950"
                               >
                                 {cast.name}
-                                {index < 3 ? ', ' : '.'}
+                                {index < 3 ? ", " : "."}
                               </Link>
                             ))}
                           </div>
@@ -147,7 +147,7 @@ const TvShowDetailsPage = () => {
       ) : (
         <p>Loading...</p>
       )}
-      <div className="w-[calc(100vw-5rem)]">
+      <div className="w-[calc(100vw-4rem)]">
         <TVShowCards tvShows={similarTvShows} />
       </div>
     </div>

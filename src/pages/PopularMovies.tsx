@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { MovieChange } from '@/types/types';
-import { MovieCards } from '@/components/Cards';
-import Pagination from '@/components/Pagination';
-import SelectScrollable from '@/components/SelectScrollable';
-import { fetchDiscoverData, DiscoverFilters } from '@/api/discover';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { MovieChange } from "@/types/types";
+import { MovieCards } from "@/components/Cards";
+import Pagination from "@/components/Pagination";
+import SelectScrollable from "@/components/SelectScrollable";
+import { fetchDiscoverData, DiscoverFilters } from "@/api/discover";
 import {
   genreOptions,
   ratingOptions,
   yearOptions,
   languageOptions,
   sortOptions,
-} from '@/Constants/dropdownOptions';
-import Spinner from '@/components/Spinner';
+} from "@/Constants/dropdownOptions";
+import Spinner from "@/components/Spinner";
 
 const PopularMovies = () => {
   const { page } = useParams<{ page: string }>();
@@ -24,11 +24,11 @@ const PopularMovies = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [filters, setFilters] = useState<DiscoverFilters>({
-    genre: '',
-    rating: '',
-    year: '',
-    language: '',
-    sort_by: '',
+    genre: "",
+    rating: "",
+    year: "",
+    language: "",
+    sort_by: "",
   });
 
   const handleFilterChange = (key: keyof DiscoverFilters, value: string) => {
@@ -43,11 +43,11 @@ const PopularMovies = () => {
     const fetchMovieResults = async () => {
       setLoading(true);
       try {
-        const response = await fetchDiscoverData('movie', currentPage, filters);
+        const response = await fetchDiscoverData("movie", currentPage, filters);
         setMovieResults(response.results);
         setTotalMovieResults(response.total_results);
       } catch (err) {
-        console.error('Error fetching movie results:', err);
+        console.error("Error fetching movie results:", err);
       } finally {
         setLoading(false);
       }
@@ -61,7 +61,7 @@ const PopularMovies = () => {
   }, [currentPage, filters]);
 
   return (
-    <main className="flex flex-col pt-[68px] max-w-screen-xl">
+    <main className="flex flex-col pt-[68px] w-full py-4 md:py-6 lg:py-8">
       <section className="flex flex-col p-8">
         <h1 className="text-2xl font-black mb-4 text-center">
           Find Your Movies
@@ -69,11 +69,11 @@ const PopularMovies = () => {
 
         <div className="flex flex-wrap gap-4 justify-center items-center">
           {[
-            { label: 'Genre', key: 'genre', options: genreOptions },
-            { label: 'Ratings', key: 'rating', options: ratingOptions },
-            { label: 'Year', key: 'year', options: yearOptions },
-            { label: 'Language', key: 'language', options: languageOptions },
-            { label: 'Sort by', key: 'sort_by', options: sortOptions },
+            { label: "Genre", key: "genre", options: genreOptions },
+            { label: "Ratings", key: "rating", options: ratingOptions },
+            { label: "Year", key: "year", options: yearOptions },
+            { label: "Language", key: "language", options: languageOptions },
+            { label: "Sort by", key: "sort_by", options: sortOptions },
           ].map(({ label, key, options }) => (
             <div key={key} className="p-4 rounded-md max-w-screen-sm">
               <h2 className="font-semibold mb-2">{label}:</h2>
@@ -89,10 +89,16 @@ const PopularMovies = () => {
         </div>
       </section>
 
-      <section className="p-8 h-screen">
-        {loading ? <Spinner /> : <MovieCards movies={movieResults} />}
+      <section className=" w-full">
+        {loading ? (
+          <Spinner />
+        ) : (
+          <MovieCards
+            movies={movieResults}
+            className={`grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-4 gap-2`}
+          />
+        )}
       </section>
-
       <Pagination
         totalPosts={totalMovieResults}
         postsPerPage={20}

@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { MovieChange, MovieCreditDetials, MovieDetails } from '@/types/types';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { image200, imageOriginal } from '@/Constants/Constants';
-import { format } from 'date-fns';
-import { useParams, Link } from 'react-router-dom';
-import { MovieCards } from '@/components/Cards';
+import { useEffect, useState } from "react";
+import { MovieChange, MovieCreditDetials, MovieDetails } from "@/types/types";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { image200, imageOriginal } from "@/Constants/Constants";
+import { format } from "date-fns";
+import { useParams, Link } from "react-router-dom";
+import { MovieCards } from "@/components/Cards";
 import {
   fetchMovieCredits,
   fetchMovieDetails,
   fetchSimilarMovies,
-} from '@/api/movies';
+} from "@/api/movies";
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
@@ -27,14 +27,13 @@ const MovieDetailsPage = () => {
         setMovieCredits(credits.cast);
       }
     };
-
     fetchData().catch((err) =>
-      console.error('Error fetching movie details:', err)
+      console.error("Error fetching movie details:", err)
     );
   }, [movieId]);
 
   return (
-    <div className="flex flex-col  w-full h-full pt-[68px]">
+    <div className="flex flex-col  w-full h-full py-4 md:py-6 lg:py-8">
       {movieDetails ? (
         <div className="flex flex-col items-center justify-center ">
           <div className="flex h-[70vh] w-full items-center justify-center relative">
@@ -61,7 +60,7 @@ const MovieDetailsPage = () => {
                       src={
                         movieDetails.poster_path
                           ? image200 + movieDetails.poster_path
-                          : ''
+                          : ""
                       }
                       className="w-[207px] h-[307px]  relative rounded-xl p-1"
                     />
@@ -80,7 +79,7 @@ const MovieDetailsPage = () => {
                             {movieDetails.release_date &&
                               format(
                                 new Date(movieDetails.release_date),
-                                'MMM dd, yyyy'
+                                "MMM dd, yyyy"
                               )}
                           </div>
                           <div className="font-normal">
@@ -89,8 +88,8 @@ const MovieDetailsPage = () => {
                               <span key={item.id}>
                                 {`${item.name}${
                                   index != movieDetails.genres.length - 1
-                                    ? ', '
-                                    : '  .'
+                                    ? ", "
+                                    : "  ."
                                 }`}
                               </span>
                             ))}
@@ -110,8 +109,8 @@ const MovieDetailsPage = () => {
                                   {`${item.name}${
                                     index !=
                                     movieDetails.production_companies.length - 1
-                                      ? ', '
-                                      : '  .'
+                                      ? ", "
+                                      : "  ."
                                   }`}
                                 </span>
                               )
@@ -126,7 +125,7 @@ const MovieDetailsPage = () => {
                                 className="text-blue-700 hover:text-blue-950"
                               >
                                 {cast.name}
-                                {index < 3 ? ', ' : '.'}
+                                {index < 3 ? ", " : "."}
                               </Link>
                             ))}
                           </div>
@@ -143,7 +142,10 @@ const MovieDetailsPage = () => {
         <p>Loading...</p>
       )}
       <div className="w-[calc(100vw-5rem)]">
-        <MovieCards movies={similarMovies} />
+        <MovieCards
+          movies={similarMovies}
+          className={`grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-4 gap-2`}
+        />
       </div>
     </div>
   );

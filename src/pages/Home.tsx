@@ -42,7 +42,7 @@ const MainContent = () => {
       <div className="">
         <TrendingCarousel />
       </div>
-      <div className="flex flex-col justify-center md:w-[calc(100vw-4rem)] ">
+      <div className="flex flex-col justify-center md:w-[calc(100vw-4rem)] p-4 md:p-6 md:pr-0 lg:p-8 lg:pr-0 ">
         <MovieSection movies={movies} />
         <TVShowsSection tvShows={tvShows} />
         <PeopleSection people={people} />

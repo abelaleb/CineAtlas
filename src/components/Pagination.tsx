@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from "lucide-react";
 
 interface PaginationProps {
   totalPosts: number;
@@ -14,63 +14,75 @@ const Pagination = ({
   currentPage,
 }: PaginationProps) => {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
-  const pages = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
+
+  if (totalPages <= 1) return null; // Hide pagination if only one page
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5; // Max number of pages shown at a time
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+
+    return pages.map((page, index) => (
+      <button
+        key={index}
+        onClick={() => typeof page === "number" && handlePageChange(page)}
+        className={`w-10 h-10 font-semibold rounded-[6px] transition-colors duration-300 ${
+          currentPage === page
+            ? "bg-[#1C0326] text-white"
+            : "bg-[#8A49A6] text-white hover:bg-[#6B347F]"
+        } ${page === "..." ? "cursor-default bg-transparent text-gray-500" : ""}`}
+        disabled={page === "..."}
+      >
+        {page}
+      </button>
+    ));
   };
 
   return (
-    <div className="flex flex-wrap justify-center mt-4">
-      {currentPage > 1 && (
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          className="w-10 h-10 font-semibold  mx-[10px] rounded-[6px] p-3 m-2 transition-colors duration-300 cursor-pointer bg-[#8A49A6] border-gray-200 text-white flex justify-center items-center"
-        >
-          <ArrowLeft />
-        </button>
-      )}
-      {currentPage > 1 && (
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          className={`w-10 h-10 font-semibold text-base mx-[10px] rounded-[6px] px-4 py-2 m-2 transition-colors duration-300 cursor-pointer ${
-            currentPage - 1 === currentPage
-              ? 'active bg-[#1C0326] border-[#1C0326] text-white'
-              : 'bg-[#8A49A6] border-gray-200 text-white'
-          }`}
-        >
-          {currentPage - 1}
-        </button>
-      )}
+    <div className="flex justify-center mt-4 gap-2">
+      {/* Previous Button */}
       <button
-        onClick={() => handlePageChange(currentPage)}
-        className="w-10 h-10 font-semibold text-base mx-[10px] rounded-[6px] px-4 py-2 m-2 transition-colors duration-300 cursor-pointer active bg-[#1C0326] border-[#1C0326] text-white"
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={`w-10 h-10 font-semibold rounded-[6px] flex justify-center items-center transition-colors duration-300 cursor-pointer ${
+          currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-[#8A49A6] text-white"
+        }`}
       >
-        {currentPage}
+        <ArrowLeft />
       </button>
-      {currentPage < totalPages && (
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          className={`w-10 h-10 font-semibold text-base mx-[10px] rounded-[6px] px-4 py-2 m-2 transition-colors duration-300 cursor-pointer ${
-            currentPage + 1 === currentPage
-              ? 'active bg-[#1C0326] border-[#1C0326] text-white'
-              : 'bg-[#8A49A6] border-gray-200 text-white'
-          }`}
-        >
-          {currentPage + 1}
-        </button>
-      )}
-      {currentPage < totalPages && (
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          className="w-10 h-10 font-semibold text-base mx-[10px] rounded-[6px] p-3 m-2 transition-colors duration-300 cursor-pointer bg-[#8A49A6] border-gray-200 text-white flex justify-center items-center"
-        >
-          <ArrowRight />
-        </button>
-      )}
+
+      {/* Page Numbers */}
+      {renderPageNumbers()}
+
+      {/* Next Button */}
+      <button
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={`w-10 h-10 font-semibold rounded-[6px] flex justify-center items-center transition-colors duration-300 cursor-pointer ${
+          currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-[#8A49A6] text-white"
+        }`}
+      >
+        <ArrowRight />
+      </button>
     </div>
   );
 };

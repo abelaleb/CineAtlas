@@ -20,7 +20,10 @@ const SearchBar = () => {
         const results = await fetchSearchData(searchQuery);
         setSearchResults(results.results);
       };
-      fetchSearchResults();
+      const delayDebounceFn = setTimeout(() => {
+        fetchSearchResults();
+      }, 300);
+      return () => clearTimeout(delayDebounceFn);
     } else {
       setSearchResults([]);
     }

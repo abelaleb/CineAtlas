@@ -35,7 +35,7 @@ const PersonDetailsPage = () => {
   }, [personId]);
 
   return (
-    <div className="w-full h-full pt-[68px]">
+    <div className="w-full h-full pt-[68px] p-4 md:p-6 lg:p-8">
       {personDetails ? (
         <div>
           <div className="flex justify-center items-start">

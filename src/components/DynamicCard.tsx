@@ -1,18 +1,18 @@
-import { MovieCards, TVShowCards, PeopleCards } from './Cards';
-import { MovieChange, TVShowChange, PersonChange } from '@/types/types';
+import { MovieCards, TVShowCards, PeopleCards } from "./Cards";
+import { MovieChange, TVShowChange, PersonChange } from "@/types/types";
 
 interface DynamicCardProps {
-  mediaType: 'movie' | 'tv' | 'person';
-  data: MovieChange | TVShowChange | PersonChange ;
+  mediaType: "movie" | "tv" | "person";
+  data: MovieChange | TVShowChange | PersonChange;
 }
 
 const DynamicCard = ({ mediaType, data }: DynamicCardProps) => {
   switch (mediaType) {
-    case 'movie':
+    case "movie":
       return <MovieCards movies={[data as MovieChange]} />;
-    case 'tv':
+    case "tv":
       return <TVShowCards tvShows={[data as TVShowChange]} />;
-    case 'person':
+    case "person":
       return <PeopleCards people={[data as PersonChange]} />;
     default:
       return null;
