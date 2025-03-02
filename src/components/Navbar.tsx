@@ -5,7 +5,7 @@ import ThemeToggle from "./Navbar/ThemeToggle";
 
 const Navbar = () => {
   return (
-    <div className="flex py-1 bg-secondary gap-4 md:gap-40 ">
+    <div className="flex pt-2 gap-4 md:gap-40  dark:bg-gradient-to-br bg-[#e1c1eb]/90 dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f] text-primary dark:text-primary border-b border-primary ">
       <div className="flex items-center justify-start gap-4 lg:gap-8 ">
         <SidebarToggle />
         <Logo />
@@ -18,7 +18,6 @@ const Navbar = () => {
           <ThemeToggle />
         </div>
       </div>
-      
     </div>
   );
 };

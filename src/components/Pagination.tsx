@@ -15,17 +15,24 @@ const Pagination = ({
 }: PaginationProps) => {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
-  if (totalPages <= 1) return null; // Hide pagination if only one page
+  if (totalPages <= 1) return null;
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      const scrollableDiv = document.querySelector(".scrollable-content");
+      if (scrollableDiv) {
+        scrollableDiv.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   };
+  
 
   const renderPageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 5; // Max number of pages shown at a time
+    const pages: (number | string)[] = [];
+    const maxVisiblePages = 5; // Maximum visible pages
 
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
@@ -37,7 +44,15 @@ const Pagination = ({
       } else if (currentPage >= totalPages - 2) {
         pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+        pages.push(
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages
+        );
       }
     }
 
@@ -45,12 +60,15 @@ const Pagination = ({
       <button
         key={index}
         onClick={() => typeof page === "number" && handlePageChange(page)}
-        className={`w-10 h-10 font-semibold rounded-[6px] transition-colors duration-300 ${
-          currentPage === page
-            ? "bg-[#1C0326] text-white"
-            : "bg-[#8A49A6] text-white hover:bg-[#6B347F]"
-        } ${page === "..." ? "cursor-default bg-transparent text-gray-500" : ""}`}
         disabled={page === "..."}
+        className={`w-8 h-8 sm:w-10 sm:h-10 text-sm sm:text-base rounded-full transition-colors duration-300 
+          ${
+            page === "..."
+              ? "cursor-default bg-transparent text-gray-500"
+              : currentPage === page
+              ? "bg-accent text-white shadow-md"
+              : "bg-gray-100 text-accent hover:bg-gray-200"
+          } focus:outline-none focus:ring-2 focus:ring-blue-300`}
       >
         {page}
       </button>
@@ -58,30 +76,33 @@ const Pagination = ({
   };
 
   return (
-    <div className="flex justify-center mt-4 gap-2">
-      {/* Previous Button */}
+    <div className="flex justify-center mt-4 gap-2 p-4">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`w-10 h-10 font-semibold rounded-[6px] flex justify-center items-center transition-colors duration-300 cursor-pointer ${
-          currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-[#8A49A6] text-white"
-        }`}
+        className={`w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 
+          ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+          }`}
       >
-        <ArrowLeft />
+        <ArrowLeft className="w-4 h-4" />
       </button>
 
-      {/* Page Numbers */}
       {renderPageNumbers()}
 
-      {/* Next Button */}
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`w-10 h-10 font-semibold rounded-[6px] flex justify-center items-center transition-colors duration-300 cursor-pointer ${
-          currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-[#8A49A6] text-white"
-        }`}
+        className={`w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 
+          ${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+          }`}
       >
-        <ArrowRight />
+        <ArrowRight className="w-4 h-4" />
       </button>
     </div>
   );

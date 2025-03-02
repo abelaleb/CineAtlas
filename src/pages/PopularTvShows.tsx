@@ -60,7 +60,7 @@ const PopularTvShows = () => {
   }, [currentPage, filters]);
 
   return (
-    <main className="flex flex-col pt-[68px] w-full py-4 md:py-6 lg:py-8">
+    <main className="flex flex-col pt-[68px] w-full my-4 md:py-6 lg:py-8 dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f] text-primary dark:text-primary">
       <section className="flex flex-col p-8">
         <h1 className="text-2xl font-black mb-4 text-center">
           Find Your Tv Shows

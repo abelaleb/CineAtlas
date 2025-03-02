@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        background: "var(--background-image)",
         text: "var(--text)",
         textSecondary: "var(--text-secondary)",
-        background: "var(--background)",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
@@ -82,6 +82,6 @@ export default {
       },
     },
   },
-  darkMode: ["class", "class"],
+  darkMode: ["class"],
   plugins: [import("tailwindcss-animate")],
 };

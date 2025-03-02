@@ -2,50 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
-  .scrollbar-light::-webkit-scrollbar {
-    width:  8px;
+  .scroll-top {
+    scroll-behavior: auto !important;
+    scroll-padding-top: 0px !important;
   }
+}
 
-  .scrollbar-light::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
+body {
+  @apply scroll-top;
+  /* Use the proper font name with a fallback */
+  font-family: 'Sora', serif;
+}
 
-  .scrollbar-light::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-  }
-  .scrollbar-light::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/Sora-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 
-  .dark .scrollbar-dark::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .dark .scrollbar-dark::-webkit-scrollbar-track {
-    background: #333;
-  }
-
-  .dark .scrollbar-dark::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 4px;
-  }
-
-  .dark .scrollbar-dark::-webkit-scrollbar-thumb:hover {
-    background: #444;
-  }
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/Sora-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
 }
 
 @layer base {
   :root {
     --text: #190321;
-    --text-secondary: #610361;
     --background: #fbf1fe;
     --primary: #622772;
     --secondary: #cf8fe0;
-    --tertiary: #ebec85;
-    --accent: #ff3d44;
+    --tertiary: #240a2c;
+    --accent: #c559e3;
     --foreground: #0a0a0a;
     --card: #ffffff;
     --card-foreground: #0a0a0a;
@@ -55,8 +50,6 @@
     --secondary-foreground: #1a1a1a;
     --muted: #f2f2f2;
     --muted-foreground: #737373;
-    --accent: #c559e3;
-    --accent-foreground: #1a1a1a;
     --destructive: #d92c2c;
     --destructive-foreground: #fafafa;
     --border: #e6e6e6;
@@ -79,11 +72,12 @@
   }
 
   .dark {
-    --text: #f4defc
-    --background: #0b010e
-    --primary:#c88dd8
-    --secondary: #5e1f70
-    --accent:#881ca6
+    --text: #f4defc;
+    --background: #0b010e;
+    --primary: #c88dd8;
+    --secondary: #5e1f70;
+    --accent: #881ca6;
+    --tertiary: white;
     --foreground: #fafafa;
     --card: #0a0a0a;
     --card-foreground: #fafafa;
@@ -114,15 +108,3 @@
     --sidebar-ring: #357edd;
   }
 }
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-/* body {
-  overflow: auto !important;
-} */

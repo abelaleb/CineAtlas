@@ -8,7 +8,6 @@ import { MovieChange, PersonChange, TVShowChange } from "@/types/types";
 import Spinner from "../components/Spinner";
 import MovieSection from "@/components/MovieSection";
 import TrendingCarousel from "@/components/ui/TrendingCarousel";
-
 const MainContent = () => {
   const [movies, setMovies] = useState<MovieChange[]>([]);
   const [tvShows, setTvShows] = useState<TVShowChange[]>([]);
@@ -37,12 +36,13 @@ const MainContent = () => {
     fetchChanges();
   }, []);
   if (loading) return <Spinner />;
+
   return (
-    <div className="pt-[56px] flex flex-col h-full">
-      <div className="">
+    <div className="pt-[56px] flex flex-col h-full dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f]">
+      <div>
         <TrendingCarousel />
       </div>
-      <div className="flex flex-col justify-center md:w-[calc(100vw-4rem)] p-4 md:p-6 md:pr-0 lg:p-8 lg:pr-0 ">
+      <div className="flex flex-col justify-center md:w-[calc(100vw-5rem)] p-4 md:p-6 md:pr-0 lg:p-8 lg:pr-0 dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f]">
         <MovieSection movies={movies} />
         <TVShowsSection tvShows={tvShows} />
         <PeopleSection people={people} />

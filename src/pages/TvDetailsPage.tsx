@@ -10,6 +10,7 @@ import {
   fetchSimilarTvShows,
   fetchTvShowCredits,
 } from "@/api/tvShows";
+import Spinner from "@/components/Spinner";
 
 const TvShowDetailsPage = () => {
   const [tvShowDetails, setTvShowDetails] = useState<TVShowDetails | null>(
@@ -37,7 +38,7 @@ const TvShowDetailsPage = () => {
   }, [series_id]);
 
   return (
-    <div className="flex flex-col h-full w-full pt-[68px] p-4 md:p-6 lg:p-8">
+    <div className="flex flex-col w-full h-full py-4 md:py-6 lg:py-8  text-primary dark:text-primary ">
       {tvShowDetails ? (
         <div className="flex flex-col items-center justify-center ">
           <div className="flex h-[70vh] w-full items-center justify-center relative ">
@@ -56,28 +57,28 @@ const TvShowDetailsPage = () => {
             ></div>
           </div>
           <div className="flex flex-col m-8 rounded-lg w-3/4 relative -mt-40 z-20">
-            <Card className="p-4 hover:shadow-lg">
+            <Card className="p-4 hover:shadow-lg border-none dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f]">
               <CardContent>
                 <CardHeader>
-                  <div className="flex justify-center items-top gap-4">
+                  <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start gap-4">
                     <img
                       src={
                         tvShowDetails?.poster_path
                           ? image200 + tvShowDetails.poster_path
                           : ""
                       }
-                      className="w-[207px] h-[307px] relative rounded-xl p-1"
+                      className="w-[150px] h-auto sm:w-[207px] sm:h-[307px] relative rounded-xl p-1"
                       alt="TV Show Poster"
                     />
-                    <div className="flex flex-col gap-4">
-                      <div className="text-4xl font-bold">
+                    <div className="flex flex-col gap-4 text-center sm:text-left">
+                      <div className="text-2xl sm:text-4xl font-bold text-primary dark:text-primary">
                         {tvShowDetails?.name || tvShowDetails?.original_name}
                       </div>
-                      <div className="py-4 font-normal">
+                      <div className="py-2 sm:py-4 font-normal text-sm sm:text-base">
                         {tvShowDetails?.overview}
                       </div>
 
-                      <div className="grid grid-cols-2 justify-start">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 justify-start text-sm sm:text-base">
                         <div className="col-span-1 flex flex-col gap-1">
                           <div className="font-normal">
                             <span className="font-bold">Released: </span>
@@ -105,7 +106,6 @@ const TvShowDetailsPage = () => {
                             <span className="font-bold">Episodes: </span>
                             {tvShowDetails?.number_of_episodes}
                           </div>
-
                           <div className="font-normal">
                             <span className="font-bold">Productions: </span>
                             {tvShowDetails?.production_companies?.map(
@@ -128,7 +128,7 @@ const TvShowDetailsPage = () => {
                               <Link
                                 to={`/person/${cast.id}`}
                                 key={cast.id}
-                                className="text-blue-500 hover:text-blue-950"
+                                className="text-purple-800 hover:text-blue-950 dark:hover:text-purple-600"
                               >
                                 {cast.name}
                                 {index < 3 ? ", " : "."}
@@ -145,10 +145,13 @@ const TvShowDetailsPage = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <Spinner />
       )}
       <div className="w-[calc(100vw-4rem)]">
-        <TVShowCards tvShows={similarTvShows} />
+        <TVShowCards
+          tvShows={similarTvShows}
+          className={` grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-4 gap-2`}
+        />
       </div>
     </div>
   );

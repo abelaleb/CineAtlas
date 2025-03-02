@@ -33,11 +33,12 @@ const SearchBar = () => {
     if (searchQuery.trim()) {
       navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
       setIsMobileSearchOpen(false);
+      setIsSearchFocused(false); 
     }
   };
 
   const searchInputSection = (
-    <section className="flex md:flex-1 md:w-8/12 sm:flex-1 w-[100%] ">
+    <section className="flex md:flex-1 md:w-8/12 sm:flex-1 w-[100%] bg-secondary text-text rounded-lg ">
       <Input
         type="text"
         placeholder="Search..."
@@ -58,16 +59,19 @@ const SearchBar = () => {
   );
 
   const searchResultsDropdown = isSearchFocused && searchResults.length > 0 && (
-    <div className="absolute top-full left-0 w-full mt-2 bg-background border border-primary rounded-lg shadow-lg z-50">
+    <div
+      style={{ scrollbarWidth: "thin", scrollbarColor: "# #f1f1f1" }}
+      className="absolute top-full left-0 w-full mt-2 max-h-80 overflow-y-auto border border-primary rounded-lg shadow-lg z-50 dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f] text-text"
+    >
       {searchResults.map((result) => (
         <a
           key={result.id}
           href={`/${result.media_type}/${result.id}`}
-          className="block p-2 hover:bg-accent transition-colors duration-200 cursor-pointer"
-          onMouseDown={(e) => e.preventDefault()} 
+          className="block p-3 hover:bg-accent transition-colors duration-200 cursor-pointer"
+          onMouseDown={(e) => e.preventDefault()}
         >
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-muted-foreground">
+          <div className="flex items-center space-x-3">
+            <span className="text-lg text-muted-foreground">
               {result.media_type === "movie" ? (
                 <FilmIcon />
               ) : result.media_type === "tv" ? (
@@ -76,29 +80,28 @@ const SearchBar = () => {
                 <User />
               )}
             </span>
-            <span className="font-normal">{result.title || result.name}</span>
-            <span>{result.release_date}</span>
+            <span className="flex-1 font-normal">
+              {result.title || result.name}
+            </span>
+            <span className="text-sm text-gray-400">{result.release_date}</span>
             <span>
-              {result.backdrop_path ? (
+              {result.backdrop_path ||
+              result.poster_path ||
+              result.profile_path ? (
                 <img
-                  src={image200 + result.backdrop_path}
-                  alt="image"
-                  width="100px"
-                  height="100%"
-                />
-              ) : result.poster_path ? (
-                <img
-                  src={image200 + result.poster_path}
-                  alt="image"
-                  width="100px"
-                  height="100%"
-                />
-              ) : result.profile_path ? (
-                <img
-                  src={image200 + result.profile_path}
-                  alt="image"
-                  width="100px"
-                  height="100%"
+                  src={
+                    result.backdrop_path
+                      ? image200 + result.backdrop_path
+                      : result.poster_path
+                      ? image200 + result.poster_path
+                      : image200 + result.profile_path
+                  }
+                  alt="thumbnail"
+                  className={`object-cover ${
+                    result.profile_path
+                      ? "w-10 h-10 rounded-full"
+                      : "w-16 h-9 rounded-lg"
+                  }`}
                 />
               ) : null}
             </span>

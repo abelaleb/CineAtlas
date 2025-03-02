@@ -26,16 +26,16 @@ const SelectScrollable = ({
 }: SelectScrollableProps) => {
   return (
     <Select onValueChange={onValueChange}>
-      <SelectTrigger>
+      <SelectTrigger className='rounded-2 border-none bg-secondary dark:text-white'>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='rounded-none border-none border-l-none bg-secondary'>
         <SelectGroup>
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-primary"
             >
               <div className="flex gap-2">
                 {option.label}

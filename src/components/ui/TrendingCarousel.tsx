@@ -54,7 +54,7 @@ const TrendingCarousel = () => {
   if (loading) return <Spinner />;
 
   return (
-    <div className="relative overflow-hidden w-full h-[400px]">
+    <div className="relative overflow-hidden w-full h-[400px] dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f]">
       <Swiper
         slidesPerView="auto"
         autoplay={{

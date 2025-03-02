@@ -16,17 +16,17 @@ export const genreOptions = [
 
 export const ratingOptions = [
   { value: 'all', label: 'All' },
-  { value: '10', label: '🔟 10' },
-  { value: '9', label: '9️⃣ 9' },
-  { value: '8', label: '🎱 8' },
-  { value: '7', label: '7️⃣ 7' },
-  { value: '6', label: '6️⃣ 6' },
-  { value: '5', label: '5️⃣ 5' },
-  { value: '4', label: '4️⃣ 4' },
-  { value: '3', label: '3️⃣ 3' },
-  { value: '2', label: '2️⃣ 2' },
-  { value: '1', label: '1️⃣ 1' },
-  { value: '0', label: '0️⃣ 0' },
+  { value: '10', label: '10' },
+  { value: '9', label: '9' },
+  { value: '8', label: '8' },
+  { value: '7', label: '7' },
+  { value: '6', label: '6' },
+  { value: '5', label: '5' },
+  { value: '4', label: '4' },
+  { value: '3', label: '3' },
+  { value: '2', label: '2' },
+  { value: '1', label: '1' },
+  { value: '0', label: '0' },
 ];
 
 export const yearOptions = [

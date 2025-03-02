@@ -10,6 +10,7 @@ import {
   fetchMovieDetails,
   fetchSimilarMovies,
 } from "@/api/movies";
+import Spinner from "@/components/Spinner";
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
@@ -33,7 +34,7 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   return (
-    <div className="flex flex-col  w-full h-full py-4 md:py-6 lg:py-8">
+    <div className="flex flex-col  w-full h-full py-4 md:py-6 lg:py-8 text-primary dark:text-primary">
       {movieDetails ? (
         <div className="flex flex-col items-center justify-center ">
           <div className="flex h-[70vh] w-full items-center justify-center relative">
@@ -52,27 +53,27 @@ const MovieDetailsPage = () => {
             ></div>
           </div>
           <div className="flex flex-col m-8 rounded-lg w-3/4 relative -mt-40 z-20">
-            <Card className="p-4 hover:shadow-lg">
+            <Card className="p-4 hover:shadow-lg border-none dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f]">
               <CardContent>
                 <CardHeader>
-                  <div className="flex justify-center items-top gap-4">
+                  <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start gap-4">
                     <img
                       src={
                         movieDetails.poster_path
                           ? image200 + movieDetails.poster_path
                           : ""
                       }
-                      className="w-[207px] h-[307px]  relative rounded-xl p-1"
+                      className="w-[150px] h-auto sm:w-[207px] sm:h-[307px] relative rounded-xl p-1"
                     />
-                    <div className="flex flex-col gap-4">
-                      <div className="text-4xl font-bold">
+                    <div className="flex flex-col gap-4 text-center sm:text-left">
+                      <div className="text-2xl sm:text-4xl font-bold text-primary dark:text-primary">
                         {movieDetails.title}
                       </div>
-                      <div className="py-4 font-normal">
+                      <div className="py-2 sm:py-4 font-normal text-sm sm:text-base">
                         {movieDetails.overview}
                       </div>
 
-                      <div className="grid grid-cols-2 justify-start">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 justify-start text-sm sm:text-base">
                         <div className="col-span-1 flex flex-col gap-1">
                           <div className="font-normal">
                             <span className="font-bold">Released: </span>
@@ -87,7 +88,7 @@ const MovieDetailsPage = () => {
                             {movieDetails.genres.map((item, index) => (
                               <span key={item.id}>
                                 {`${item.name}${
-                                  index != movieDetails.genres.length - 1
+                                  index !== movieDetails.genres.length - 1
                                     ? ", "
                                     : "  ."
                                 }`}
@@ -98,16 +99,15 @@ const MovieDetailsPage = () => {
                         <div className="col-span-1 flex flex-col gap-1">
                           <div className="font-normal">
                             <span className="font-bold">Duration: </span>
-                            {movieDetails.runtime}
+                            {movieDetails.runtime} min
                           </div>
-
                           <div className="font-normal">
                             <span className="font-bold">Productions: </span>
                             {movieDetails.production_companies.map(
                               (item, index) => (
                                 <span key={item.id}>
                                   {`${item.name}${
-                                    index !=
+                                    index !==
                                     movieDetails.production_companies.length - 1
                                       ? ", "
                                       : "  ."
@@ -122,7 +122,7 @@ const MovieDetailsPage = () => {
                               <Link
                                 to={`/person/${cast.id}`}
                                 key={cast.id}
-                                className="text-blue-700 hover:text-blue-950"
+                                className="text-purple-800 hover:text-blue-950 dark:hover:text-purple-600"
                               >
                                 {cast.name}
                                 {index < 3 ? ", " : "."}
@@ -139,12 +139,12 @@ const MovieDetailsPage = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <Spinner />
       )}
       <div className="w-[calc(100vw-5rem)]">
         <MovieCards
           movies={similarMovies}
-          className={`grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-4 gap-2`}
+          className={` grid justify-center items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-4 gap-2 `}
         />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import tmdb from "@/api/axiosInstance";
 import { handleResponse } from "@/api/responseHandler";
 import confetti from "canvas-confetti";
@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Shuffle, Star, Calendar, Film, Tv, AlertTriangle } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 import { imageOriginal } from "@/Constants/Constants";
+import { useNavigate } from "react-router-dom";
 const TOTAL_PAGES = 150;
 
 const RandomPage = () => {
@@ -17,11 +18,9 @@ const RandomPage = () => {
 
   const formatYear = useCallback((dateString?: string | number | Date) => {
     if (!dateString) return "Unknown";
-
     if (dateString instanceof Date) {
       return dateString.getFullYear().toString();
     }
-
     return new Date(dateString).getFullYear().toString();
   }, []);
 
@@ -91,28 +90,25 @@ const RandomPage = () => {
       triggerConfetti();
     } catch (err) {
       console.error("Error fetching data:", err);
+      setError("Failed to fetch data. Please try again.");
     } finally {
       setLoading(false);
     }
   }, [fetchRandomMovies, fetchRandomTvShows, triggerConfetti]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
-      <div className="container mx-auto pt-[68px] px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <div className="min-h-screen pt-[68px] dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f] text-primary dark:text-primary">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600">
             Discover Something New
           </h1>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="text-lg text-text max-w-2xl mx-auto">
             Feeling indecisive? Let us recommend random movies and TV shows for
             your next binge-watching session.
           </p>
@@ -124,7 +120,7 @@ const RandomPage = () => {
             disabled={loading}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="relative bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 disabled:opacity-70 group"
+            className="relative bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold py-3 px-8 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 disabled:opacity-70 group"
           >
             <span className="flex items-center justify-center gap-2">
               {loading ? (
@@ -169,7 +165,6 @@ const RandomPage = () => {
               type="movie"
               formatYear={formatYear}
             />
-
             <MediaSection
               title="TV Shows"
               icon={<Tv className="w-6 h-6" />}
@@ -184,6 +179,7 @@ const RandomPage = () => {
     </div>
   );
 };
+
 interface MediaSectionProps {
   title: string;
   icon: React.ReactNode;
@@ -192,6 +188,7 @@ interface MediaSectionProps {
   type: "movie" | "tv";
   formatYear: (dateString?: string | number | Date | undefined) => string;
 }
+
 const MediaSection = ({
   title,
   icon,
@@ -199,120 +196,144 @@ const MediaSection = ({
   loading,
   type,
   formatYear,
-}: MediaSectionProps) => (
-  <section className="mb-16">
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-      className="flex items-center gap-2 mb-6"
-    >
-      <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
-      {icon}
-    </motion.div>
+}: MediaSectionProps) => {
+  const navigate = useNavigate();
+  const handleClick = (id: number, mediaType: string) => {
+    navigate(`/${mediaType}/${id}`);
+  };
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <>
-            {[1, 2, 3].map((i) => (
-              <motion.div
-                key={`skeleton-${type}-${i}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <SkeletonCard />
-              </motion.div>
-            ))}
-          </>
-        ) : (
-          // Show actual content when loaded
-          items.map((item, index) => {
-            const isMovie = "title" in item;
-            const title = isMovie
-              ? (item as MovieChange).title
-              : (item as TVShowChange).name;
-            const releaseDate = isMovie
-              ? (item as MovieChange).release_date
-              : (item as TVShowChange).first_air_date;
+  return (
+    <section className="mb-16">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex items-center gap-2 mb-6"
+      >
+        <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+        {icon}
+      </motion.div>
 
-            return (
-              <motion.div
-                key={`${type}-${index}-${title}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                className="bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-purple-500/20 transition-all duration-300 group"
-              >
-                <div className="relative overflow-hidden">
-                  {item.poster_path ? (
-                    <img
-                      src={
-                        item.poster_path
-                          ? imageOriginal + item.poster_path
-                          : item.backdrop_path
-                          ? imageOriginal + item.backdrop_path
-                          : ""
-                      }
-                      alt={title}
-                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  ) : (
-                    <div className="w-full h-80 bg-slate-700 flex items-center justify-center">
-                      <span className="text-slate-400">No Image Available</span>
-                    </div>
-                  )}
-                  <div className="absolute top-0 right-0 bg-black/70 p-2 m-2 rounded-full">
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-400" />
-                      <span className="text-sm font-medium">
-                        {item.vote_average?.toFixed(1) || "N/A"}
-                      </span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <>
+              {[1, 2, 3].map((i) => (
+                <motion.div
+                  key={`skeleton-${type}-${i}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <SkeletonCard />
+                </motion.div>
+              ))}
+            </>
+          ) : items.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="col-span-full flex flex-col items-center justify-center py-20 border-2 border-dashed border-gray-400 rounded-lg"
+            >
+              <p className="text-lg text-gray-500 italic">
+                Press &quot;Shuffle Recommendations&quot; to reveal random {title.toLowerCase()}!
+              </p>
+            </motion.div>
+          ) : (
+            items.map((item, index) => {
+              const isMovie = "title" in item;
+              const titleText = isMovie
+                ? (item as MovieChange).title
+                : (item as TVShowChange).name;
+              const releaseDate = isMovie
+                ? (item as MovieChange).release_date
+                : (item as TVShowChange).first_air_date;
+
+              return (
+                <motion.div
+                  key={`${type}-${index}-${titleText}`}
+                  onClick={() => handleClick(item.id, type)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  whileHover={{ y: -10, transition: { duration: 0.2 } }}
+                  className="bg-primary text-primary rounded-xl overflow-hidden shadow-lg hover:shadow-purple-500/20 transition-all duration-300 group cursor-pointer"
+                >
+                  <div className="relative overflow-hidden">
+                    {item.poster_path ? (
+                      <img
+                        src={
+                          item.poster_path
+                            ? imageOriginal + item.poster_path
+                            : item.backdrop_path
+                            ? imageOriginal + item.backdrop_path
+                            : ""
+                        }
+                        alt={titleText}
+                        className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-80 bg-slate-700 flex items-center justify-center">
+                        <span className="text-slate-400">
+                          No Image Available
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute top-0 right-0 bg-black/70 text-white dark:text-text p-2 m-2 rounded-full">
+                      <div className="flex items-center gap-1">
+                        <Star className="w-4 h-4 text-yellow-400" />
+                        <span className="text-sm font-medium">
+                          {item.vote_average?.toFixed(1) || "N/A"}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="text-xl font-bold mb-2 line-clamp-1">
-                    {title}
-                  </h3>
-                  <div className="flex items-center gap-3 text-slate-300">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      <span className="text-sm">{formatYear(releaseDate)}</span>
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold mb-2 line-clamp-1 text-secondary">
+                      {titleText}
+                    </h3>
+                    <div className="flex items-center gap-3 text-slate-300">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-sm">
+                          {formatYear(releaseDate)}
+                        </span>
+                      </div>
+                      {item.original_language && (
+                        <span className="text-xs px-2 py-1 bg-secondary rounded-full uppercase">
+                          {item.original_language}
+                        </span>
+                      )}
                     </div>
-                    {item.original_language && (
-                      <span className="text-xs px-2 py-1 bg-slate-700 rounded-full uppercase">
-                        {item.original_language}
-                      </span>
+                    {item.overview && (
+                      <p className="mt-3 text-secondary text-sm line-clamp-2">
+                        {item.overview}
+                      </p>
                     )}
                   </div>
-                  {item.overview && (
-                    <p className="mt-3 text-slate-300 text-sm line-clamp-2">
-                      {item.overview}
-                    </p>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })
-        )}
-      </AnimatePresence>
-    </div>
-  </section>
-);
+                </motion.div>
+              );
+            })
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+};
+
 const SkeletonCard = () => (
-  <div className="bg-slate-800/50 rounded-xl overflow-hidden shadow-lg animate-pulse">
-    <div className="w-full h-80 bg-slate-700"></div>
+  <div className="bg-primary rounded-xl overflow-hidden shadow-lg animate-pulse">
+    <div className="w-full h-80 bg-primary"></div>
     <div className="p-5 space-y-3">
-      <div className="h-6 bg-slate-700 rounded w-3/4"></div>
+      <div className="h-6 bg-primary rounded w-3/4"></div>
       <div className="flex space-x-2">
-        <div className="h-4 bg-slate-700 rounded w-1/4"></div>
-        <div className="h-4 bg-slate-700 rounded w-1/4"></div>
+        <div className="h-4 bg-primary rounded w-1/4"></div>
+        <div className="h-4 bg-primary rounded w-1/4"></div>
       </div>
     </div>
   </div>
 );
+
 export default RandomPage;

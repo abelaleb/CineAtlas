@@ -3,7 +3,6 @@ import type React from "react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarMenu,
   SidebarMenuItem,
   useSidebar,
@@ -27,22 +26,22 @@ export function SidebarLayout() {
   return (
     <Sidebar
       collapsible="icon"
-      className={`fixed left-0 top-0 h-full pt-[56px] z-60 border-r border-gray-800 bg-white shadow-lg will-change-transform
+      className={`z-10 border-none dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f] text-primary dark:text-primary fixed left-0 top-0 h-full pt-[56px] z-60 border-r border-gray-800 shadow-lg 
         ${
           isMobile
-            ? "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] transform"
-            : "transition-[width,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+            ? "transition-transform duration-300 ease-in-out transform"
+            : "transition-[width,transform] duration-300 ease-in-out transform"
         }
         ${state === "collapsed" ? "w-12 translate-x-0" : "w-64 translate-x-0"}
         ${isMobile && state === "collapsed" && "-translate-x-full"}
       `}
     >
-      <SidebarContent className="col-span-3 overflow-hidden">
-        <SidebarMenu className="gap-0 p-0 m-0">
-          <SidebarMenuItem className="h-[56px] bg-secondary md:hidden">
-            <div className="flex items-center justify-start w-full transition-opacity duration-300 ease-in-out">
+      <SidebarContent className="col-span-3 overflow-hidden  dark:bg-gradient-to-br bg-[#e1c1eb] dark:from-[#1a1a2e] dark:via-[#231b32] dark:to-[#1f1f2f] border-r border-primary">
+        <SidebarMenu className="gap-0 p-0 m-0 ">
+          <SidebarMenuItem className="h-[56px] md:hidden">
+            <div className="flex items-center justify-start w-full transition-opacity duration-300 ease-in-out ">
               <SidebarToggle />
-              <Link to="/" className="ml-4">
+              <Link to="/" className="ml-4 mt-2">
                 <div className="flex items-center gap-1 group transition-all duration-300 ease-in-out hover:scale-105 active:scale-95">
                   <img
                     src={logo || "/placeholder.svg"}
@@ -61,17 +60,17 @@ export function SidebarLayout() {
               <NavLink
                 to={item.url}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                  `flex items-center gap-3 p-3 transition-all duration-300 ease-in-out
                   ${
                     isActive
-                      ? "bg-gray-800 text-white"
-                      : "hover:bg-gray-200 hover:text-gray-900"
+                      ? "bg-[#300a30] text-white duration-300 ease-in-out"
+                      : "hover:text-white duration-300 ease-in-out"
                   }`
                 }
               >
                 <item.icon className="h-6 w-6 min-w-6 transition-transform duration-300" />
                 <span
-                  className={`font-normal whitespace-nowrap transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                  className={`font-normal whitespace-nowrap transition-[opacity,transform] duration-300 ease-in-out
                     ${
                       !isMobile && state === "collapsed"
                         ? "opacity-0 -translate-x-4"
@@ -86,26 +85,6 @@ export function SidebarLayout() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="p-4">
-        <div
-          className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]`}
-        >
-          {state === "expanded" ? (
-            <p
-              className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]`}
-            >
-              © 2024 CineAtlas
-            </p>
-          ) : (
-            // <img
-            //   src={logo || "/placeholder.svg"}
-            //   alt="logo"
-            //   className="h-6 w-6 transition-transform duration-300 hover:rotate-12"
-            // />
-            null
-          )}
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }
